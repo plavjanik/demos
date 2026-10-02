@@ -1,0 +1,118 @@
+.vsc-explorer {
+  width: 100%;
+  height: 100%;
+  background: var(--vsc-bg-sidebar);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.exp-header {
+  padding: 10px 20px 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--vsc-fg-muted);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.exp-header-menu {
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.exp-section {
+  padding: 4px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--vsc-fg);
+  display: flex;
+  align-items: center;
+}
+
+/* ---- collapsible top-level sections (Explorer For Endevor) ---- */
+
+.exp-tree-sections {
+  padding-bottom: 12px;
+}
+
+.exp-toplevel-section:not(:last-child) {
+  border-bottom: 1px solid var(--vsc-border);
+}
+
+.exp-section-collapsible {
+  cursor: pointer;
+  gap: 4px;
+  padding: 6px 8px;
+}
+.exp-section-collapsible .codicon {
+  font-size: 15px;
+}
+
+.exp-tree-nested {
+  position: relative;
+}
+/* The real view's vertical indent guide under an expanded node — a single
+   rule the full height of the nested subtree, not per-row. */
+.exp-tree-nested .exp-dir-open > .exp-row {
+  position: relative;
+}
+.exp-tree-nested .exp-dir-open::before {
+  content: "";
+  position: absolute;
+  top: 24px;
+  bottom: 0;
+  left: 15px;
+  width: 1px;
+  background: #3a3a3a;
+}
+
+.exp-tree {
+  overflow-y: auto;
+  flex: 1;
+  padding-bottom: 12px;
+}
+
+.exp-tree .hotspot {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border-radius: 0;
+}
+
+.exp-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  font-size: 13px;
+  color: var(--vsc-fg);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.exp-row:hover {
+  background: #2a2d2e;
+}
+
+.exp-row.selected {
+  background: #094771;
+  color: #fff;
+}
+
+.exp-row .codicon {
+  font-size: 15px;
+  color: #c5c5c5;
+  flex: none;
+}
+
+.exp-row .codicon-folder {
+  color: #dcb67a;
+}
+
+.exp-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

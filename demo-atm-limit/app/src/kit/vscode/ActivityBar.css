@@ -1,0 +1,48 @@
+.vsc-activitybar {
+  width: 48px;
+  background: var(--vsc-bg-activitybar);
+  border-right: 1px solid var(--vsc-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 8px;
+  gap: 4px;
+  flex: none;
+}
+
+.vsc-activity-item {
+  width: 48px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #858585;
+  border-left: 2px solid transparent;
+}
+
+.vsc-activity-item .codicon {
+  font-size: 22px;
+}
+
+/* An extension's own view-container icon, drawn as VS Code draws it: an SVG
+   mask filled with the activity bar's current foreground colour (inherited
+   via currentColor), never a coloured image. */
+.vsc-activity-icon-mask {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  background-color: currentColor;
+  /* mask-image/-webkit-mask-image are set inline (ActivityBar.tsx), keyed
+     per demo — this rule only sizes and positions whichever image lands. */
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+}
+
+.vsc-activity-item.active {
+  color: #fff;
+  border-left-color: #fff;
+}

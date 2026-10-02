@@ -1,0 +1,28 @@
+    0         1         2         3         4         5         6         7         
+    01234567890123456789012345678901234567890123456789012345678901234567890123456789
+00:  DATE: 2026-09-25      DEPOSITORY OF ONLINE TRANSACTIONS         TIME: 13:35:12 
+01:                               ACCOUNT TRANSACTION                               
+02:                                                                                 
+03:                                                                                 
+04:                        BANK NUMBER ====> < [001] >                                
+05:                        ACCOUNT TYPE ===> < [DD] >                                 
+06:                        ACCOUNT KEY ====> < [901123456___________] >               
+07:                        SERVICE TYPE ===> < [TPS] >                                
+08:                        FORMAT TYPE ====> < [DB] >                                 
+09:                        TRAN DATE ======> < [20260925] >                           
+10:                        TRAN CODE ======> < [001] >                                
+11:                        TYPE/REASON ====> < [__] >                                 
+12:                        AMOUNT 1 =======> < [00000005000] >                        
+13:                        AMOUNT 2 =======> < [___________] >                        
+14:                        SERIAL 1 =======> < [_________] >                          
+15:                        SERIAL 2 =======> < [_________] >                          
+16:                        RELEASE DATE ===> < [YYYYMMDD] >                           
+17:                        ALERT CODE =====> < [_] >                                  
+18:                        NON-MONETARY ===> < [____________________] >               
+19:                                                                                 
+20:                                                                                 
+21:                        TRANSACTION INSERTED SUCCESSFULLY                        
+22:                                                                                 
+23:  F1 = RESET    F2 = INSERT    F3 = DELETE                          CLEAR = QUIT 
+
+"DATE: 2026-09-25 DEPOSITORY OF ONLINE TRANSACTIONS TIME: 13…" | cursor=(4,43) | fields=15 | keyboard=UNLOCKED

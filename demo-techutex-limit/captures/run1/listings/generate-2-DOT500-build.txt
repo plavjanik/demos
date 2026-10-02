@@ -1,0 +1,157 @@
+[task build:dot] executing (Build only dbs application located in /ais-cam-dot/src/dot/ directory)
+connecting USER@testsys.broadcom.net:22...
+
+syncing [build:scripts] [./] to [/u/users/USER/devops-ai-demo/]
+up to date.
+
+syncing [build:src] [./] to [/u/users/USER/devops-ai-demo/]
+synchronizing text files
+sync: ais-cam-dot/src/dot/files/cobol/DOT500
+creating local archive ... done.
+uploading archive ... done.
+decompressing on z/OS ... done.
+unpax on z/OS ... done.
+text files done.
+
+INTERTEST= tools/TeamBuild/bldz -p1 dot
+ZOAU_HOME=/sys/zoau
+PYTHON_HOME=/usr/lpp/IBM/cyp/pyz
+PYTHONPATH=/sys/zoau/lib
+NODE_HOME=/usr/lpp/IBM/cnj/IBM/node-v18.20.7-os390-s390x-202503251523/bin
+PATH=/usr/lpp/IBM/cnj/IBM/node-v18.20.7-os390-s390x-202503251523/bin:/usr/lpp/IBM/zoautil/env/bin:/sys/zoau/bin:/usr/lpp/IBM/cyp/pyz/bin:/usr/lpp/java/current/bin:/bin:.:/u/users/oem/Rocket/bin
+CLASSPATH=/sys/zoau/lib/*:/usr/lpp/IBM/cyp/pyz/lib/*:
+LIBPATH=/sys/zoau/lib:/usr/lpp/IBM/cyp/pyz/lib:/lib:/usr/lib:.
+MANPATH=/sys/zoau/docs/%L:/usr/man/%L
+JAVA_HOME=/usr/lpp/java/current
+------gathering rules from package in root directory ...
+------gathering rules from package 'dbs' ...
+------gathering rules from package 'dup' ...
+------gathering rules from package 'ais-cam-dot/src/cam' ...
+------gathering rules from package 'ais-cam-dot/src/ais' ...
+------gathering rules from package 'ais-cam-dot/src/dot' ...
+------gathering rules from package 'tools/toolchain' ...
+
++-----------------------------------------------+
+| 210 candidate genrule(s) found in build files |
++-----------------------------------------------+
+
+------preparing rules ...
+
++------------------------+
+| ... starting build ... |
++------------------------+
+
+[up-to-date] ... //:ds_alloc_USER.TMBLD.BIZAPP.DUP.COPY (workspace)
+[up-to-date] ... //:ds_copy_USER.TMBLD.BIZAPP.DUP.COPY (workspace)
+[up-to-date] ... //:ds_alloc_USER.TMBLD.BIZAPP.AIS.COPY (workspace)
+[up-to-date] ... //:ds_alloc_USER.TMBLD.BIZAPP.DBS.COPY (workspace)
+[up-to-date] ... //:ds_copy_USER.TMBLD.BIZAPP.DBS.COPY (workspace)
+[up-to-date] ... //:ds_copy_USER.TMBLD.BIZAPP.AIS.COPY (workspace)
+[up-to-date] ... //:ds_alloc_USER.TMBLD.BIZAPP.DOT.COPY (workspace)
+[up-to-date] ... //:ds_copy_USER.TMBLD.BIZAPP.DOT.COPY (workspace)
+[up-to-date] ... //:ds_alloc_USER.TMBLD.BIZAPP.CAM.COPY (workspace)
+[up-to-date] ... //:ds_copy_USER.TMBLD.BIZAPP.CAM.COPY (workspace)
+[up-to-date] ... //tools/toolchain:bms_binary
+[up-to-date] ... //ais-cam-dot/src/dot:bms_compile_bind#files_mac_DOT500X
+[up-to-date] ... //ais-cam-dot/src/dot:bms_compile_bind#files_mac_DOT500M
+[up-to-date] ... //ais-cam-dot/src/dot:bms_compile_bind#files_mac_DOT400X
+[up-to-date] ... //ais-cam-dot/src/dot:cobol_object#files_cobol_ZOT999
+[up-to-date] ... //ais-cam-dot/src/dot:cobol_object#files_cobol_DOT999
+[up-to-date] ... //ais-cam-dot/src/dot:cobol_object#files_cobol_DOT100
+[up-to-date] ... //ais-cam-dot/src/dot:cobol_object#files_cobol_DOT300
+[up-to-date] ... //ais-cam-dot/src/dot:cobol_object#files_cobol_DOTDDA
+[up-to-date] ... //dup:dup_objects
+[up-to-date] ... //ais-cam-dot/src/dot:cobol_object#files_cobol_DOT200
+[up-to-date] ... //ais-cam-dot/src/dot:bms_compile_bind#files_mac_DOT400M
+[up-to-date] ... //ais-cam-dot/src/dot:cobol_object#files_cobol_DOT400
+[up-to-date] ... //ais-cam-dot/src/dot:cobol_object#files_cobol_DOT000
+[up-to-date] ... //tools/toolchain:binder
+[up-to-date] ... //ais-cam-dot/src/dot:binder#cobol_object#files_cobol_DOT400
+[up-to-date] ... //ais-cam-dot/src/dot:binder#cobol_object#files_cobol_DOT300
+[up-to-date] ... //ais-cam-dot/src/dot:binder#cobol_object#files_cobol_DOT200
+[up-to-date] ... //ais-cam-dot/src/dot:binder#cobol_object#files_cobol_DOT100
+[up-to-date] ... //ais-cam-dot/src/dot:binder#cobol_object#files_cobol_DOT000
+[up-to-date] ... //ais-cam-dot/src/dot:cobol_object#files_cobol_DOTSAV
+[up-to-date] ... //ais-cam-dot/src/dot:cobol_object#files_cobol_DOTDUMP
+[up-to-date] ... //ais-cam-dot/src/dot:binder#cobol_object#files_cobol_DOT999
+[up-to-date] ... //ais-cam-dot/src/dot:binder#cobol_object#files_cobol_ZOT999
+[up-to-date] ... //ais-cam-dot/src/dot:binder#cobol_object#files_cobol_DOTDUMP
+[up-to-date] ... //ais-cam-dot/src/dot:binder#cobol_object#files_cobol_DOTSAV
+[up-to-date] ... //ais-cam-dot/src/dot:binder#cobol_object#files_cobol_DOTDDA
+[failed] ... //ais-cam-dot/src/dot:cobol_object#files_cobol_DOT500
+
++-------------------------------+
+| ... failing rules summary ... |
++-------------------------------+
+
+------//ais-cam-dot/src/dot:cobol_object#files_cobol_DOT500 at ais-cam-dot/src/dot/BUILDZ.js:74 ... process failed - rc: 12
+
++-------------------------------------------------------------------------------------------+
+| //ais-cam-dot/src/dot:cobol_object#files_cobol_DOT500 at ais-cam-dot/src/dot/BUILDZ.js:74 |
+| rc: 12, process stderr                                                                    |
++-------------------------------------------------------------------------------------------+
+
+12.47.40 STC00576  IEF764I USER9 STEP1 DFHAPIR DFHEIMOD PARMLIB READ FAILED - MEMBER DFHAPIR NOT FOUND.
+12.47.40 STC00576  IEF764I USER9 STEP1 DFHAPIR DFHEIMOD PARMLIB READ FAILED - MEMBER DFHAPIR NOT FOUND.
+
++-------------------------------------------------------------------------------------------+
+| //ais-cam-dot/src/dot:cobol_object#files_cobol_DOT500 at ais-cam-dot/src/dot/BUILDZ.js:74 |
+| rc: 12, @bldz//mvs/pgm:IGYCRCTL: SYSTERM output                                           |
++-------------------------------------------------------------------------------------------+
+
+PP 5655-EC6 IBM Enterprise COBOL for z/OS  6.4.0 in progress ...               
+ LineID  Message code  Message text                                             
+    180  IGYDS0002-E   A character other than "*", "D", "/" or "-" was found in 
+                       column 7.  A blank was assumed.                          
+    180  IGYDS0009-E   "PY" should not begin in area "A".  It was processed as  
+                       if found in area "B".                                    
+    180  IGYDS1089-S   "PY" was invalid.  Scanning was resumed at the next area 
+                       "A" item, level-number, or the start of the next clause. 
+    180  IGYDS0009-E   "DOTCONS" should not begin in area "A".  It was processed
+                       as if found in area "B".                                 
+   1490  IGYPS2121-S   "DOT-INSERT-DETAIL" was not defined as a data-name.  The 
+                       statement was discarded.                                 
+   1529  IGYPS2121-S   "DOT-RETURN-HEADER" was not defined as a data-name.  The 
+                       statement was discarded.                                 
+   1530  IGYPS2121-S   "DOT-AFTER-CUTOFF" was not defined as a data-name.  The  
+                       statement was discarded.                                 
+                       Same message on line:   1566   1817                      
+   1565  IGYPS2121-S   "DOT-SET-RETRIEVAL" was not defined as a data-name.  The 
+                       statement was discarded.                                 
+   1581  IGYPS2121-S   "DOT-END-RETRIEVAL" was not defined as a data-name.  The 
+                       statement was discarded.                                 
+   1596  IGYPS2121-S   "DOT-DELETE-DETAIL" was not defined as a data-name.  The 
+                       statement was discarded.                                 
+   1621  IGYPS2121-S   "DOT-RETURN-KEYS" was not defined as a data-name.  The   
+                       statement was discarded.                                 
+   1816  IGYPS2121-S   "DOT-RETURN-DETAIL" was not defined as a data-name.  The 
+                       statement was discarded.                                 
+   1919  IGYPS2121-S   "DOT-MASTER-TERMINAL" was not defined as a data-name.    
+                       The statement was discarded.                             
+   1931  IGYPS2121-S   "DOT-SERVICE-PROGRAM" was not defined as a data-name.    
+                       The statement was discarded.                             
+                       Same message on line:   1942                             
+   1932  IGYPS2121-S   "DOT-FILE-NAME" was not defined as a data-name.  The     
+                       statement was discarded.                                 
+   1980  IGYPS2121-S   "DOT-USER-PROGRAM" was not defined as a data-name.  The  
+                       statement was discarded.                                 
+                       Same message on line:   1989                             
+ Messages    Total    Informational    Warning    Error    Severe    Terminating
+ Printed:      20                                    3        17                
+ End of compilation 1,  program DOT500,  highest severity 12.                   
+ Return code 12
+
++-----------------------------------------------------------------------+
+| ... build failed ... executed 1, up-to-date 37, succeeded 0, failed 1 |
++-----------------------------------------------------------------------+
+
+exit code: 12
+
+back-syncing [build:list] [/u/users/USER/devops-ai-demo/build-out/] to [listings/]
+download for [text] file group
+sync: ais-cam-dot/src/dot/files/cobol/DOT500.list
+packaging remote files ... done.
+downloading/unpacking package ... done.
+back sync done!
+[task build:dot] failed (Build only dbs application located in /ais-cam-dot/src/dot/ directory)
+critical: [task 'build:dot' error] localcmd: syncz --id-match build -a "build:src::INTERTEST= tools/TeamBuild/bldz -p1 dot", error: sh exited with non-zero code: 12

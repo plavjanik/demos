@@ -1,0 +1,307 @@
+.compare-scene {
+  width: 100%;
+  height: 100%;
+  background: #0b0b0d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  padding: 18px 70px;
+  overflow: hidden;
+}
+
+.compare-header {
+  width: 100%;
+  max-width: 1720px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.compare-title {
+  font-size: 28px;
+  color: #fff;
+  margin: 0;
+}
+
+.compare-headline {
+  text-align: right;
+}
+
+.compare-headline-value {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--accent-amber);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.compare-headline-label {
+  font-size: 13px;
+  color: var(--vsc-fg-muted);
+  margin-top: 2px;
+}
+
+.compare-bars {
+  width: 100%;
+  max-width: 1720px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.compare-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  position: relative;
+}
+
+.compare-row-label {
+  width: 300px;
+  flex: none;
+  font-size: 14px;
+  color: var(--vsc-fg);
+}
+
+.compare-track {
+  flex: 1;
+  position: relative;
+  height: 32px;
+}
+
+.compare-bar-toscale,
+.compare-bar-stack {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  min-width: 3px;
+}
+
+/* Same segments/colours/proportions as .compare-zoom-seg below, just too
+   narrow (a few px each on a shared axis with the manual bars) to hold a
+   label of their own — the zoom bar above carries the text. */
+.compare-seg-toscale {
+  height: 100%;
+  /* Without a floor, a group under ~2px (e.g. "tests"/"read" at 2% of a
+     ~60px bar) rounds to 0 and vanishes, so the small bar starts with a
+     different colour than the zoom bar above it; flex-shrink:0 keeps the
+     floor from being shrunk back away when the segments' widths then sum
+     to a few px over the bar's own width (.compare-bar-toscale's
+     overflow:hidden just clips that excess off the right edge). */
+  min-width: 2px;
+  flex-shrink: 0;
+}
+
+.compare-seg {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.compare-seg span {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 0 6px;
+}
+
+.compare-seg-mechanics {
+  background: var(--accent-blue);
+}
+.compare-seg-mechanics span {
+  color: #06121e;
+}
+
+.compare-seg-typing {
+  background-color: var(--accent-amber);
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0.28) 0px,
+    rgba(0, 0, 0, 0.28) 4px,
+    transparent 4px,
+    transparent 9px
+  );
+}
+.compare-seg-typing span {
+  color: #241a00;
+}
+
+.compare-seg-thinking {
+  background-color: rgba(188, 140, 255, 0.35);
+  border: 1px dashed rgba(188, 140, 255, 0.85);
+  box-sizing: border-box;
+}
+.compare-seg-thinking span {
+  color: #efe6ff;
+}
+
+.compare-total-label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--vsc-fg);
+  white-space: nowrap;
+}
+
+.compare-row-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 316px = .compare-row-label's 300px + .compare-row's 16px gap — lines the
+   zoom bar and the funnel below it up with the to-scale track underneath,
+   the same offset .compare-track starts at. */
+.compare-zoom {
+  margin: 0 0 6px 316px;
+}
+
+.compare-zoom-label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 3px;
+}
+
+.compare-zoom-label {
+  font-size: 11px;
+  color: var(--vsc-fg-muted);
+}
+
+.compare-zoom-note {
+  font-size: 11px;
+  font-style: italic;
+  color: var(--vsc-fg-muted);
+  white-space: nowrap;
+}
+
+.compare-zoom-bar {
+  display: flex;
+  height: 30px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.compare-zoom-seg {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #0b0b0d;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+/* The funnel between the zoom bar and the to-scale bar: an SVG spanning
+   the same 316px-offset track width, its four corners placed purely from
+   widthPct (CompareScene.tsx) — left edge vertical (both bars start at the
+   track's left edge), right edge fanning out to the zoom bar's full width.
+   56px tall (not the ~20px gap a plain margin would leave) so the fan
+   actually reads as a trapezoid instead of collapsing into one dashed
+   line — preserveAspectRatio="none" on the SVG lets the height grow
+   without touching the widthPct-derived x coordinates. */
+.compare-zoom-funnel {
+  display: block;
+  width: calc(100% - 316px);
+  height: 56px;
+  margin-left: 316px;
+}
+
+.compare-zoom-funnel-fill {
+  fill: rgba(210, 153, 34, 0.14);
+  stroke: none;
+}
+
+.compare-zoom-funnel-dash {
+  stroke: rgba(210, 153, 34, 0.65);
+  stroke-width: 2;
+  stroke-dasharray: 6 5;
+  vector-effect: non-scaling-stroke;
+}
+
+.compare-row-axis {
+  margin-top: 10px;
+}
+
+.compare-axis {
+  position: relative;
+  height: 18px;
+  border-top: 1px solid #2b2b2b;
+}
+
+.compare-axis-tick {
+  position: absolute;
+  top: 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--vsc-fg-muted);
+  transform: translateX(-50%);
+  padding-top: 4px;
+}
+
+/* One row under the axis: which colour is which. Small and muted — a
+   caption for the bars above, not a headline — and wraps at narrow widths
+   instead of overflowing the stage. */
+.compare-legend {
+  width: 100%;
+  max-width: 1720px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  font-size: 12px;
+  color: var(--vsc-fg-muted);
+}
+
+.compare-legend-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.compare-legend-heading {
+  font-weight: 700;
+  color: var(--vsc-fg);
+}
+
+.compare-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.compare-legend-swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  flex: none;
+}
+
+/* The takeaway sentence under the bars — same amber-callout visual
+   language as NarrationCallout.tsx (rounded, translucent dark card, amber
+   left rule), but a permanent part of THIS slide's own content, not a
+   toggleable presenter cue: it stays even with narration off. */
+.compare-takeaway {
+  width: 100%;
+  max-width: 1720px;
+  background: rgba(210, 153, 34, 0.1);
+  border-left: 4px solid var(--accent-amber);
+  border-radius: 10px;
+  padding: 14px 20px;
+  font-size: 20px;
+  color: var(--accent-amber);
+  font-weight: 600;
+}

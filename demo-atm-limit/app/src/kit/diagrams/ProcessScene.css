@@ -1,0 +1,310 @@
+.proc-scene {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--stage-bg);
+  padding: 28px 36px 0;
+}
+
+.proc-halves {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  min-height: 0;
+}
+
+.proc-divider {
+  width: 2px;
+  background: var(--vsc-border);
+  flex: none;
+}
+
+.proc-diagram {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.proc-diagram-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 10px;
+  flex: none;
+}
+
+.proc-diagram-lanes {
+  position: relative;
+  flex: 1;
+  display: flex;
+  gap: 28px;
+  justify-content: center;
+  min-height: 0;
+}
+
+/* ProcessDiagram.links — one overlay spanning every lane (a link always
+   crosses lanes), see ProcessScene.tsx's useCrossLaneLinks/CrossLaneLinks. */
+.proc-links {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  opacity: 0.35;
+}
+
+.proc-lane {
+  position: relative;
+  flex: 0 1 260px;
+  min-width: 0;
+  padding-right: 12px;
+  display: flex;
+  flex-direction: column;
+}
+/* Only a lane that actually HAS loop-back arcs reserves the extra room for
+   the bulge(s) (staggered by index, ProcessScene.tsx) and their label
+   pills — every other lane (Developer, Host) keeps its full width for node
+   text. Sized for 2 staggered loop-backs (the most this story ever draws
+   in one lane): 46 + 1*34 = 80px bulge + ~70px for the widest label. */
+.proc-lane-has-arcs {
+  padding-right: 150px;
+}
+/* The lone lane in a single-lane diagram ("without an agent") has the whole
+   diagram width to itself — wider boxes than the 3-lane diagram needs. */
+.proc-lane-wide {
+  flex-basis: 380px;
+}
+
+.proc-lane-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+  margin-bottom: 12px;
+  color: var(--vsc-fg-muted);
+}
+.proc-lane-header .codicon {
+  font-size: 18px;
+  color: var(--accent-blue);
+}
+.proc-lane-label {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.proc-lane-nodes {
+  /* Fills the lane's full (stretched) height — see .proc-arrow-down below,
+     which is what actually absorbs the extra space so the whole column
+     (not just the last node) spreads across it, per "use ~90% of the
+     height". */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-height: 0;
+}
+
+.proc-node {
+  background: #17181b;
+  border: 2px solid #3a3d42;
+  border-radius: 8px;
+  padding: 7px 12px;
+  text-align: center;
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s ease;
+  flex: none;
+}
+.proc-node.shown {
+  opacity: 1;
+  transform: translateY(0);
+}
+/* The per-node time estimate (steps.ts, derived from manualTimings.ts) —
+   small and grey so it reads as a footnote to the label, never competes
+   with it; monospace so the numbers themselves line up down a lane. */
+.proc-node-time {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--vsc-fg-muted);
+  margin-top: 2px;
+}
+.proc-node-decision .proc-node-time {
+  color: var(--accent-amber);
+  opacity: 0.85;
+}
+/* A decision node ("RC 12?") reads differently from a plain action box:
+   pill-shaped, amber border — the same accent as the loop-back arrows it
+   feeds, so the "this can send you back" relationship reads visually. */
+.proc-node-decision {
+  border-radius: 999px;
+  border-color: var(--accent-amber);
+  color: var(--accent-amber);
+}
+
+.proc-arrow-down {
+  align-self: center;
+  width: 2px;
+  /* Grows to fill whatever vertical space the lane has beyond its nodes'
+     own natural height — this is what spreads a short lane (Host, 3 nodes)
+     across the same height as a long one (Agent, 10 nodes) instead of
+     leaving it clumped in the top ~70%. */
+  flex: 1;
+  min-height: 20px;
+  background: #5a5d62;
+  position: relative;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.proc-arrow-down.shown {
+  opacity: 1;
+}
+.proc-arrow-down::after {
+  content: "";
+  position: absolute;
+  left: -4px;
+  bottom: -1px;
+  border: 5px solid transparent;
+  border-top-color: #5a5d62;
+}
+
+/* lane.chain:false (a lane whose items don't run as a pipeline, e.g. MCP
+   tools) — keeps the element (and the vertical space it fills) but drops
+   its visible line/arrowhead; ProcessDiagram.links draws what actually
+   calls what instead. */
+.proc-arrow-down.proc-arrow-hidden,
+.proc-arrow-down.proc-arrow-hidden::after {
+  background: transparent;
+  border-color: transparent;
+}
+
+/* ProcessDiagram.sequence's grid layout (ProcessScene.tsx's Lane, the
+   sequenceLayout branch): replaces .proc-lane-nodes' flex-column-of-nodes
+   with one CSS grid row per diagram row, all `minmax(0, 1fr)` so every
+   lane in the diagram divides the SAME stretched height into the SAME
+   number of equal rows — cross-lane row alignment falls out of that
+   equality, no shared/subgrid needed. Each node's own `gridRow` (inline
+   style, from ProcessRowPlacement) places it in its row; a lane with
+   nothing that row simply leaves the row empty. `minmax(0, …)` (not plain
+   `1fr`, whose floor is the content's own size) lets a row shrink below
+   an overlong label rather than growing every row after it and breaking
+   the alignment — the tradeoff is a label that's too long for its row
+   clipping instead; see ProcessScene.tsx's own steps.ts data for the
+   longest labels this was sized against. */
+.proc-lane-grid {
+  position: relative;
+  flex: 1;
+  display: grid;
+  align-items: center;
+  min-height: 0;
+}
+
+/* Sequence-mode nodes get one size step down from the default .proc-node
+   (15 rows share the vertical space a 9-node lane had before) — scoped to
+   .proc-lane-grid so the non-sequence left diagram (and DOGECICS, which
+   never sets `sequence`) keeps its current look untouched. */
+.proc-lane-grid .proc-node {
+  padding: 4px 8px;
+  font-size: 13px;
+}
+.proc-lane-grid .proc-node-time {
+  font-size: 10px;
+  margin-top: 1px;
+}
+
+/* Chain connectors between two of a lane's OWN sequence-mode nodes
+   (useChainConnectors) — measured, not CSS-flex-filled, since a gap
+   between them can be several empty rows wide. Same visual weight as the
+   non-sequence .proc-arrow-down it replaces (#5a5d62), not the loop-back
+   arcs' amber. */
+.proc-chain-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.proc-arcs {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* An arc only mounts once BOTH its ends are revealed (useLoopbackArcs'
+   ".shown" check) — a plain opacity transition on mount races the browser's
+   first paint (the element can paint at its final opacity before the
+   transition is picked up), so this uses a keyframe animation instead,
+   which always starts from the `from` state regardless of paint timing. */
+@keyframes proc-arc-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.proc-arcs path {
+  animation: proc-arc-fade-in 0.3s ease;
+}
+
+/* The loop-back's own small label, set on the curve (ProcessScene.tsx
+   positions it at the arc's bulge, vertically centered on the curve). */
+.proc-arc-label {
+  position: absolute;
+  transform: translate(6px, -50%);
+  background: var(--stage-bg);
+  color: var(--accent-amber);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  padding: 1px 4px;
+  pointer-events: none;
+  animation: proc-arc-fade-in 0.3s ease;
+}
+
+/* The big total/callout under each diagram (steps.ts computes the text from
+   manualTimings.ts / agentLoopTiming.ts — never hand-typed). */
+.proc-summary {
+  flex: none;
+  text-align: center;
+  padding: 10px 8px 4px;
+  border-top: 1px solid var(--vsc-border);
+  margin-top: 10px;
+}
+.proc-summary-main {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+}
+.proc-summary-sub {
+  margin-top: 3px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--vsc-fg-muted);
+}
+.proc-summary-accent .proc-summary-main {
+  color: var(--accent-amber);
+}
+.proc-summary-accent .proc-summary-sub {
+  color: var(--accent-amber);
+  opacity: 0.8;
+}

@@ -1,0 +1,5 @@
+open: 21646ms
+Balance before: 200,050.00000000 DOGE
+withdraw: 334ms
+ACCEPTED: SENDING 0.5               DOGE
+close: 2827ms

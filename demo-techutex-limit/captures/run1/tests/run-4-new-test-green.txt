@@ -1,0 +1,21 @@
+$ node tests/dot.dailyLimit.test.js 50.00
+$ hb script run postDebit amount=50.00
+{
+  "test": "DOT_DAILY_LIMIT",
+  "status": "REJECTED",
+  "input": {
+    "bank": "001",
+    "accountType": "DD",
+    "accountKey": "DEMO",
+    "service": "TPS",
+    "tranCode": "001",
+    "processDate": "20260925",
+    "amount": "50.00"
+  },
+  "screen": {
+    "errorMessage": "ERROR: DAILY DEBIT LIMIT EXCEEDED",
+    "userMessage": "CORRECT AND RE-ENTER INPUT FIELD"
+  }
+}
+PASS: debit was rejected for exceeding the daily debit ceiling
+exit=0

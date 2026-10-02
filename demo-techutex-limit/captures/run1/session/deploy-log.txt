@@ -1,0 +1,31 @@
+[task deploy] executing (Deploy last built binaries to CICS region on the same lpar/zdt)
+connecting USER@testsys.broadcom.net:22...
+
+syncing [build:scripts] [./] to [/u/users/USER/devops-ai-demo/]
+up to date.
+
+extattr +a tools/TeamBuild/bldz && CICS_REGION=CICSTEST tools/TeamBuild/bldz script tools/deploy/deploy.js
+ZOAU_HOME=/sys/zoau
+PYTHON_HOME=/usr/lpp/IBM/cyp/pyz
+PYTHONPATH=/sys/zoau/lib
+NODE_HOME=/usr/lpp/IBM/cnj/IBM/node-v18.20.7-os390-s390x-202503251523/bin
+PATH=/usr/lpp/IBM/cnj/IBM/node-v18.20.7-os390-s390x-202503251523/bin:/usr/lpp/IBM/zoautil/env/bin:/sys/zoau/bin:/usr/lpp/IBM/cyp/pyz/bin:/usr/lpp/java/current/bin:/bin:.:/u/users/oem/Rocket/bin
+CLASSPATH=/sys/zoau/lib/*:/usr/lpp/IBM/cyp/pyz/lib/*:
+LIBPATH=/sys/zoau/lib:/usr/lpp/IBM/cyp/pyz/lib:/lib:/usr/lib:.
+MANPATH=/sys/zoau/docs/%L:/usr/man/%L
+JAVA_HOME=/usr/lpp/java/current
+
+AIS: obtaining artifacts...
+MAIS: no artifacts found    
+
+CAM: obtaining artifacts...
+MCAM: no artifacts found    
+
+DOT: obtaining artifacts...
+MDOT: deploying artifacts...
+'build-out/ais-cam-dot/src/dot/bin/DOT500' -> 'USER.CICS.BIZAPP.DOT.LOAD(DOT500)'... 
+M[92C [32mdone![0m
+CICSTEST: DOT500 phasein... 
+M[28C [32mdone![0m
+exit code: 0
+[task deploy] success (Deploy last built binaries to CICS region on the same lpar/zdt)

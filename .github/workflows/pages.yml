@@ -1,0 +1,53 @@
+# Builds the demo app and publishes it to GitHub Pages on every push to main.
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: demo-atm-limit/app
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: demo-atm-limit/app/package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - run: npx vitest run
+      - name: Every bundle an entry page references must exist
+        run: |
+          missing=0
+          for f in $(grep -oh 'assets/[^"]*' dist/*.html | sort -u); do
+            [ -f "dist/$f" ] || { echo "MISSING $f"; missing=1; }
+          done
+          exit $missing
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: demo-atm-limit/app/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

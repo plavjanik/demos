@@ -1,0 +1,42 @@
+.vsc-titlebar {
+  height: 36px;
+  background: var(--vsc-bg-titlebar);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--vsc-border);
+  flex: none;
+}
+
+.vsc-traffic-lights {
+  display: flex;
+  gap: 8px;
+  width: 90px;
+}
+
+.tl {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  display: inline-block;
+}
+.tl-red {
+  background: #ff5f57;
+}
+.tl-yellow {
+  background: #febc2e;
+}
+.tl-green {
+  background: #28c840;
+}
+
+.vsc-titlebar-title {
+  flex: 1;
+  text-align: center;
+  font-size: 13px;
+  color: var(--vsc-fg-muted);
+}
+
+.vsc-titlebar-spacer {
+  width: 90px;
+}

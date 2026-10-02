@@ -1,0 +1,33 @@
+$ node hb-cli/bin/hb.js script list
+{"type":"File","name":"getCheckingBalances", ...}
+{"type":"Script","name":"postDebit.hbx", ...}
+{"type":"Script","name":"getCheckingBalances.hbx", ...}
+[exit 0]
+
+$ node hb-cli/bin/hb.js script run postDebit amount=1.00 --raw
+{"test":"DOT_DAILY_LIMIT","status":"ACCEPTED", ... "userMessage":"TRANSACTION INSERTED SUCCESSFULLY"}
+[exit 0]
+
+$ node tests/dot.regression.test.js
+$ hb script run getCheckingBalances account=101123456
+{"status":"SUCCESS", ... "customerName":"WILLIAMS ROBT" ...}
+PASS: basic account inquiry returns SUCCESS
+[exit 0]
+
+$ node tests/dot.dailyLimit.test.js 50.00      # BEFORE the change
+$ hb script run postDebit amount=50.00
+{"test":"DOT_DAILY_LIMIT","status":"ACCEPTED", ...}
+FAIL: expected status REJECTED with "LIMIT EXCEEDED", got status=ACCEPTED
+[exit 1]
+
+$ node tests/dot.dailyLimit.test.js 50.00      # AFTER the change + deploy
+$ hb script run postDebit amount=50.00
+{"test":"DOT_DAILY_LIMIT","status":"REJECTED","screen":{"errorMessage":"ERROR: DAILY DEBIT LIMIT EXCEEDED","userMessage":"CORRECT AND RE-ENTER INPUT FIELD"}}
+PASS: debit was rejected for exceeding the daily debit ceiling
+[exit 0]
+
+$ node tests/dot.regression.test.js            # AFTER the change + deploy
+$ hb script run getCheckingBalances account=101123456
+{"status":"SUCCESS", ...}
+PASS: basic account inquiry returns SUCCESS
+[exit 0]

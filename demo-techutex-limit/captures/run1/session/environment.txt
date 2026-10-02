@@ -1,0 +1,19 @@
+Claude Code CLI: 2.1.282
+Model: claude-sonnet-5 ("Sonnet 5"), session default effort/thinking (not pinned per-turn)
+Extension: none -- headless CLI session, no VS Code / Claude Code extension involved
+Permission mode: default, with per-tool rules in .claude/settings.local.json
+  (a Bash rule for `syncz task build:dot`/`deploy` was pre-approved; no
+  interactive permission prompts were shown to capture for section 8)
+
+hb CLI (ais-cam-dot/hostBridge/hb-cli): 1.0.0
+Endevor MCP server (code4z-cowboys, from the code4z-gen-ai monorepo): 0.10.2-develop
+  endpoint: http://localhost:8080/EndevorService/api/v2 (mock EWS server,
+  version "2.22" per mock-ews-config.json), datasource COWBOYS
+
+z/OS + CICS on CICSTEST (testsys.broadcom.net):
+  CICS TS 6.1, RSU2509 (cics_hlq=CICSSYS.CTS610.GA.CICS.RSU2509)
+Enterprise COBOL for z/OS: 6.4.0 (PP 5655-EC6, from the compile listing headers
+  in listings/generate-1/2/3-DOT500-build.txt)
+
+Node.js (client side, running hb-cli/tests): v24.13.1
+syncz (build/deploy client): v1.22.1

@@ -1,0 +1,24 @@
+{"stage": "start", "t": "2026-09-24T21:03:55Z", "epochMs": 1790283835659, "note": "prompt received"}
+{"stage": "tests-regression-written", "t": "2026-09-24T21:04:41Z", "epochMs": 1790283881196, "note": "test/atm.test.ts: 4 characterization tests"}
+{"stage": "tests-regression-run", "t": "2026-09-24T21:05:07Z", "epochMs": 1790283907359, "note": "vitest run 1"}
+{"stage": "tests-limit-written", "t": "2026-09-24T21:05:28Z", "epochMs": 1790283928593, "note": "4 limit tests appended"}
+{"stage": "tests-limit-run", "t": "2026-09-24T21:05:55Z", "epochMs": 1790283955309, "note": "vitest run 2 (expected red)"}
+{"stage": "search", "t": "2026-09-24T21:06:26Z", "epochMs": 1790283986860, "note": "grep located MOVE-SOME-DOGE in DOGESEND.cbl"}
+{"stage": "plan", "t": "2026-09-24T21:06:26Z", "epochMs": 1790283986907, "note": "plan.md written"}
+{"stage": "edit-v1", "t": "2026-09-24T21:08:22Z", "epochMs": 1790284102235, "note": "DOGESEND.cbl: limit tracker + amount parse"}
+{"stage": "jcl-written", "t": "2026-09-24T21:08:52Z", "epochMs": 1790284132784, "note": "jcl/COMPSEND.jcl (DOGESEND only)"}
+{"stage": "host-logon", "t": "2026-09-24T21:08:58Z", "epochMs": 1790284138497, "note": "CLI session dev at READY"}
+{"stage": "upload", "t": "2026-09-24T21:09:00Z", "epochMs": 1790284140017, "note": "DOGESEND + COMPSEND uploaded"}
+{"stage": "submit", "t": "2026-09-24T21:09:00Z", "epochMs": 1790284140601, "note": "COMPSEND submitted"}
+{"stage": "job-done", "t": "2026-09-24T21:09:06Z", "epochMs": 1790284146882, "note": " JOB DOGECOB(JOB00037) ON OUTPUT QUEUE PWL194I: tso: 'STATUS DOGECOB' \u2014 2 row(s), 1 page(s), 0.0s, ended at READY "}
+{"stage": "job-output", "t": "2026-09-24T21:09:08Z", "epochMs": 1790284148022, "note": "OUTLIST fetched"}
+{"stage": "job-output", "t": "2026-09-24T21:10:23Z", "epochMs": 1790284223066, "note": "OUTLIST JOB00037 fetched"}
+{"stage": "edit-v2", "t": "2026-09-24T21:12:13Z", "epochMs": 1790284333336, "note": "compile errors: UNSTRING/INSPECT unknown to this compiler; hand parse + EXAMINE"}
+{"stage": "submit-2", "t": "2026-09-24T21:12:14Z", "epochMs": 1790284334759, "note": "COMPSEND resubmitted"}
+{"stage": "job-done-2", "t": "2026-09-24T21:12:26Z", "epochMs": 1790284346607, "note": "JOB00037 on output queue"}
+{"stage": "job-output-2", "t": "2026-09-24T21:12:27Z", "epochMs": 1790284347820, "note": "OUTLIST JOB00037 fetched"}
+{"stage": "job-output-2", "t": "2026-09-24T21:12:47Z", "epochMs": 1790284367103, "note": "OUTLIST JOB00038 fetched (RC 4)"}
+{"stage": "host-logoff", "t": "2026-09-24T21:12:52Z", "epochMs": 1790284372497, "note": "dev session disconnected"}
+{"stage": "tests-run-3", "t": "2026-09-24T21:13:19Z", "epochMs": 1790284399147, "note": "vitest run 3 after v2"}
+{"stage": "atm-after-50000", "t": "2026-09-24T21:14:46Z", "epochMs": 1790284486192, "note": ""}
+{"stage": "atm-after-0.5", "t": "2026-09-24T21:15:11Z", "epochMs": 1790284511067, "note": "ACCEPTED: SENDING 0.5               DOGE"}

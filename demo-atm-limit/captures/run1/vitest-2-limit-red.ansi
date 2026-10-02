@@ -1,0 +1,60 @@
+
+ RUN  v4.1.11 /work/demo-atm-limit
+
+ ✓ test/atm.regression.test.ts > existing behaviour > shows the account balance 39ms
+ ✓ test/atm.regression.test.ts > existing behaviour > lists the recent transactions with date, label, sign and amount 50ms
+ ✓ test/atm.regression.test.ts > existing behaviour > rejects a send to the placeholder address 367ms
+ ✓ test/atm.regression.test.ts > existing behaviour > sends an ordinary amount 261ms
+ × test/atm.limit.test.ts > daily withdrawal limit (10,000 DOGE per day) > refuses a single withdrawal over the limit 529ms
+   → expected true to be false // Object.is equality
+ ✓ test/atm.limit.test.ts > daily withdrawal limit (10,000 DOGE per day) > still accepts an amount under the limit 227ms
+ ✓ test/atm.limit.test.ts > daily withdrawal limit (10,000 DOGE per day) > accepts an amount with decimals 154ms
+ × test/atm.limit.test.ts > daily withdrawal limit (10,000 DOGE per day) > counts withdrawals cumulatively within the day 192ms
+   → expected true to be false // Object.is equality
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 2 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  test/atm.limit.test.ts > daily withdrawal limit (10,000 DOGE per day) > refuses a single withdrawal over the limit
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ test/atm.limit.test.ts:22:29
+     20|   test("refuses a single withdrawal over the limit", async () => {
+     21|     const result = await atm.withdraw("10001");
+     22|     expect(result.accepted).toBe(false);
+       |                             ^
+     23|     expect(result.message).toMatch(/DAILY LIMIT/);
+     24|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯
+
+ FAIL  test/atm.limit.test.ts > daily withdrawal limit (10,000 DOGE per day) > counts withdrawals cumulatively within the day
+AssertionError: expected true to be false // Object.is equality
+
+- Expected
++ Received
+
+- false
++ true
+
+ ❯ test/atm.limit.test.ts:39:29
+     37|     // 5 + 100 + 999.5 DOGE have been sent so far in this run; 9,000 m…
+     38|     const result = await atm.withdraw("9000");
+     39|     expect(result.accepted).toBe(false);
+       |                             ^
+     40|     expect(result.message).toMatch(/DAILY LIMIT/);
+     41|   });
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯
+
+
+ Test Files  1 failed | 1 passed (2)
+      Tests  2 failed | 6 passed (8)
+   Start at  06:36:10
+   Duration  67.52s (transform 9.80s, setup 0ms, import 12.73s, tests 51.78s, environment 0ms)
+

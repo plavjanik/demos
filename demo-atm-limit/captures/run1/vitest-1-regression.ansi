@@ -1,0 +1,13 @@
+
+ RUN  v4.1.11 /work/demo-atm-limit
+
+ ✓ test/atm.regression.test.ts > existing behaviour > shows the account balance 7ms
+ ✓ test/atm.regression.test.ts > existing behaviour > lists the recent transactions with date, label, sign and amount 12ms
+ ✓ test/atm.regression.test.ts > existing behaviour > rejects a send to the placeholder address 308ms
+ ✓ test/atm.regression.test.ts > existing behaviour > sends an ordinary amount 281ms
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  06:35:22
+   Duration  40.32s (transform 12.16s, setup 0ms, import 13.42s, tests 25.12s, environment 0ms)
+

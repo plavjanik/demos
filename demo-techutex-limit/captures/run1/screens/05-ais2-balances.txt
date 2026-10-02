@@ -1,0 +1,28 @@
+    0         1         2         3         4         5         6         7         
+    01234567890123456789012345678901234567890123456789012345678901234567890123456789
+00:  BANK: 001                ACCOUNT INFORMATION SERVICES               2026-09-25 
+01:                                 ACCOUNT BALANCES                                
+02:                                                                                 
+03:  DD: 1-01-123456              SNM: WILLIAMS ROBT          FILE DATE: 1994-01-05 
+04:                                                                                 
+05:  CURRENT BALANCE:       5,000.00               ACCOUNT BALANCE:       5,374.00- 
+06:                                                                                 
+07:    - 1 DAY FLOAT:            .00                 + OD LIMIT:               .00  
+08:    - 2 DAY FLOAT:            .00                 + CREDIT LINE:            .00  
+09:    - 3 DAY FLOAT:            .00                 - LINE PAYOFF:            .00  
+10:    - 4 DAY FLOAT:            .00                 + OTHER FUNDS:       5,350.00  
+11:    - 5 DAY FLOAT:            .00                 + MEMO CREDIT:         900.00  
+12:    - OTHER FLOAT:            .00                 - MEMO DEBITS:            .00  
+13:                   --------------                                --------------  
+14:  COLLECTED FUNDS:       5,000.00               AVAIL. BALANCE:          876.00  
+15:                                                                                 
+16:    + DEP CREDITS:          40.00               ODP ID: SS 11-01-123456          
+17:    - WITHDRAWALS:      10,114.00               ODP TSF LIMIT:         5,350.00  
+18:    - OTHER HOLDS:         300.00               ODP TSF ONLINE:             .00  
+19:                   --------------                                                
+20:  ACCOUNT BALANCE:       5,374.00-              LINE PAST DUE:              .00  
+21:                                                                                 
+22:                                                                                 
+23:  CONTINUE: F1 = EXIT   F2 = SNAP   F3 = INT.   F4 = HLDS   F5 = DEPS   F6 = TRXS
+
+"BANK: 001 ACCOUNT INFORMATION SERVICES 2026-09-25" | cursor=(0,0) | fields=0 | keyboard=UNLOCKED

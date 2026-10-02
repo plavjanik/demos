@@ -1,0 +1,662 @@
+.atm-scene {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, #1a1a1e 0%, #0b0b0d 70%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  padding: 16px 60px;
+}
+
+.atm-layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  width: 100%;
+}
+
+.atm-machine-wrap {
+  flex: none;
+  width: 55%;
+  max-width: 940px;
+  display: flex;
+  justify-content: center;
+}
+
+.atm-layout.split .atm-machine-wrap {
+  width: 48%;
+}
+
+.atm-machine-hotspot,
+.atm-3270-hotspot {
+  width: 100%;
+}
+
+/* ============================================================
+ * Skins (atmSkins.ts): AtmScene's markup never changes between
+ * "doge" / "bank" / "terminal" — every element any skin needs is
+ * always rendered. Each skin is one class on .atm-machine that
+ * redefines these custom properties (colour/font/radius) plus a
+ * handful of `display` toggles for the elements only it uses
+ * (LED, receipt slot, quick-amount tiles, the bottom action bar,
+ * the CLEAR/CANCEL keys). .atm-machine's own declarations below
+ * consume the variables; "doge" is the default values, unchanged
+ * from before skins existed.
+ * ============================================================ */
+.atm-machine {
+  --atm-bezel-bg: linear-gradient(180deg, #3a3d42 0%, #202226 100%);
+  --atm-bezel-border: 1px solid #4a4d52;
+  --atm-bezel-radius: 32px;
+  --atm-topper-color: #d4af37;
+  --atm-topper-font: var(--font-ui);
+  --atm-topper-weight: 800;
+  --atm-topper-tracking: 0.1em;
+  --atm-topper-transform: none;
+  --atm-screen-bg: #001a00;
+  --atm-screen-fg: #4dff4d;
+  --atm-screen-muted-opacity: 0.65;
+  --atm-screen-font: var(--font-mono);
+  --atm-screen-border: 11px solid #0a0a0a;
+  --atm-screen-radius: 11px;
+  --atm-accept-bg: rgba(77, 255, 77, 0.15);
+  --atm-accept-fg: #6dff6d;
+  --atm-accept-border: 1px solid #2f7a2f;
+  --atm-refuse-bg: rgba(255, 77, 77, 0.15);
+  --atm-refuse-fg: #ff6d6d;
+  --atm-refuse-border: 1px solid #7a2f2f;
+  --atm-key-bg: #55585e;
+  --atm-key-fg: #f2f2f2;
+  --atm-key-radius: 9px;
+  --atm-key-confirm-bg: #2f7a2f;
+  --atm-key-confirm-fg: #d9ffd9;
+  --atm-accent: #d4af37;
+  --atm-note-bg: #c9992e;
+  --atm-note-border: #f3dfa0;
+  --atm-note-fg: #3a2600;
+
+  width: 100%;
+  max-width: 920px;
+  background: var(--atm-bezel-bg);
+  border-radius: var(--atm-bezel-radius);
+  padding: 35px;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.6),
+    inset 0 2px 0 rgba(255, 255, 255, 0.08);
+  border: var(--atm-bezel-border);
+}
+
+/* ---- skin B: a serious bank ATM ---- */
+.atm-skin-bank {
+  --atm-bezel-bg: linear-gradient(165deg, #4a4e54 0%, #2c2f33 55%, #232629 100%);
+  --atm-bezel-border: 1px solid #5a5e64;
+  --atm-bezel-radius: 14px;
+  --atm-topper-color: #dfe3e8;
+  --atm-topper-font: var(--font-ui);
+  --atm-topper-weight: 700;
+  --atm-topper-tracking: 0.04em;
+  --atm-screen-bg: linear-gradient(180deg, #eef4fb 0%, #dce7f2 100%);
+  --atm-screen-fg: #16324f;
+  --atm-screen-muted-opacity: 0.6;
+  --atm-screen-font: var(--font-ui);
+  --atm-screen-border: 10px solid #1a1c1f;
+  --atm-screen-radius: 4px;
+  --atm-accept-bg: #1f7a3d;
+  --atm-accept-fg: #eafff1;
+  --atm-accept-border: 1px solid #164f28;
+  --atm-refuse-bg: #a02020;
+  --atm-refuse-fg: #ffecec;
+  --atm-refuse-border: 1px solid #6e1414;
+  --atm-key-bg: #3d4045;
+  --atm-key-fg: #e8eaed;
+  --atm-key-radius: 6px;
+  --atm-key-confirm-bg: #1f7a3d;
+  --atm-key-confirm-fg: #eafff1;
+  --atm-accent: #3fb950;
+  --atm-note-bg: #4f5d55;
+  --atm-note-border: #9db3a4;
+  --atm-note-fg: #eef5f0;
+}
+
+/* ---- skin C: a modern touchscreen ATM ---- */
+.atm-skin-terminal {
+  --atm-bezel-bg: linear-gradient(180deg, #1c1e22 0%, #0e0f11 100%);
+  --atm-bezel-border: 1px solid #2a2d31;
+  --atm-bezel-radius: 26px;
+  --atm-topper-color: #7fd9e6;
+  --atm-topper-font: var(--font-ui);
+  --atm-topper-weight: 700;
+  --atm-topper-tracking: 0.02em;
+  --atm-screen-bg: #0a0b0d;
+  --atm-screen-fg: #f4f6f8;
+  --atm-screen-muted-opacity: 0.5;
+  --atm-screen-font: var(--font-ui);
+  --atm-screen-border: 4px solid #16181b;
+  --atm-screen-radius: 18px;
+  --atm-accept-bg: rgba(63, 185, 80, 0.16);
+  --atm-accept-fg: #6bdc85;
+  --atm-accept-border: 1px solid rgba(63, 185, 80, 0.5);
+  --atm-refuse-bg: rgba(248, 81, 73, 0.16);
+  --atm-refuse-fg: #ff8f88;
+  --atm-refuse-border: 1px solid rgba(248, 81, 73, 0.5);
+  --atm-key-bg: #55585e;
+  --atm-key-fg: #f2f2f2;
+  --atm-key-confirm-bg: #2f7a2f;
+  --atm-key-confirm-fg: #d9ffd9;
+  --atm-accent: #22d3ee;
+}
+
+/* The big fascia wordmark (AtmMachine.tsx) — reads as an ATM at a glance,
+   well before the smaller header title line below it. */
+.atm-wordmark {
+  text-align: center;
+  margin-bottom: 14px;
+}
+/* content.atm.brand.logoUrl — every skin, capped well under the fascia's
+   own width so it never competes with the wordmark text below it. */
+.atm-wordmark-logo {
+  display: block;
+  max-width: 200px;
+  max-height: 60px;
+  margin: 0 auto 8px;
+  object-fit: contain;
+}
+.atm-wordmark-small {
+  font-family: var(--atm-topper-font);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: 0.14em;
+  color: var(--atm-topper-color);
+  opacity: 0.85;
+  margin-bottom: 2px;
+}
+.atm-wordmark-big {
+  font-family: var(--atm-topper-font);
+  font-weight: 800;
+  font-size: 46px;
+  letter-spacing: 0.08em;
+  color: var(--atm-topper-color);
+}
+
+.atm-topper {
+  text-align: center;
+  color: var(--atm-topper-color);
+  font-family: var(--atm-topper-font);
+  font-weight: var(--atm-topper-weight);
+  letter-spacing: var(--atm-topper-tracking);
+  font-size: 25px;
+  margin-bottom: 19px;
+  position: relative;
+}
+
+/* The doge skin's header title text ("DOGE ATM") is byte-identical to its
+   own wordmark above — shown once, not twice. */
+.atm-skin-doge .atm-topper-title {
+  display: none;
+}
+
+/* Bank's card-slot activity LED — off (default) for every skin but bank. */
+.atm-led {
+  display: none;
+  position: absolute;
+  right: 4px;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--atm-accent);
+  box-shadow: 0 0 8px var(--atm-accent);
+}
+.atm-skin-bank .atm-led {
+  display: inline-block;
+}
+
+.atm-card-slot {
+  height: 9px;
+  width: 248px;
+  margin: 0 auto 23px;
+  background: #0a0a0a;
+  border-radius: 5px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.atm-screen {
+  background: var(--atm-screen-bg);
+  border: var(--atm-screen-border);
+  border-radius: var(--atm-screen-radius);
+  padding: 27px 30px;
+  font-family: var(--atm-screen-font);
+  font-size: 27px;
+  font-variant-numeric: tabular-nums;
+  color: var(--atm-screen-fg);
+  min-height: 220px;
+  box-shadow: inset 0 0 30px rgba(0, 255, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.atm-skin-bank .atm-screen,
+.atm-skin-terminal .atm-screen {
+  box-shadow: none;
+}
+
+.atm-screen-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.atm-screen-row.muted {
+  opacity: var(--atm-screen-muted-opacity);
+  font-size: 21px;
+}
+
+.atm-screen-row span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.amount-row {
+  font-size: 34px;
+  font-weight: 700;
+}
+
+.atm-skin-terminal .amount-row {
+  font-size: 46px;
+  font-weight: 800;
+}
+
+.atm-amount-digits {
+  white-space: nowrap;
+}
+
+/* display:inline-block is needed so motion's `y` transform can move each
+   digit (plain `inline` elements ignore CSS transform entirely) — but its
+   default `vertical-align: baseline` measured the LAST span in the run a
+   few px above its neighbours (measured: every other browser/Chromium
+   combination we tried, reproducibly, digits otherwise pixel-identical).
+   `top` anchors every digit to the same line-box edge regardless of that
+   per-glyph baseline metric. */
+.atm-amount-digits span {
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* Fintech quick-amount tiles (terminal skin only). */
+.atm-quick-tiles {
+  display: none;
+  gap: 10px;
+  margin-top: 2px;
+}
+.atm-skin-terminal .atm-quick-tiles {
+  display: flex;
+}
+.atm-quick-tile {
+  flex: 1;
+  text-align: center;
+  padding: 8px 4px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 15px;
+  color: #cfe9ee;
+}
+
+.atm-banner {
+  margin-top: 7px;
+  padding: 11px 16px;
+  border-radius: 7px;
+  font-weight: 800;
+  text-align: center;
+  font-size: 25px;
+  letter-spacing: 0.01em;
+}
+
+.atm-banner.accept {
+  background: var(--atm-accept-bg);
+  color: var(--atm-accept-fg);
+  border: var(--atm-accept-border);
+}
+
+.atm-banner.refuse {
+  background: var(--atm-refuse-bg);
+  color: var(--atm-refuse-fg);
+  border: var(--atm-refuse-border);
+}
+
+/* The raw host message — skins B/C reword the banner, this keeps the
+   demo truthful about what the host actually said (AtmScene.tsx only
+   renders it when skin.showHostFooter is set). */
+.atm-host-footer {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  opacity: 0.55;
+  text-align: center;
+}
+
+.atm-keypad {
+  margin-top: 27px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  align-items: center;
+}
+
+.atm-skin-terminal .atm-keypad {
+  display: none;
+}
+
+.atm-keypad-row {
+  display: flex;
+  gap: 11px;
+}
+
+.atm-key {
+  width: 71px;
+  height: 53px;
+  border-radius: var(--atm-key-radius, 9px);
+  background: var(--atm-key-bg);
+  color: var(--atm-key-fg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+  font-weight: 600;
+  box-shadow:
+    0 1px 0 #2a2c2f,
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.atm-key-confirm {
+  width: 237px;
+  background: var(--atm-key-confirm-bg);
+  color: var(--atm-key-confirm-fg);
+}
+
+/* Wraps the ✓ key only (not the whole row) so the cue below can anchor to
+   ITS right edge without disturbing the row's own flex sizing. */
+.atm-key-confirm-wrap {
+  position: relative;
+  display: flex;
+}
+
+/* "Press the button" cue (Petr: "make an arrow to press the button so the
+   user will not skip it"; superseded a Hotspot "arrow" label that floated
+   outside the whole machine and pointed at nowhere in particular — see
+   Hotspot.tsx). Sits INSIDE the fascia, immediately right of the ✓ key,
+   vertically centred on it. Measured at 1280x720 (bank skin, the demos'
+   shared default — DEFAULT_ATM_SKIN in skins.ts): the key's right edge
+   sits ~190 stage px from the face's own right edge, so max-width leaves
+   margin inside that budget and wraps to two lines for a long amount
+   rather than overflowing the face. */
+.atm-confirm-cue {
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 10px;
+  max-width: 165px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent-amber, #d29922);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.15;
+  white-space: normal;
+  pointer-events: none;
+  animation: atm-confirm-cue-pulse 1.6s ease-in-out infinite;
+}
+/* AtmMachine's `instant` prop (no story animation) also skips this pulse. */
+.atm-confirm-cue.instant {
+  animation: none;
+}
+.atm-confirm-cue-glyph {
+  flex: none;
+  font-size: 22px;
+  line-height: 1;
+}
+.atm-confirm-cue-text {
+  flex: 1;
+}
+
+@keyframes atm-confirm-cue-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* Bank's three coloured action keys replace the single confirm key. */
+.atm-key-cancel,
+.atm-key-clear {
+  display: none;
+  width: 100px;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+.atm-skin-bank .atm-key-cancel,
+.atm-skin-bank .atm-key-clear {
+  display: flex;
+}
+.atm-skin-bank .atm-key-confirm {
+  width: 100px;
+}
+.atm-key-cancel {
+  background: #a02020;
+  color: #ffecec;
+}
+.atm-key-clear {
+  background: #cf9a12;
+  color: #241a00;
+}
+
+/* Fintech bottom action bar (terminal skin only). */
+.atm-bottom-bar {
+  display: none;
+  margin-top: 22px;
+  justify-content: space-between;
+  padding: 0 6px;
+  font-size: 16px;
+  color: #93a4ab;
+}
+.atm-skin-terminal .atm-bottom-bar {
+  display: flex;
+}
+.atm-bottom-bar-confirm {
+  color: var(--atm-accent);
+  font-weight: 700;
+}
+
+.atm-cash-slot {
+  margin-top: 25px;
+  height: 19px;
+  width: 287px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #0a0a0a;
+  border-radius: 5px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 7px;
+  overflow: visible;
+  position: relative;
+}
+
+.atm-skin-terminal .atm-cash-slot {
+  display: none;
+}
+
+/* A small fanned stack of banknotes — NOT the old hazard-stripe rectangle
+   (Petr: "what is this yellow thingy") — sliding out of the slot on
+   accept. Recognisable as money via shape (rounded corners, a lighter
+   inner border) and content (a faint "Ð" watermark plus the amount on the
+   front note), coloured per skin via --atm-note-*. */
+.atm-note {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 84px;
+  height: 38px;
+  margin-left: -42px;
+  border-radius: 5px;
+  background: var(--atm-note-bg);
+  border: 1.5px solid var(--atm-note-border);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35);
+  transform-origin: bottom center;
+}
+.atm-note-0 {
+  left: 36%;
+}
+.atm-note-1 {
+  left: 50%;
+}
+.atm-note-2 {
+  left: 64%;
+}
+
+.atm-note-watermark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--atm-note-fg);
+  opacity: 0.3;
+}
+
+.atm-note-face {
+  position: absolute;
+  left: 6px;
+  bottom: 4px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--atm-note-fg);
+  white-space: nowrap;
+}
+
+/* The touchscreen skin has no physical cash slot — a receipt-style ticket
+   slides out of the screen area instead (same authorised-only gate). */
+.atm-receipt-ticket {
+  display: none;
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--atm-screen-fg);
+}
+.atm-skin-terminal .atm-receipt-ticket {
+  display: flex;
+}
+.atm-receipt-ticket-title {
+  font-weight: 700;
+}
+.atm-receipt-ticket-amount {
+  font-family: var(--font-mono);
+  color: var(--atm-accent);
+  font-weight: 700;
+}
+
+/* Bank's receipt slot, under the cash slot. */
+.atm-receipt-slot {
+  display: none;
+  margin: 10px auto 0;
+  height: 6px;
+  width: 200px;
+  background: #0a0a0a;
+  border-radius: 3px;
+  box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.8);
+}
+.atm-skin-bank .atm-receipt-slot {
+  display: block;
+}
+
+.atm-3270-panel {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+}
+
+.atm-3270-caption {
+  color: var(--vsc-fg-muted);
+  font-family: var(--font-mono);
+  font-size: 18px;
+  letter-spacing: 0.02em;
+}
+
+.atm-3270-note {
+  color: var(--vsc-fg-muted);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  max-width: 880px;
+  opacity: 0.8;
+}
+
+.atm-3270-svg-box {
+  width: 100%;
+  max-width: 880px;
+  aspect-ratio: 768 / 499.2;
+  background: #000;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 2px solid #2b2b2b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.atm-3270-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.atm-3270-svg svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.atm-3270-missing {
+  color: var(--vsc-fg-muted);
+  font-family: var(--font-mono);
+}
+
+.atm-diagram-strip-wrap {
+  width: 100%;
+  max-width: 1720px;
+}
+
+/* The balance re-rendered after an authorised withdrawal (AtmMachine.tsx's
+   balanceAfter) — a short flash so the eye catches that it changed. */
+@keyframes atm-balance-flash {
+  from {
+    color: var(--atm-accept-fg, #6dff6d);
+  }
+  to {
+    color: inherit;
+  }
+}
+.atm-balance-updated {
+  animation: atm-balance-flash 1.2s ease-out;
+}

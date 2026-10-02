@@ -1,0 +1,146 @@
+--- captures/run1/DOGESEND.v0.cbl	2026-09-24 23:08:22
++++ cobol/DOGESEND.cbl	2026-09-24 23:08:22
+@@ -34,6 +34,42 @@
+            05 TEXT-MESSAGE     PIC X(7)B VALUE 'SENDING'.
+            05 TEXT-AMOUNT      PIC X(17)B VALUE '00000000.00000000'.
+            05 TEXT-CURRENCY    PIC X(4) VALUE 'DOGE'.
++      * Daily withdrawal limit. The running total lives in a tracker
++      * record in DOGEVSAM under a key that sorts before every real
++      * transaction, so the balance read and the history browse skip it.
++       01  DAILY-LIMIT         PIC 9(8)V9(8) VALUE 10000.
++       01  LIMIT-KEY           PIC X(10) VALUE '0000000000'.
++       01  LIMIT-RECORD.
++           05  LDATE           PIC X(10) VALUE '0000000000'.
++           05  FILLER          PIC X VALUE SPACES.
++           05  LADDRSS         PIC X(34) VALUE 'DAILY LIMIT TRACKER'.
++           05  FILLER          PIC X VALUE SPACES.
++           05  LDAY            PIC X(10).
++           05  FILLER          PIC X VALUE SPACES.
++           05  LTOTAL.
++               10  LTOT-SIGN   PIC X VALUE '+'.
++               10  LTOT-INT    PIC 9(8).
++               10  LTOT-DOT    PIC X VALUE '.'.
++               10  LTOT-DEC    PIC 9(8).
++           05  FILLER          PIC X(5) VALUE SPACES.
++       01  LIMIT-REC-LEN       PIC S9(4) COMP VALUE 80.
++       01  LIMIT-RESP          PIC S9(4) COMP.
++           88  LIMIT-REC-FOUND VALUE 0.
++           88  LIMIT-REC-NOTFND VALUE 13.
++       01  LIMIT-FLAG          PIC X VALUE 'N'.
++           88  LIMIT-EXCEEDED  VALUE 'Y'.
++       01  ABS-TIME            PIC S9(15) COMP-3.
++       01  TODAY               PIC X(10).
++       01  AMT-INT-X           PIC X(8) JUSTIFIED RIGHT.
++       01  AMT-DEC-X           PIC X(8).
++       01  AMT-PARTS.
++           05  AMT-INT-9       PIC 9(8).
++           05  AMT-DEC-9       PIC 9(8).
++       01  AMT-NUMERIC REDEFINES AMT-PARTS PIC 9(8)V9(8).
++       01  WS-TOTAL.
++           05  WS-TOTAL-INT    PIC 9(8).
++           05  WS-TOTAL-DEC    PIC 9(8).
++       01  WS-TOTAL-NUM REDEFINES WS-TOTAL PIC 9(8)V9(8).
+        COPY DOGESN.
+        COPY DFHAID.
+        COPY DFHBMSCA.
+@@ -118,34 +154,82 @@
+            PERFORM DOGE-WTO.
+            MOVE TO-ADDRESS TO WTO-MESSAGE.
+            PERFORM DOGE-WTO.
+-      *     MOVE 'Amount:' TO WTO-MESSAGE.
+-      *     PERFORM DOGE-WTO.
+-      *     MOVE SEND-AMOUNT TO WTO-MESSAGE.
+-      *     PERFORM DOGE-WTO.
+       *    Just some simple check incase a person hits enter
+            IF TO-ADDRESS EQUAL TO 'Enter address here'
+                MOVE DFHREVRS TO PAYTOH
+                MOVE 'Invalid DOGE Coin address' TO SNDMSGO
+            ELSE
+-               MOVE SEND-AMOUNT TO TEXT-AMOUNT
+-               MOVE TOP-MESSAGE TO SNDMSGO
+-               MOVE SPACES TO AMOUNTO
++               PERFORM CHECK-DAILY-LIMIT
++               IF LIMIT-EXCEEDED
++                   MOVE DFHREVRS TO AMOUNTH
++                   MOVE 'DAILY LIMIT 10000 DOGE EXCEEDED' TO SNDMSGO
++               ELSE
++                   PERFORM RECORD-DAILY-TOTAL
++                   MOVE SEND-AMOUNT TO TEXT-AMOUNT
++                   MOVE TOP-MESSAGE TO SNDMSGO
++                   MOVE SPACES TO AMOUNTO
+ 
+-               EXEC CICS SPOOLOPEN OUTPUT
+-                   TOKEN(SYSOUT-TOKEN) CLASS('D')
+-                   USERID('*') NODE('*')
+-               END-EXEC
++                   EXEC CICS SPOOLOPEN OUTPUT
++                       TOKEN(SYSOUT-TOKEN) CLASS('D')
++                       USERID('*') NODE('*')
++                   END-EXEC
+ 
+-               EXEC CICS SPOOLWRITE
+-                   TOKEN(SYSOUT-TOKEN) FROM(TO-SEND)
+-                   FLENGTH(TO-SEND-LEN)
+-               END-EXEC
++                   EXEC CICS SPOOLWRITE
++                       TOKEN(SYSOUT-TOKEN) FROM(TO-SEND)
++                       FLENGTH(TO-SEND-LEN)
++                   END-EXEC
+ 
+-               EXEC CICS SPOOLCLOSE
+-                   TOKEN(SYSOUT-TOKEN)
+-               END-EXEC.
++                   EXEC CICS SPOOLCLOSE
++                       TOKEN(SYSOUT-TOKEN)
++                   END-EXEC.
+ 
+            EXEC CICS
+                SEND MAP('DOGESN1')
+                    MAPSET('DOGESN')
+            END-EXEC.
++
++       CHECK-DAILY-LIMIT.
++      *    The typed amount is left-justified text such as '999.5':
++      *    split it on the point and zero-fill both halves.
++           MOVE SPACES TO AMT-INT-X AMT-DEC-X.
++           UNSTRING AMOUNTI DELIMITED BY '.' OR ' ' OR LOW-VALUE
++               INTO AMT-INT-X AMT-DEC-X.
++           INSPECT AMT-INT-X REPLACING ALL ' ' BY '0'.
++           INSPECT AMT-DEC-X REPLACING ALL ' ' BY '0'.
++           MOVE AMT-INT-X TO AMT-INT-9.
++           MOVE AMT-DEC-X TO AMT-DEC-9.
++      *    Today's date, and the tracker record if there is one
++           EXEC CICS ASKTIME ABSTIME(ABS-TIME) END-EXEC.
++           EXEC CICS FORMATTIME ABSTIME(ABS-TIME)
++               DATESEP('-') YYYYMMDD(TODAY)
++           END-EXEC.
++           EXEC CICS READ FILE('DOGEVSAM') INTO(LIMIT-RECORD)
++               RIDFLD(LIMIT-KEY) UPDATE RESP(LIMIT-RESP)
++           END-EXEC.
++           IF LIMIT-REC-FOUND AND LDAY EQUAL TO TODAY
++               MOVE LTOT-INT TO WS-TOTAL-INT
++               MOVE LTOT-DEC TO WS-TOTAL-DEC
++           ELSE
++               MOVE ZEROS TO WS-TOTAL-NUM.
++           ADD AMT-NUMERIC TO WS-TOTAL-NUM.
++           IF WS-TOTAL-NUM GREATER THAN DAILY-LIMIT
++               MOVE 'Y' TO LIMIT-FLAG
++           ELSE
++               MOVE 'N' TO LIMIT-FLAG.
++           IF LIMIT-EXCEEDED AND LIMIT-REC-FOUND
++               EXEC CICS UNLOCK FILE('DOGEVSAM') END-EXEC.
++
++       RECORD-DAILY-TOTAL.
++      *    Write today's running total back (a new tracker on first use)
++           MOVE TODAY TO LDAY.
++           MOVE WS-TOTAL-INT TO LTOT-INT.
++           MOVE WS-TOTAL-DEC TO LTOT-DEC.
++           IF LIMIT-REC-FOUND
++               EXEC CICS REWRITE FILE('DOGEVSAM') FROM(LIMIT-RECORD)
++                   LENGTH(LIMIT-REC-LEN)
++               END-EXEC
++           ELSE
++               MOVE LIMIT-KEY TO LDATE
++               EXEC CICS WRITE FILE('DOGEVSAM') FROM(LIMIT-RECORD)
++                   RIDFLD(LIMIT-KEY) LENGTH(LIMIT-REC-LEN)
++               END-EXEC.

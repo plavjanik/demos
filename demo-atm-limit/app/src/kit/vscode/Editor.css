@@ -1,0 +1,115 @@
+.vsc-editor {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  background: var(--vsc-bg-editor);
+}
+
+.vsc-tabstrip {
+  height: 35px;
+  background: var(--vsc-bg-sidebar);
+  display: flex;
+  border-bottom: 1px solid var(--vsc-border);
+  flex: none;
+}
+
+.vsc-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  font-size: 13px;
+  color: var(--vsc-fg-muted);
+  border-right: 1px solid var(--vsc-border);
+}
+
+.vsc-tab.active {
+  background: var(--vsc-bg-tab-active);
+  color: var(--vsc-fg);
+  border-top: 1px solid var(--vsc-accent);
+}
+
+.vsc-editor-body {
+  flex: 1;
+  overflow: auto;
+  min-height: 0;
+}
+/* VS Code's own thin dark scrollbar, in place of the page's default one
+   (global.css's ::-webkit-scrollbar is wider and lighter). */
+.vsc-editor-body::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+.vsc-editor-body::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+  border: 4px solid transparent;
+  background-clip: padding-box;
+  border-radius: 7px;
+}
+.vsc-editor-body::-webkit-scrollbar-thumb:hover {
+  background: #4a4a4a;
+  background-clip: padding-box;
+}
+.vsc-editor-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---- staged compiler/editor diagnostics (Editor.tsx, types.ts's
+   Diagnostic) — a VS Code-style wavy underline under the whole line plus a
+   gutter marker; ".ln" is the line-number span prerender.mts stamps as
+   every line's first child. ---- */
+.diag-error,
+.diag-warning {
+  position: relative;
+  background-image:
+    linear-gradient(45deg, transparent 65%, currentColor 80%, transparent 90%),
+    linear-gradient(135deg, transparent 65%, currentColor 80%, transparent 90%);
+  background-repeat: repeat-x;
+  background-size: 6px 3px;
+  background-position: left bottom;
+}
+.diag-error {
+  color: var(--accent-red, #f85149);
+}
+.diag-warning {
+  color: #d29922;
+}
+.diag-error > .ln::before,
+.diag-warning > .ln::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.diag-error > .ln::before {
+  background: var(--accent-red, #f85149);
+}
+.diag-warning > .ln::before {
+  background: #d29922;
+}
+
+.vsc-editor-missing {
+  padding: 24px;
+  color: var(--vsc-fg-muted);
+  font-family: var(--font-mono);
+}
+
+/* VS Code's own "no editor open" watermark, simplified — the warm-up step
+   (chat panel empty, nothing open yet) starts here. */
+.vsc-editor-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 100%;
+  color: #3a3a3a;
+  font-size: 15px;
+}
+.vsc-editor-empty .codicon {
+  font-size: 64px;
+}

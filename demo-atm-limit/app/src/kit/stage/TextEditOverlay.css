@@ -1,0 +1,37 @@
+/* position:fixed here is relative to the true viewport, not the scaled
+   1920x1080 stage — this component is mounted as a sibling of <Stage>
+   (DemoApp.tsx), same as NarrationCallout's own callout, never nested
+   inside .stage-inner (which has its own CSS transform and would
+   otherwise become this element's containing block, scaling and
+   mispositioning it — see VoicePopover.css's own note on the same hazard). */
+.text-edit-pencil {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  z-index: 200;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid var(--accent-amber);
+  background: #1c1c1c;
+  color: var(--accent-amber);
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+.text-edit-pencil:hover {
+  background: var(--accent-amber);
+  color: #1c1c1c;
+}
+
+/* Applied directly to the leaf element itself (classList, not a React
+   className — TextEditOverlay.tsx mutates the real DOM node) while it's
+   contentEditable. */
+.text-edit-editing {
+  outline: 1px dashed var(--accent-amber);
+  outline-offset: 2px;
+  cursor: text;
+}

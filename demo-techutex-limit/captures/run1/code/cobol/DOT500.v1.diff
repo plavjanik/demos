@@ -1,0 +1,88 @@
+diff --git a/ais-cam-dot/src/dot/files/cobol/DOT500 b/ais-cam-dot/src/dot/files/cobol/DOT500
+index c1b9591..431e6d0 100644
+--- a/ais-cam-dot/src/dot/files/cobol/DOT500
++++ b/ais-cam-dot/src/dot/files/cobol/DOT500
+@@ -114,6 +114,9 @@
+ 011200
+ 011300     05  WS-INSERTED-MSG         PIC X(35)     VALUE
+ 011400                         'TRANSACTION INSERTED SUCCESSFULLY  '.
++
++           05  WS-LIMIT-MSG            PIC X(35)     VALUE
++                               'ERROR: DAILY DEBIT LIMIT EXCEEDED  '.
+ 011500
+ 011600     05  WS-DELETED-MSG          PIC X(35)     VALUE
+ 011700                         'TRANSACTION DELETED SUCCESSFULLY   '.
+@@ -169,7 +172,12 @@
+ 016700     05  WS-SERIOUS-ERROR-MSG    PIC X(35)     VALUE
+ 016800                         'DOT500: DOT500   SERIOUS ERROR     '.
+ 016900     EJECT
+-017000     COPY DOTCONS.
++017000     01  WS-DAILY-LIMIT-CONTROL.
++         05  WS-DB-CEILING   PIC S9(9)V99  VALUE 5000.00 COMP-3.
++         05  WS-DB-DAY-TOTAL PIC S9(9)V99  VALUE ZERO    COMP-3.
++         05  WS-DB-NEW-TOTAL PIC S9(9)V99  VALUE ZERO    COMP-3.
++
++     COPY DOTCONS.
+ 017100******************************************************************
+ 017200****                   CICS AID DEFINITIONS                   ****
+ 017300******************************************************************
+@@ -844,6 +852,17 @@
+ 084200
+ 084300 4000-INSERT-TRANSACTION         SECTION.
+ 084400
++           IF TRX-DB-TYPE
++               PERFORM 4100-CHECK-DAILY-LIMIT.
++
++           IF TRX-DB-TYPE
++              AND
++              WS-DB-NEW-TOTAL GREATER THAN WS-DB-CEILING
++               MOVE WS-LIMIT-MSG          TO WS-ERROR-MESSAGE
++               MOVE WS-CORRECT-MSG        TO WS-USER-MESSAGE
++               PERFORM 3900-RESEND-SCREEN-MAP
++               GO TO 4000-SECTION-EXIT.
++
+ 084500     INITIALIZE DOT-ONLINE-RECORD.
+ 084600
+ 084700     MOVE USER-COMM-BANK-NUMBER  TO DOT-BANK-NUMBER.
+@@ -944,6 +963,41 @@
+ 094200
+ 094300     EXIT.
+ 094400     EJECT
++      ******************************************************************
++      ****            CHECK DAILY DEBIT LIMIT PROCEDURE             ****
++      ******************************************************************
++
++       4100-CHECK-DAILY-LIMIT          SECTION.
++
++           MOVE ZERO                   TO WS-DB-DAY-TOTAL.
++
++           INITIALIZE DOT-ONLINE-RECORD.
++
++           MOVE USER-COMM-BANK-NUMBER  TO DOT-BANK-NUMBER.
++           MOVE USER-COMM-ACCOUNT-TYPE TO DOT-ACCOUNT-TYPE.
++           MOVE USER-COMM-MASTER-KEY   TO DOT-ACCOUNT-KEY.
++
++           MOVE DOT-RETURN-HEADER      TO DOT-COMM-REQUEST-CODE.
++           MOVE DOT-AFTER-CUTOFF       TO DOT-COMM-CUTOFF-CODE.
++           MOVE WS-CUTOFF-DATE         TO DOT-COMM-CUTOFF-DATE.
++
++           PERFORM 8000-CALL-DOT-SERVICE.
++
++           IF DOT-SUCCESSFUL
++               ADD DOT-TPS-DB-AMT-TRANS
++                   DOT-ATM-DB-AMT-TRANS
++                   DOT-POS-DB-AMT-TRANS
++                   DOT-EBS-DB-AMT-TRANS
++                   DOT-ACH-DB-AMT-TRANS
++                       GIVING WS-DB-DAY-TOTAL.
++
++           COMPUTE WS-DB-NEW-TOTAL =
++                   WS-DB-DAY-TOTAL + WS-TRX-AMOUNT-1.
++
++       4100-SECTION-EXIT.
++
++           EXIT.
++           EJECT
+ 094500******************************************************************
+ 094600****            DELETE DOT TRANSACTION PROCEDURE              ****
+ 094700******************************************************************

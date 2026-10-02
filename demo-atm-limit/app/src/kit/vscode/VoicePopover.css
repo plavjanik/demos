@@ -1,0 +1,156 @@
+/* Anchored above PresenterBar.tsx's own real-pixel strip (--presenter-bar-
+   height, global.css) regardless of which button opened it — the portal
+   (VoicePopover.tsx's own comment) makes this the TRUE viewport bottom,
+   not the scaled stage's. max-height + overflow-y is the "stay inside the
+   viewport at 1280x720" guarantee: this panel has enough fields that a
+   short window could otherwise push its top edge above 0. */
+.voice-popover {
+  position: fixed;
+  right: 12px;
+  bottom: calc(var(--presenter-bar-height) + 10px);
+  max-height: calc(100vh - var(--presenter-bar-height) - 20px);
+  overflow-y: auto;
+  z-index: 60;
+  width: 280px;
+  background: #1c1c1c;
+  border: 1px solid var(--vsc-border);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  padding: 12px 14px 10px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--vsc-fg);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-sizing: border-box;
+}
+
+.voice-popover-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 700;
+  color: var(--accent-amber);
+  margin-bottom: 2px;
+}
+
+.voice-popover-close {
+  background: transparent;
+  border: none;
+  color: var(--vsc-fg-muted);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 2px;
+}
+.voice-popover-close:hover {
+  color: #fff;
+}
+
+.voice-field {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.voice-field > span:first-child {
+  color: var(--vsc-fg-muted);
+  font-size: 11px;
+}
+.voice-field select,
+.voice-field input[type="text"],
+.voice-field input[type="number"] {
+  background: #0f0f0f;
+  border: 1px solid var(--vsc-border);
+  border-radius: 4px;
+  color: var(--vsc-fg);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  padding: 4px 6px;
+}
+
+.voice-field-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.voice-refresh-btn {
+  background: transparent;
+  border: none;
+  color: var(--vsc-fg-muted);
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 2px;
+}
+.voice-refresh-btn:hover {
+  color: #fff;
+}
+
+.voice-field-note {
+  color: var(--vsc-fg-muted);
+  font-size: 10px;
+  font-style: italic;
+}
+
+.voice-field-checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+.voice-field-checkbox > span {
+  color: var(--vsc-fg);
+  font-size: 12px;
+}
+
+.voice-popover-footer {
+  border-top: 1px solid var(--vsc-border);
+  margin-top: 4px;
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.voice-btn {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--vsc-accent);
+  background: var(--vsc-accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.voice-btn:hover {
+  filter: brightness(1.1);
+}
+.voice-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.voice-popover-status {
+  color: var(--vsc-fg-muted);
+}
+.voice-popover-error {
+  color: var(--accent-red);
+}
+
+.voice-popover-cache {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--vsc-fg-muted);
+}
+
+.voice-btn-link {
+  background: transparent;
+  border: none;
+  color: var(--accent-blue);
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+}

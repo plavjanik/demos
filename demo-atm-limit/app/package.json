@@ -1,0 +1,51 @@
+{
+  "name": "demo-atm-limit-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run prerender && vite",
+    "prerender": "tsx scripts/prerender.mts",
+    "build": "npm run prerender && tsc -p . --noEmit && vite build",
+    "preview": "vite preview",
+    "narration:render:dogecics": "tsx scripts/render-narration.mts --demo dogecics",
+    "narration:render:techutex": "tsx scripts/render-narration.mts --demo techutex"
+  },
+  "dependencies": {
+    "@vscode/codicons": "^0.0.36",
+    "motion": "^11.15.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.17",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "jsdom": "^29.1.1",
+    "shiki": "^1.24.4",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5",
+    "vitest": "^4.1.11"
+  },
+  "overrides": {
+    "rollup": "4.63.4",
+    "@rollup/rollup-darwin-arm64": "4.63.4",
+    "caniuse-lite": "1.0.30001810",
+    "electron-to-chromium": "1.5.433",
+    "browserslist": "4.29.0",
+    "baseline-browser-mapping": "2.11.25",
+    "node-releases": "2.0.56",
+    "@csstools/color-helpers": "6.1.1",
+    "@csstools/css-calc": "3.4.0",
+    "@csstools/css-color-parser": "4.2.3",
+    "@csstools/css-parser-algorithms": "4.0.0",
+    "@csstools/css-tokenizer": "4.0.1",
+    "@exodus/bytes": "1.15.2",
+    "tldts": "7.4.14",
+    "tldts-core": "7.4.14",
+    "undici": "7.29.1"
+  },
+  "//overrides": "Pinned one release behind on purpose: a corporate npm registry with a 72-hour immaturity policy refuses versions younger than three days, and Vite's transitive dependencies release daily. Bump these together when they are older than that."
+}

@@ -1,0 +1,36 @@
+.stage-outer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* Reserve PresenterBar's own real-pixel strip below the fitting box, so
+     the 1920x1080 canvas scales to fit ABOVE it — never underneath it. */
+  bottom: var(--presenter-bar-height);
+  background: var(--stage-bg);
+  overflow: hidden;
+  transition:
+    top 0.2s ease,
+    right 0.2s ease;
+}
+
+/* Mirrors the bottom reservation above, for a step whose narrationSide is
+   "top" (NarrationCallout.tsx) — see Stage.tsx's own comment. */
+.stage-outer-top-reserved {
+  top: var(--narration-top-height);
+}
+
+/* Review mode's docked panel (ReviewPanel.tsx) — same mechanism, on the
+   right. Independent of stage-outer-top-reserved: both can apply at once
+   (review mode open on the process step), each shrinking a different
+   edge. */
+.stage-outer-review-reserved {
+  right: var(--review-panel-width);
+}
+
+.stage-inner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: center center;
+  background: var(--stage-bg);
+}

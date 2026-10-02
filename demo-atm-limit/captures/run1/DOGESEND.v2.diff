@@ -1,0 +1,84 @@
+--- captures/run1/DOGESEND.v1.cbl	2026-09-24 23:08:22
++++ cobol/DOGESEND.cbl	2026-09-24 23:12:13
+@@ -52,16 +52,27 @@
+                10  LTOT-DOT    PIC X VALUE '.'.
+                10  LTOT-DEC    PIC 9(8).
+            05  FILLER          PIC X(5) VALUE SPACES.
+-       01  LIMIT-REC-LEN       PIC S9(4) COMP VALUE 80.
++       01  LIMIT-REC-LEN       PIC S9(4) COMP VALUE +80.
+        01  LIMIT-RESP          PIC S9(4) COMP.
+-           88  LIMIT-REC-FOUND VALUE 0.
+-           88  LIMIT-REC-NOTFND VALUE 13.
++           88  LIMIT-REC-FOUND VALUE +0.
++           88  LIMIT-REC-NOTFND VALUE +13.
+        01  LIMIT-FLAG          PIC X VALUE 'N'.
+            88  LIMIT-EXCEEDED  VALUE 'Y'.
+        01  ABS-TIME            PIC S9(15) COMP-3.
+        01  TODAY               PIC X(10).
+-       01  AMT-INT-X           PIC X(8) JUSTIFIED RIGHT.
+-       01  AMT-DEC-X           PIC X(8).
++      * The typed amount, taken apart by hand: this compiler predates
++      * UNSTRING and INSPECT, so the digits are copied with subscripts.
++       01  AMT-TEXT.
++           05  AMT-CHAR        PIC X OCCURS 17 TIMES.
++       01  AMT-INT-X.
++           05  AMT-INT-CHAR    PIC X OCCURS 8 TIMES.
++       01  AMT-DEC-X.
++           05  AMT-DEC-CHAR    PIC X OCCURS 8 TIMES.
++       01  AMT-I               PIC S9(4) COMP.
++       01  AMT-POINT           PIC S9(4) COMP.
++       01  AMT-END             PIC S9(4) COMP.
++       01  AMT-DIGITS          PIC S9(4) COMP.
++       01  AMT-T               PIC S9(4) COMP.
+        01  AMT-PARTS.
+            05  AMT-INT-9       PIC 9(8).
+            05  AMT-DEC-9       PIC 9(8).
+@@ -191,11 +202,22 @@
+        CHECK-DAILY-LIMIT.
+       *    The typed amount is left-justified text such as '999.5':
+       *    split it on the point and zero-fill both halves.
++           MOVE AMOUNTI TO AMT-TEXT.
+            MOVE SPACES TO AMT-INT-X AMT-DEC-X.
+-           UNSTRING AMOUNTI DELIMITED BY '.' OR ' ' OR LOW-VALUE
+-               INTO AMT-INT-X AMT-DEC-X.
+-           INSPECT AMT-INT-X REPLACING ALL ' ' BY '0'.
+-           INSPECT AMT-DEC-X REPLACING ALL ' ' BY '0'.
++           MOVE 18 TO AMT-END AMT-POINT.
++           PERFORM SCAN-AMOUNT VARYING AMT-I FROM 1 BY 1
++               UNTIL AMT-I > 17.
++           IF AMT-POINT > AMT-END MOVE AMT-END TO AMT-POINT.
++           SUBTRACT 1 FROM AMT-POINT GIVING AMT-DIGITS.
++           IF AMT-DIGITS > 8 MOVE 8 TO AMT-DIGITS.
++           PERFORM COPY-INT-DIGIT VARYING AMT-I FROM 1 BY 1
++               UNTIL AMT-I > AMT-DIGITS.
++           MOVE 0 TO AMT-T.
++           ADD 1 AMT-POINT GIVING AMT-I.
++           PERFORM COPY-DEC-DIGIT
++               UNTIL AMT-I NOT < AMT-END OR AMT-T NOT < 8.
++           EXAMINE AMT-INT-X REPLACING ALL ' ' BY '0'.
++           EXAMINE AMT-DEC-X REPLACING ALL ' ' BY '0'.
+            MOVE AMT-INT-X TO AMT-INT-9.
+            MOVE AMT-DEC-X TO AMT-DEC-9.
+       *    Today's date, and the tracker record if there is one
+@@ -233,3 +255,21 @@
+                EXEC CICS WRITE FILE('DOGEVSAM') FROM(LIMIT-RECORD)
+                    RIDFLD(LIMIT-KEY) LENGTH(LIMIT-REC-LEN)
+                END-EXEC.
++
++       SCAN-AMOUNT.
++      *    First point = end of the integer part; first blank = end.
++           IF AMT-CHAR (AMT-I) = '.' AND AMT-POINT = 18
++               MOVE AMT-I TO AMT-POINT.
++           IF (AMT-CHAR (AMT-I) = ' ' OR AMT-CHAR (AMT-I) = LOW-VALUE)
++               AND AMT-END = 18
++               MOVE AMT-I TO AMT-END.
++
++       COPY-INT-DIGIT.
++      *    Right-align the integer digits in the 8-byte field.
++           COMPUTE AMT-T = 8 - AMT-DIGITS + AMT-I.
++           MOVE AMT-CHAR (AMT-I) TO AMT-INT-CHAR (AMT-T).
++
++       COPY-DEC-DIGIT.
++           ADD 1 TO AMT-T.
++           MOVE AMT-CHAR (AMT-I) TO AMT-DEC-CHAR (AMT-T).
++           ADD 1 TO AMT-I.

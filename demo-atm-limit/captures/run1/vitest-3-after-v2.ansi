@@ -1,0 +1,17 @@
+
+ RUN  v4.1.11 /work/demo-atm-limit
+
+ ✓ test/atm.limit.test.ts > daily withdrawal limit (10,000 DOGE per day) > refuses a single withdrawal over the limit 317ms
+ ✓ test/atm.limit.test.ts > daily withdrawal limit (10,000 DOGE per day) > still accepts an amount under the limit 184ms
+ ✓ test/atm.limit.test.ts > daily withdrawal limit (10,000 DOGE per day) > accepts an amount with decimals 149ms
+ ✓ test/atm.limit.test.ts > daily withdrawal limit (10,000 DOGE per day) > counts withdrawals cumulatively within the day 150ms
+ ✓ test/atm.regression.test.ts > existing behaviour > shows the account balance 27ms
+ ✓ test/atm.regression.test.ts > existing behaviour > lists the recent transactions with date, label, sign and amount 68ms
+ ✓ test/atm.regression.test.ts > existing behaviour > rejects a send to the placeholder address 401ms
+ ✓ test/atm.regression.test.ts > existing behaviour > sends an ordinary amount 158ms
+
+ Test Files  2 passed (2)
+      Tests  8 passed (8)
+   Start at  06:39:10
+   Duration  63.73s (transform 8.45s, setup 0ms, import 10.70s, tests 50.85s, environment 0ms)
+

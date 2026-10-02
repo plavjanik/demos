@@ -1,0 +1,55 @@
+{
+  "server": "code4z-cowboys (mcp__code4z-cowboys__*)",
+  "endpoint": "http://localhost:8080/EndevorService/api/v2",
+  "datasource": "COWBOYS",
+  "note": "Real, currently-registered tools this run actually called are marked invented:false. The two tools a real demo needs (update an element, generate/compile it) do NOT exist on this server as of 2026-09-25 -- they are invented:true placeholders shaped the way the rest of this tool family is shaped (Endevor verb + environment/stage/system/subsystem/type/element path params).",
+  "tools": [
+    {
+      "name": "get_map",
+      "invented": false,
+      "description": "Full Endevor map topology and pre-computed promotion chains.",
+      "inputSchema": { "type": "object", "properties": {} }
+    },
+    {
+      "name": "get_elements",
+      "invented": false,
+      "description": "Basic metadata for matching element(s): location, processor group, VVLL, fingerprint, signout status.",
+      "inputSchema": { "type": "object", "properties": {
+        "element": {"type": "string"}, "environment": {"type": "string", "default": "*"},
+        "stageNumber": {"enum": ["1","2","*","%"]}, "system": {"type": "string"},
+        "subsystem": {"type": "string"}, "type": {"type": "string"}
+      }, "required": ["element"] }
+    },
+    {
+      "name": "get_element_content",
+      "invented": false,
+      "description": "Retrieve an element's source content.",
+      "inputSchema": { "type": "object", "properties": {
+        "element": {"type": "string"}, "environment": {"type": "string"}, "stageNumber": {"enum": ["1","2"]},
+        "system": {"type": "string"}, "subsystem": {"type": "string"}, "type": {"type": "string"},
+        "maxLines": {"type": "number"}
+      }, "required": ["element","environment","stageNumber","system","subsystem","type"] }
+    },
+    {
+      "name": "update_element",
+      "invented": true,
+      "inventedNote": "Does not exist on this server today; assumed for the demo per the user's brief.",
+      "description": "Update an Endevor element's source (add/replace) at a given inventory location.",
+      "inputSchema": { "type": "object", "properties": {
+        "element": {"type": "string"}, "environment": {"type": "string"}, "stageNumber": {"enum": ["1","2"]},
+        "system": {"type": "string"}, "subsystem": {"type": "string"}, "type": {"type": "string"},
+        "source": {"type": "string"}, "ccid": {"type": "string"}, "comment": {"type": "string"}
+      }, "required": ["element","environment","stageNumber","system","subsystem","type","source"] }
+    },
+    {
+      "name": "generate_element",
+      "invented": true,
+      "inventedNote": "Does not exist on this server today; assumed for the demo per the user's brief.",
+      "description": "Run the element's processor group (compile/link) and return the listing + return code.",
+      "inputSchema": { "type": "object", "properties": {
+        "element": {"type": "string"}, "environment": {"type": "string"}, "stageNumber": {"enum": ["1","2"]},
+        "system": {"type": "string"}, "subsystem": {"type": "string"}, "type": {"type": "string"}
+      }, "required": ["element","environment","stageNumber","system","subsystem","type"] }
+    }
+  ]
+}

@@ -1,0 +1,503 @@
+.vsc-chatpanel {
+  /* ~30% of the 1920px design stage — the presenter's main reading surface. */
+  width: 576px;
+  flex: none;
+  background: var(--vsc-bg-sidebar);
+  border-left: 1px solid var(--vsc-border);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.cc-header {
+  height: 40px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--vsc-border);
+  color: var(--vsc-fg);
+}
+
+.cc-session-title {
+  font-size: 13px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cc-header-icons {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--vsc-fg-muted);
+  font-size: 15px;
+}
+
+.cc-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+}
+
+/* ---- rows: a dot + connecting rail on the left, content on the right ---- */
+
+.cc-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.cc-dot {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-top: 7px;
+  position: relative;
+  z-index: 1;
+}
+.cc-dot-green {
+  background: var(--accent-green);
+  box-shadow: 0 0 6px rgba(63, 185, 80, 0.6);
+}
+.cc-dot-grey {
+  background: #6e7681;
+}
+
+/* Connects this row's dot down through the row-gap into the next row's dot
+   (ref15-dots.png) — only added (cc-rail-down, ChatPanel.tsx) between two
+   consecutive dot-bearing rows, never into a user bubble or result block. */
+.cc-rail-down {
+  position: relative;
+}
+.cc-rail-down::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 11px;
+  bottom: -12px;
+  width: 1px;
+  background: #3a3a3a;
+}
+
+.cc-row-body {
+  flex: 1;
+  min-width: 0;
+  font-size: 21px;
+  line-height: 1.5;
+  color: var(--vsc-fg);
+}
+
+.cc-row-thinking .cc-thinking-text {
+  font-size: 17px;
+  color: var(--vsc-fg-muted);
+  margin-top: 5px;
+}
+
+/* ---- user prompt: a bordered box on the page's own background (NOT a
+   filled chat bubble — ref15-dots.png), full width, left-aligned ---- */
+
+.cc-user-bubble {
+  width: 100%;
+  border: 1px solid var(--vsc-border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  position: relative;
+}
+.cc-user-bubble pre {
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: var(--font-ui);
+  font-size: 20px;
+  color: var(--vsc-fg);
+}
+.cc-user-bubble-clamped pre {
+  max-height: 4.6em;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+}
+.cc-show-more {
+  display: block;
+  margin-top: 4px;
+  background: none;
+  border: none;
+  color: var(--vsc-accent);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* ---- assistant prose ---- */
+
+.cc-prose {
+  padding-top: 4px;
+}
+.md-lite p {
+  margin: 0 0 8px;
+}
+.md-lite p:last-child {
+  margin-bottom: 0;
+}
+.md-lite ul {
+  margin: 0 0 8px;
+  padding-left: 20px;
+}
+.md-heading {
+  margin: 0 0 6px;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  color: var(--vsc-fg);
+}
+.md-heading:not(:first-child) {
+  margin-top: 12px;
+}
+.md-h2 {
+  font-size: 1.15em;
+}
+.md-h3 {
+  font-size: 1.02em;
+  color: var(--vsc-fg-muted);
+}
+.md-inline-code {
+  background: #0000004d;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+}
+
+/* ---- result block (e.g. the RC12 diagnostics) ---- */
+
+.cc-row-result {
+  margin-left: 19px;
+  background: #1c2b1c;
+  border: 1px solid #2e5c2e;
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.cc-row-result.cc-result-error {
+  background: #2b1c1c;
+  border-color: #5c2e2e;
+}
+.cc-row-result pre {
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: var(--font-mono);
+  font-size: 17px;
+  color: #cde8cd;
+}
+.cc-result-error pre {
+  color: #f3cdcd;
+}
+
+/* ---- tool rows: bold verb + mono filename, duration at the right edge ---- */
+
+.cc-tool-line {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 21px;
+}
+.cc-tool-line .codicon {
+  color: var(--vsc-fg-muted);
+  font-size: 15px;
+}
+.cc-tool-title {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: var(--vsc-fg);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cc-tool-duration {
+  margin-left: auto;
+  flex: none;
+  color: var(--vsc-fg-muted);
+  font-size: 13px;
+  font-family: var(--font-mono);
+}
+
+/* Quiet, not a warning — the row's OUTPUT is real, only the tool call
+   itself is invented for the demo (see ChatItem.proposed's doc comment). */
+.cc-proposed-badge {
+  flex: none;
+  margin-left: auto;
+  font-size: 10px;
+  color: var(--vsc-fg-muted);
+  border: 1px solid var(--vsc-border);
+  border-radius: 8px;
+  padding: 1px 7px;
+  letter-spacing: 0.02em;
+}
+
+.cc-mcp-title {
+  margin: -2px 0 2px 22px;
+  font-size: 0.78em;
+}
+
+.cc-inout {
+  margin-top: 8px;
+}
+.cc-inout pre {
+  margin: 0;
+  background: #0000004d;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  /* Same size as the editor's own code (Editor.css .code-block) — legible
+     from the back of a room. */
+  font-size: 20px;
+  line-height: 28px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 320px;
+  overflow-y: auto;
+}
+.cc-inout-toggle {
+  background: transparent;
+  border: none;
+  color: var(--vsc-accent);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 0 0;
+}
+
+/* ---- approval card: unverified against the real extension, see ChatPanel.tsx ---- */
+
+.cc-approval {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+.cc-approval-btn {
+  border: 1px solid var(--vsc-border);
+  border-radius: 5px;
+  padding: 5px 11px;
+  font-size: 13px;
+  color: var(--vsc-fg);
+  cursor: default;
+}
+.cc-approval-yes {
+  background: var(--vsc-accent);
+  border-color: var(--vsc-accent);
+  color: #fff;
+}
+.cc-approval-no {
+  color: var(--accent-red);
+}
+
+/* ---- plan-mode approval card: Claude Code's own real wording ---- */
+
+.cc-row-plan-approval {
+  margin-top: 4px;
+}
+.cc-plan-approve-question {
+  font-size: 15px;
+  color: var(--vsc-fg);
+  margin-bottom: 8px;
+}
+.cc-plan-approve-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.cc-row-plan-resolved {
+  margin-left: 19px;
+}
+.cc-plan-resolved-text {
+  font-size: 13px;
+  color: var(--vsc-fg-muted);
+  font-style: italic;
+}
+
+/* ---- in-flight status row (ChatPanel.tsx's WorkingRow) ---- */
+
+.cc-row-working {
+  align-items: center;
+}
+.cc-spinner-glyph {
+  flex: none;
+  width: 9px;
+  margin-top: 0;
+  text-align: center;
+  font-weight: 700;
+  font-size: 15px;
+  /* Sampled from the reference screenshot's in-flight spinner
+     (scratchpad/ccref/08-read-prompt-running-1.png). */
+  color: #d97757;
+}
+.cc-working-verb {
+  font-size: 15px;
+  color: var(--vsc-fg);
+}
+
+/* ---- input area ---- */
+
+.cc-inputwrap {
+  flex: none;
+  padding: 10px 12px 12px;
+  border-top: 1px solid var(--vsc-border);
+}
+
+.cc-input {
+  position: relative;
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+  background: #1c1c1c;
+  padding: 9px 34px 0 12px;
+  transition: border-color 0.25s;
+}
+/* Verified: this border is warm once the SESSION has any history at all —
+   ref15 (a just-finished turn) and ref23 (the whole window, captured last)
+   both still show it, with the ordinary "Ask Claude to edit…" placeholder
+   back — so it tracks "has this session been used", not "is it busy". */
+.cc-input-active {
+  border-color: #c97a5c;
+}
+.cc-input-text {
+  font-size: 15px;
+  color: #fff;
+  white-space: pre-wrap;
+  min-height: 20px;
+  padding-bottom: 9px;
+}
+.cc-input-placeholder {
+  color: #7a7a7a;
+}
+.cc-caret {
+  display: inline-block;
+  width: 2px;
+  height: 15px;
+  margin-left: 1px;
+  vertical-align: -3px;
+  background: #fff;
+  animation: cc-blink 1s step-end infinite;
+}
+@keyframes cc-blink {
+  50% {
+    opacity: 0;
+  }
+}
+.cc-input-mic {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: var(--vsc-fg-muted);
+  font-size: 15px;
+}
+
+/* Separates the text area from the icon/send row WITHIN the same bordered
+   box (ref02-input.png, ref20-input-full.png) — a full-bleed rule back out
+   to the box's own edges, not just the padded content width. */
+.cc-input-divider {
+  margin: 0 -12px 0 -12px;
+  border-top: 1px solid #3a3a3a;
+}
+
+.cc-input-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+}
+
+/* The model/effort pills' own row, OUTSIDE the bordered input box. */
+.cc-pills-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+.cc-input-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--vsc-fg-muted);
+  font-size: 15px;
+}
+.cc-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid #3a3a3a;
+  border-radius: 10px;
+  padding: 1px 8px;
+  font-size: 11px;
+  color: var(--vsc-fg-muted);
+}
+
+/* Both colors verified against the reference — the send arrow is this same
+   muted terracotta even in a NEVER-used fresh panel (ref02-input.png), not
+   blue; the stop square is a brighter coral (ref20-input-full.png). */
+.cc-send {
+  margin-left: auto;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: #b3654a;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cc-send-stop {
+  background: #e2795c;
+}
+
+/* Auto mode is this demo's own device layered on top of the real panel — see
+   ChatPanel.tsx's comment beside where it's rendered. Its own row (below the
+   Sonnet 5/High pills) so the hotspot's floating label — which needs
+   clearance ABOVE the switch — never lands on those pills, only on empty
+   space it now owns; cc-automode-row-spaced opens that clearance and is
+   only added while the hotspot is actually active. */
+.cc-automode-row {
+  display: flex;
+  margin-top: 6px;
+}
+.cc-automode-row-spaced {
+  margin-top: 26px;
+}
+.cc-automode {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cc-automode-label {
+  color: var(--vsc-fg-muted);
+  font-size: 11px;
+}
+.cc-automode-switch {
+  width: 30px;
+  height: 16px;
+  border-radius: 9px;
+  background: #3a3a3a;
+  position: relative;
+  display: inline-block;
+  transition: background 0.2s;
+}
+.cc-automode-switch.on {
+  background: var(--accent-green);
+}
+.cc-automode-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  transition: left 0.2s;
+}
+.cc-automode-switch.on .cc-automode-knob {
+  left: 16px;
+}

@@ -1,0 +1,7 @@
+{"stage": "logon", "sec": 5.511565, "note": "connect to READY via ISPF END"}
+{"stage": "open-editor", "sec": 2.665625, "note": "REVED to the editor screen"}
+{"stage": "page-member", "sec": 13.607373, "note": "PF8 x20 to BOTTOM OF DATA (275 lines)"}
+{"stage": "leave-editor", "sec": 13.691259, "note": "CANCEL + PF3 back to READY"}
+{"stage": "submit-compile", "sec": 8.331953, "note": "SUBMIT + STATUS polls until JOB00042 ON OUTPUT QUEUE"}
+{"stage": "page-listing", "sec": 1.911006, "note": "OUTPUT JOB00042 paged through on the terminal"}
+{"stage": "page-listing-screens", "sec": null, "note": "OUTPUT JOB00042: 89 terminal screens, 2025 rows (tool-paged in 1.36 s)"}

@@ -1,0 +1,248 @@
+/**
+ * Global design tokens and resets shared by every scene. One vendored
+ * monospace face (IBM Plex Mono, OFL — app/public/fonts/, license beside
+ * the files) used EVERYWHERE code-shaped text appears: the editor, diffs,
+ * the terminal, chat tool rows, 3270 side captions. No runtime font fetch —
+ * woff2 files ship in the build, so this works offline from dist/. Only the
+ * "latin" Google-Fonts subset was vendored (ASCII + a handful of symbols),
+ * so a few transcript glyphs (✓ × ⎯ ❯) aren't in it and fall through to the
+ * system-mono fallbacks in --font-mono — that's expected, not a bug.
+ */
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/IBMPlexMono-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/IBMPlexMono-Medium.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/IBMPlexMono-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/IBMPlexMono-Italic.woff2") format("woff2");
+}
+
+:root {
+  --font-mono: "IBM Plex Mono", "SF Mono", Menlo, monospace;
+  --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+
+  --vsc-bg: #1e1e1e;
+  --vsc-bg-editor: #1f1f1f;
+  --vsc-bg-sidebar: #181818;
+  --vsc-bg-activitybar: #181818;
+  --vsc-bg-titlebar: #181818;
+  --vsc-bg-statusbar: #0078d4;
+  --vsc-bg-panel: #181818;
+  --vsc-bg-tab-active: #1f1f1f;
+  --vsc-bg-tab-inactive: #181818;
+  --vsc-border: #2b2b2b;
+  --vsc-fg: #cccccc;
+  --vsc-fg-muted: #9d9d9d;
+  --vsc-accent: #0078d4;
+  --vsc-selection: #264f78;
+
+  --stage-bg: #0b0b0d;
+  /* Real screen pixels reserved at the bottom for PresenterBar — the stage
+     itself scales to fit ABOVE this strip (Stage.css), so a scene's own
+     bottom chrome (e.g. VSCodeScene's status bar) never ends up underneath
+     the presenter bar's fixed overlay. */
+  --presenter-bar-height: 56px;
+  /* Real screen pixels reserved at the TOP for NarrationCallout's
+     "top" placement (a full-width band, e.g. the process step) — same
+     mechanism as --presenter-bar-height above, mirrored: Stage.tsx adds
+     this to .stage-outer's own top offset only on a step whose
+     narrationSide is "top", so the scaled diagram is fit into the
+     remaining box and visibly shifts down, never overlapped by the band
+     (a reserved, non-overlapping region, not a measured lift). */
+  --narration-top-height: 96px;
+  /* Real screen pixels reserved on the RIGHT for ReviewPanel.tsx, same
+     mechanism again: Stage.tsx adds this to .stage-outer's own right
+     offset only while reviewMode is on, so the docked panel never covers
+     the stage — it shrinks the fit box instead. */
+  --review-panel-width: 360px;
+  --diff-add-bg: rgba(46, 160, 67, 0.18);
+  --diff-del-bg: rgba(248, 81, 73, 0.18);
+  --diff-hunk-bg: rgba(88, 166, 255, 0.12);
+
+  --accent-green: #3fb950;
+  --accent-red: #f85149;
+  --accent-amber: #d29922;
+  --accent-blue: #58a6ff;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--stage-bg);
+  color: var(--vsc-fg);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Every codicon site in the app centers it in a flex row with
+   align-items: center — but an icon font's own ascent/descent metrics are
+   rarely symmetric around its glyph ink, so a flex box can center the
+   CHARACTER'S BOX (line-height-driven) a couple of px off from where the
+   glyph actually sits inside it. line-height: 1 shrinks that box down to
+   (much closer to) the glyph's own visual bounds, which is what actually
+   fixes it — the flex centering was already correct. */
+.codicon {
+  line-height: 1;
+  vertical-align: middle;
+  flex: none;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #3a3a3a;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---- shiki code block chrome shared by every code-bearing scene ---- */
+/*
+ * shiki's `structure: "classic"` output is `<code>` holding one
+ * `<span class="line">…</span>` PER LINE, joined by real "\n" TEXT NODES
+ * that are direct children of `<code>` (not of `.line`) — they exist so a
+ * copy-paste of the rendered code keeps its line breaks. The `<pre>`'s own
+ * `white-space: pre` (the tag's UA default too) renders each of those
+ * separator newlines as ITS OWN visible line break on top of `.line`
+ * already being `display:block`, doubling every line's height — measured:
+ * consecutive `.line`s 51px apart at a 27px line-height. Fix: only `.line`
+ * itself preserves whitespace; the newlines between them sit in `<code>`,
+ * which reverts to normal (collapsing) whitespace and swallows them.
+ */
+.code-block pre.shiki {
+  margin: 0;
+  padding: 12px 0;
+  font-family: var(--font-mono);
+  font-size: 18px;
+  line-height: 27px;
+  overflow: auto;
+  height: 100%;
+  white-space: normal;
+}
+/* font-family on pre.shiki ALONE does not reach .line: the browser's UA
+   stylesheet sets `code { font-family: monospace }`, and that explicit
+   (if low-specificity) value on the intervening <code> wins the cascade
+   for ITS children over our var(--font-mono) two levels up on <pre> —
+   measured: .line computed to literal "monospace", silently never IBM Plex
+   Mono, for every code/diff view this app has ever shipped. This single
+   declaration (not copying pre.shiki's other properties — <code> is
+   inline, so height/overflow/padding there would do the wrong thing)
+   closes that gap. */
+.code-block code {
+  font-family: var(--font-mono);
+}
+.code-block .line {
+  display: block;
+  padding: 0 16px 0 0;
+  white-space: pre;
+}
+.code-block .ln {
+  display: inline-block;
+  width: 3.2em;
+  margin-right: 1em;
+  text-align: right;
+  color: #6e7681;
+  user-select: none;
+}
+.code-block .diff-add {
+  background: var(--diff-add-bg);
+}
+.code-block .diff-del {
+  background: var(--diff-del-bg);
+}
+/* ---- VS Code-style INLINE diff editor (scripts/prerender.mts's
+   diffInlineRows transformer) — two line-number gutters (old, new; blank
+   on the side a line doesn't exist on) plus a narrow +/- indicator column,
+   `.diff-add`/`.diff-del` above still the whole-row background. Replaces
+   the old raw-unified-patch look (a kept "@@ -a,b +c,d @@" header line, a
+   literal leading +/- inside the code text) — see prerender.mts's own
+   comment for why. */
+.code-block .diff-ln {
+  display: inline-block;
+  width: 2.6em;
+  text-align: right;
+  color: #6e7681;
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+.code-block .diff-ln-old {
+  margin-right: 0.4em;
+}
+.code-block .diff-ln-new {
+  margin-right: 0.6em;
+  padding-right: 0.6em;
+  border-right: 1px solid var(--vsc-border);
+}
+.code-block .diff-ind {
+  display: inline-block;
+  width: 1.2em;
+  margin-right: 0.4em;
+  text-align: center;
+  font-weight: 700;
+  user-select: none;
+}
+.code-block .diff-add .diff-ind {
+  color: var(--accent-green);
+}
+.code-block .diff-del .diff-ind {
+  color: var(--accent-red);
+}
+/* A hunk boundary — VS Code's own collapsed-region bar: one muted
+   full-width row, "⋯" roughly where the gutter sits, no text. */
+.code-block .diff-sep {
+  padding-left: 16px;
+  color: var(--vsc-fg-muted);
+  background: rgba(255, 255, 255, 0.04);
+}
+.code-block .diff-sep-glyph {
+  display: inline-block;
+  width: 7.8em;
+  text-align: center;
+  user-select: none;
+}
+/* Editor.tsx's generic scrollToLine/highlightLines (any VS Code step). */
+.code-block .line-highlight {
+  background: rgba(88, 166, 255, 0.14);
+  box-shadow: inset 3px 0 0 var(--accent-blue);
+}

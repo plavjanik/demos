@@ -1,0 +1,28 @@
+    0         1         2         3         4         5         6         7         
+    01234567890123456789012345678901234567890123456789012345678901234567890123456789
+00:  DOGECICS                                                                       
+01:                                Y.                      _                        
+02:                                YiL        WOW        .```.                      
+03:                                Yii;                .; .;;`.                     
+04:                                YY;ii._           .;`.;;;; :                     
+05:                                iiYYYYYYiiiii;;;;i` ;;::;;;;                     
+06:                            _.;YYYYYYiiiiiiYYYii  .;;.   ;;;                     
+07:                         .YYYYYYYYYYiiYYYYYYYYYYYYii;`  ;;;;                     
+08:          MUCH COIN    .YYYYYYY$$YYiiYY$$$$iiiYYYYYY;.ii;`..                     
+09:                      :YYY$!.  TYiiYY$$$$$YYYYYYYiiYYYYiYYii.                    
+10:                      Y$MM$:   :YYYYYY$!"``"4YYYYYiiiYYYYiiYY.                   
+11:                   `. :MM$$b.,dYY$$Yii" :`   :YYYYllYiiYYYiYY                    
+12:                _.._ :`4MM$!YYYYYYYYYii,.__.diii$$YYYYYYYYYYY                    
+13:                .,._ $b`P`     "4$$$$$iiiiiiii$$$$YY$$$$$$YiY;      SUCH CICS    
+14:                   `,.`$:       :$$$$$$$$$YYYYY$$$$$$$$$YYiiYYL                  
+15:                    "`:$$.    .;PPb$~.,.``T$$YY$$$$YYYYYYiiiYYU:                 
+16:                  ` ;$P$;;: ;;;;i$y$"!Y$$$b;$$$Y$YY$$YYYiiiYYiYY                 
+17:                    $Fi$$ .. ``:iii.`-";YYYYY$$YY$$$$$YYYiiYiYYY                 
+18:                    :Y$$rb ````  `_..;;i;YYY$YY$$$$$$$YYYYYYYiYY:                
+19:                     :$$$$$i;;iiiiidYYYYYYYYYY$$$$$$YYYYYYYiiYYYY.               
+20:                      `$$$$$$$YYYYYYYYYYYYY$$$$$$YYYYYYYYiiiYYYYYY               
+21:                      .i!$$$$$$YYYYYYYYY$$$$$$YYY$$YYiiiiiiYYYYYYY               
+22:                     :YYiii$$$$$$$YYYYYYY$$$$YY$$$$YYiiiiiYYYYYYi`               
+23:                               PRESS F5 TO CONTINUE                              
+
+"DOGECICS" | cursor=(0,0) | fields=0 | keyboard=UNLOCKED

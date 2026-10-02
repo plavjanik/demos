@@ -1,0 +1,16 @@
+{"stage":"start","t":"2026-09-25T16:40:34Z","epochMs":1790350834000,"note":"ticket sent; ran existing regression test first"}
+{"stage":"tests-regression-run","t":"2026-09-25T16:40:58Z","epochMs":1790350858000,"note":"getCheckingBalances -- PASS (baseline)"}
+{"stage":"tests-new-written","t":"2026-09-25T16:40:58Z","epochMs":1790350858000,"note":"dot.dailyLimit.test.js written, wraps existing postDebit HB.js script"}
+{"stage":"tests-new-run","t":"2026-09-25T16:40:58Z","epochMs":1790350858000,"note":"postDebit amount=50.00 -- FAIL (red): status ACCEPTED, expected REJECTED"}
+{"stage":"read-sources","t":"2026-09-25T16:42:00Z","epochMs":1790350920000,"note":"retrieved DOT500 via Endevor MCP get_elements + get_element_content (DEV/1/BANKING/DOT/COBPGM)"}
+{"stage":"edit-v1","t":"2026-09-25T16:43:30Z","epochMs":1790351010000,"note":"3 edits applied: WS-LIMIT-MSG, WS-DAILY-LIMIT-CONTROL, 4000/4100 sections"}
+{"stage":"generate-1","t":"2026-09-25T16:44:10Z","epochMs":1790351050000,"note":"syncz task build:dot -- FAILED rc=12, IGYDS0017-E \"01 should begin in area A\""}
+{"stage":"listing-1","t":"2026-09-25T16:46:15Z","epochMs":1790351175000,"note":"listings/generate-1-DOT500-build.txt fetched, rc=12"}
+{"stage":"edit-v2","t":"2026-09-25T16:46:00Z","epochMs":1790351160000,"note":"fixed 01-level column alignment; still had a leftover COPY-statement column-7 bug"}
+{"stage":"generate-2","t":"2026-09-25T16:46:15Z","epochMs":1790351175000,"note":"syncz task build:dot -- FAILED again, rc=12, IGYDS0002-E column 7 / IGYDS0009-E area A"}
+{"stage":"listing-2","t":"2026-09-25T16:46:15Z","epochMs":1790351175000,"note":"listings/generate-2-DOT500-build.txt fetched, rc=12"}
+{"stage":"edit-v3","t":"2026-09-25T16:48:00Z","epochMs":1790351280000,"note":"fixed COPY DOTCONS. column-7 overlap"}
+{"stage":"generate-3","t":"2026-09-25T16:48:13Z","epochMs":1790351293000,"note":"syncz task build:dot -- SUCCEEDED rc=0"}
+{"stage":"listing-3","t":"2026-09-25T16:49:51Z","epochMs":1790351391000,"note":"listings/generate-3-DOT500-build.txt fetched, rc=0"}
+{"stage":"deploy","t":"2026-09-25T16:49:51Z","epochMs":1790351391000,"note":"syncz task deploy -- copied DOT500 load module to USER.CICS.BIZAPP.DOT.LOAD, CEMT SET PROG(DOT500) PHASEIN, no region restart"}
+{"stage":"tests-run-green","t":"2026-09-25T16:51:10Z","epochMs":1790351470000,"note":"both tests re-run: regression PASS, new test PASS (REJECTED, ERROR: DAILY DEBIT LIMIT EXCEEDED)"}

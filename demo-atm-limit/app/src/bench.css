@@ -1,0 +1,83 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.bench-page {
+  width: 1920px;
+  height: 1080px;
+  box-sizing: border-box;
+  background: #0b0b0d;
+  color: #fff;
+  padding: 18px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.bench-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  flex: none;
+}
+
+.bench-section {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bench-section-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--vsc-fg-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.bench-row {
+  flex: none;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.bench-cell {
+  width: 600px;
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bench-cell-label {
+  font-size: 13px;
+  color: var(--vsc-fg-muted);
+  text-align: center;
+}
+
+/* A fixed budget (not flex:1 — that made the flex algorithm's automatic
+   minimum size fight the scaled-down content and either clip it or push
+   the second section off the 1080px page, depending on which ancestor
+   won). scale below is chosen to fit AtmMachine's real unscaled height
+   (measured: 811px at this 920px width) inside this box exactly. */
+.bench-cell-stage {
+  width: 600px;
+  height: 440px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.bench-cell-inner {
+  width: 920px;
+  flex: none;
+  transform: scale(0.5425);
+  transform-origin: top center;
+}

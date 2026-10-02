@@ -1,0 +1,45 @@
+.vsc-problems {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background: #181818;
+  padding: 4px 0;
+}
+
+.prob-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 3px 12px;
+  font-size: 15px;
+  color: var(--vsc-fg);
+  white-space: nowrap;
+}
+
+.prob-row .codicon {
+  font-size: 15px;
+  align-self: center;
+}
+.prob-error .codicon {
+  color: var(--accent-red, #f85149);
+}
+.prob-warning .codicon {
+  color: #d29922;
+}
+
+.prob-message {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prob-source {
+  color: var(--vsc-fg-muted);
+  font-size: 0.85em;
+}
+
+.prob-loc {
+  margin-left: auto;
+  flex: none;
+  color: var(--vsc-fg-muted);
+  font-size: 0.85em;
+}

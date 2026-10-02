@@ -1,0 +1,816 @@
+{
+  "screenText": "    0         1         2         3         4         5         6         7         \n    01234567890123456789012345678901234567890123456789012345678901234567890123456789\n00:  DATE: 2026-09-25      DEPOSITORY OF ONLINE TRANSACTIONS         TIME: 13:32:50 \n01:                               ACCOUNT TRANSACTION                               \n02:                                                                                 \n03:                                                                                 \n04:                        BANK NUMBER ====> < [___] >                                \n05:                        ACCOUNT TYPE ===> < [__] >                                 \n06:                        ACCOUNT KEY ====> < [____________________] >               \n07:                        SERVICE TYPE ===> < [___] >                                \n08:                        FORMAT TYPE ====> < [__] >                                 \n09:                        TRAN DATE ======> < [YYYYMMDD] >                           \n10:                        TRAN CODE ======> < [___] >                                \n11:                        TYPE/REASON ====> < [__] >                                 \n12:                        AMOUNT 1 =======> < [___________] >                        \n13:                        AMOUNT 2 =======> < [___________] >                        \n14:                        SERIAL 1 =======> < [_________] >                          \n15:                        SERIAL 2 =======> < [_________] >                          \n16:                        RELEASE DATE ===> < [YYYYMMDD] >                           \n17:                        ALERT CODE =====> < [_] >                                  \n18:                        NON-MONETARY ===> < [____________________] >               \n19:                                                                                 \n20:                                                                                 \n21:                                                                                 \n22:                                                                                 \n23:  F1 = RESET    F2 = INSERT    F3 = DELETE                          CLEAR = QUIT \n\n\"DATE: 2026-09-25 DEPOSITORY OF ONLINE TRANSACTIONS TIME: 13…\" | cursor=(4,43) | fields=15 | keyboard=UNLOCKED",
+  "cursor": {
+    "row": 4,
+    "col": 43
+  },
+  "keyboard": {
+    "locked": false
+  },
+  "fields": [
+    {
+      "index": 1,
+      "row": 4,
+      "col": 43,
+      "length": 3,
+      "protected": false,
+      "numeric": true,
+      "hidden": false,
+      "credentialShaped": false,
+      "intensified": false,
+      "nearbyLabel": "BANK NUMBER ====> <",
+      "locator": "after:\"BANK NUMBER\"",
+      "value": ""
+    },
+    {
+      "index": 2,
+      "row": 5,
+      "col": 43,
+      "length": 2,
+      "protected": false,
+      "numeric": false,
+      "hidden": false,
+      "credentialShaped": false,
+      "intensified": false,
+      "nearbyLabel": "ACCOUNT TYPE ===> <",
+      "locator": "after:\"ACCOUNT TYPE\"",
+      "value": ""
+    },
+    {
+      "index": 3,
+      "row": 6,
+      "col": 43,
+      "length": 20,
+      "protected": false,
+      "numeric": false,
+      "hidden": false,
+      "credentialShaped": false,
+      "intensified": false,
+      "nearbyLabel": "ACCOUNT KEY ====> <",
+      "locator": "after:\"ACCOUNT KEY\"",
+      "value": ""
+    },
+    {
+      "index": 4,
+      "row": 7,
+      "col": 43,
+      "length": 3,
+      "protected": false,
+      "numeric": false,
+      "hidden": false,
+      "credentialShaped": false,
+      "intensified": false,
+      "nearbyLabel": "SERVICE TYPE ===> <",
+      "locator": "after:\"SERVICE TYPE\"",
+      "value": ""
+    },
+    {
+      "index": 5,
+      "row": 8,
+      "col": 43,
+      "length": 2,
+      "protected": false,
+      "numeric": false,
+      "hidden": false,
+      "credentialShaped": false,
+      "intensified": false,
+      "nearbyLabel": "FORMAT TYPE ====> <",
+      "locator": "after:\"FORMAT TYPE\"",
+      "value": ""
+    },
+    {
+      "index": 6,
+      "row": 9,
+      "col": 43,
+      "length": 8,
+      "protected": false,
+      "numeric": true,
+      "hidden": false,
+      "credentialShaped": false,
+      "intensified": false,
+      "nearbyLabel": "TRAN DATE ======> <",
+      "locator": "after:\"TRAN DATE\"",
+      "value": "YYYYMMDD"
+    },
+    {
+      "index": 7,
+      "row": 10,
+      "col": 43,
+      "length": 3,
+      "protected": false,
+      "numeric": true,
+      "hidden": false,
+      "credentialShaped": false,
+      "intensified": false,
+      "nearbyLabel": "TRAN CODE ======> <",
+      "locator": "after:\"TRAN CODE\"",
+      "value": ""
+    },
+    {
+      "index": 8,
+      "row": 11,
+      "col": 43,
+      "length": 2,
+      "protected": false,
+      "numeric": true,
+      "hidden": false,
+      "credentialShaped": false,
+      "intensified": false,
+      "nearbyLabel": "TYPE/REASON ====> <",
+      "locator": "after:\"TYPE/REASON\"",
+      "value": ""
+    },
+    {
+      "index": 9,
+      "row": 12,
+      "col": 43,
+      "length": 11,
+      "protected": false,
+      "numeric": true,
+      "hidden": false,
+      "credentialShaped": false,
+      "intensified": false,
+      "nearbyLabel": "AMOUNT 1 =======> <",
+      "locator": "after:\"AMOUNT 1\"",
+      "value": ""
+    },
+    {
+      "index": 10,
+      "row": 13,
+      "col": 43,
+      "length": 11,
+      "protected": false,
+      "numeric": true,
+      "hidden": false,
+      "credentialShaped": false,
+      "intensified": false,
+      "nearbyLabel": "AMOUNT 2 =======> <",
+      "locator": "after:\"AMOUNT 2\"",
+      "value": ""
+    },
+    {
+      "index": 11,
+      "row": 14,
+      "col": 43,
+      "length": 9,
+      "protected": false,
+      "numeric": true,
+      "hidden": false,
+      "credentialShaped": false,
+      "intensified": false,
+      "nearbyLabel": "SERIAL 1 =======> <",
+      "locator": "after:\"SERIAL 1\"",
+      "value": ""
+    },
+    {
+      "index": 12,
+      "row": 15,
+      "col": 43,
+      "length": 9,
+      "protected": false,
+      "numeric": true,
+      "hidden": false,
+      "credentialShaped": false,
+      "intensified": false,
+      "nearbyLabel": "SERIAL 2 =======> <",
+      "locator": "after:\"SERIAL 2\"",
+      "value": ""
+    },
+    {
+      "index": 13,
+      "row": 16,
+      "col": 43,
+      "length": 8,
+      "protected": false,
+      "numeric": true,
+      "hidden": false,
+      "credentialShaped": false,
+      "intensified": false,
+      "nearbyLabel": "RELEASE DATE ===> <",
+      "locator": "after:\"RELEASE DATE\"",
+      "value": "YYYYMMDD"
+    },
+    {
+      "index": 14,
+      "row": 17,
+      "col": 43,
+      "length": 1,
+      "protected": false,
+      "numeric": true,
+      "hidden": false,
+      "credentialShaped": false,
+      "intensified": false,
+      "nearbyLabel": "ALERT CODE =====> <",
+      "locator": "after:\"ALERT CODE\"",
+      "value": ""
+    },
+    {
+      "index": 15,
+      "row": 18,
+      "col": 43,
+      "length": 20,
+      "protected": false,
+      "numeric": false,
+      "hidden": false,
+      "credentialShaped": false,
+      "intensified": false,
+      "nearbyLabel": "NON-MONETARY ===> <",
+      "locator": "after:\"NON-MONETARY\"",
+      "value": ""
+    }
+  ],
+  "fingerprint": "cdf253c4",
+  "geometry": {
+    "rows": 24,
+    "cols": 80
+  },
+  "styleRuns": [
+    {
+      "row": 0,
+      "col": 1,
+      "length": 5,
+      "text": "DATE:",
+      "color": "blue"
+    },
+    {
+      "row": 0,
+      "col": 7,
+      "length": 15,
+      "text": "2026-09-25     ",
+      "color": "blue"
+    },
+    {
+      "row": 0,
+      "col": 23,
+      "length": 41,
+      "text": "DEPOSITORY OF ONLINE TRANSACTIONS        ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 0,
+      "col": 65,
+      "length": 5,
+      "text": "TIME:",
+      "color": "blue"
+    },
+    {
+      "row": 0,
+      "col": 71,
+      "length": 9,
+      "text": "13:32:50 ",
+      "color": "blue"
+    },
+    {
+      "row": 1,
+      "col": 0,
+      "length": 29,
+      "text": "                             ",
+      "color": "blue"
+    },
+    {
+      "row": 1,
+      "col": 30,
+      "length": 50,
+      "text": "ACCOUNT TRANSACTION                               ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 2,
+      "col": 0,
+      "length": 80,
+      "text": "                                                                                ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 3,
+      "col": 0,
+      "length": 80,
+      "text": "                                                                                ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 4,
+      "col": 0,
+      "length": 22,
+      "text": "                      ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 4,
+      "col": 23,
+      "length": 19,
+      "text": "BANK NUMBER ====> <",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 4,
+      "col": 43,
+      "length": 3,
+      "text": "   ",
+      "color": "green"
+    },
+    {
+      "row": 4,
+      "col": 47,
+      "length": 33,
+      "text": ">                                ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 5,
+      "col": 0,
+      "length": 22,
+      "text": "                      ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 5,
+      "col": 23,
+      "length": 19,
+      "text": "ACCOUNT TYPE ===> <",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 5,
+      "col": 43,
+      "length": 2,
+      "text": "  ",
+      "color": "green"
+    },
+    {
+      "row": 5,
+      "col": 46,
+      "length": 34,
+      "text": ">                                 ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 6,
+      "col": 0,
+      "length": 22,
+      "text": "                      ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 6,
+      "col": 23,
+      "length": 19,
+      "text": "ACCOUNT KEY ====> <",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 6,
+      "col": 43,
+      "length": 20,
+      "text": "                    ",
+      "color": "green"
+    },
+    {
+      "row": 6,
+      "col": 64,
+      "length": 16,
+      "text": ">               ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 7,
+      "col": 0,
+      "length": 22,
+      "text": "                      ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 7,
+      "col": 23,
+      "length": 19,
+      "text": "SERVICE TYPE ===> <",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 7,
+      "col": 43,
+      "length": 3,
+      "text": "   ",
+      "color": "green"
+    },
+    {
+      "row": 7,
+      "col": 47,
+      "length": 33,
+      "text": ">                                ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 8,
+      "col": 0,
+      "length": 22,
+      "text": "                      ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 8,
+      "col": 23,
+      "length": 19,
+      "text": "FORMAT TYPE ====> <",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 8,
+      "col": 43,
+      "length": 2,
+      "text": "  ",
+      "color": "green"
+    },
+    {
+      "row": 8,
+      "col": 46,
+      "length": 34,
+      "text": ">                                 ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 9,
+      "col": 0,
+      "length": 22,
+      "text": "                      ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 9,
+      "col": 23,
+      "length": 19,
+      "text": "TRAN DATE ======> <",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 9,
+      "col": 43,
+      "length": 8,
+      "text": "YYYYMMDD",
+      "color": "green"
+    },
+    {
+      "row": 9,
+      "col": 52,
+      "length": 28,
+      "text": ">                           ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 10,
+      "col": 0,
+      "length": 22,
+      "text": "                      ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 10,
+      "col": 23,
+      "length": 19,
+      "text": "TRAN CODE ======> <",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 10,
+      "col": 43,
+      "length": 3,
+      "text": "   ",
+      "color": "green"
+    },
+    {
+      "row": 10,
+      "col": 47,
+      "length": 33,
+      "text": ">                                ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 11,
+      "col": 0,
+      "length": 22,
+      "text": "                      ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 11,
+      "col": 23,
+      "length": 19,
+      "text": "TYPE/REASON ====> <",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 11,
+      "col": 43,
+      "length": 2,
+      "text": "  ",
+      "color": "green"
+    },
+    {
+      "row": 11,
+      "col": 46,
+      "length": 34,
+      "text": ">                                 ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 12,
+      "col": 0,
+      "length": 22,
+      "text": "                      ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 12,
+      "col": 23,
+      "length": 19,
+      "text": "AMOUNT 1 =======> <",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 12,
+      "col": 43,
+      "length": 11,
+      "text": "           ",
+      "color": "green"
+    },
+    {
+      "row": 12,
+      "col": 55,
+      "length": 25,
+      "text": ">                        ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 13,
+      "col": 0,
+      "length": 22,
+      "text": "                      ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 13,
+      "col": 23,
+      "length": 19,
+      "text": "AMOUNT 2 =======> <",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 13,
+      "col": 43,
+      "length": 11,
+      "text": "           ",
+      "color": "green"
+    },
+    {
+      "row": 13,
+      "col": 55,
+      "length": 25,
+      "text": ">                        ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 14,
+      "col": 0,
+      "length": 22,
+      "text": "                      ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 14,
+      "col": 23,
+      "length": 19,
+      "text": "SERIAL 1 =======> <",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 14,
+      "col": 43,
+      "length": 9,
+      "text": "         ",
+      "color": "green"
+    },
+    {
+      "row": 14,
+      "col": 53,
+      "length": 27,
+      "text": ">                          ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 15,
+      "col": 0,
+      "length": 22,
+      "text": "                      ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 15,
+      "col": 23,
+      "length": 19,
+      "text": "SERIAL 2 =======> <",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 15,
+      "col": 43,
+      "length": 9,
+      "text": "         ",
+      "color": "green"
+    },
+    {
+      "row": 15,
+      "col": 53,
+      "length": 27,
+      "text": ">                          ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 16,
+      "col": 0,
+      "length": 22,
+      "text": "                      ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 16,
+      "col": 23,
+      "length": 19,
+      "text": "RELEASE DATE ===> <",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 16,
+      "col": 43,
+      "length": 8,
+      "text": "YYYYMMDD",
+      "color": "green"
+    },
+    {
+      "row": 16,
+      "col": 52,
+      "length": 28,
+      "text": ">                           ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 17,
+      "col": 0,
+      "length": 22,
+      "text": "                      ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 17,
+      "col": 23,
+      "length": 19,
+      "text": "ALERT CODE =====> <",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 17,
+      "col": 43,
+      "length": 1,
+      "text": " ",
+      "color": "green"
+    },
+    {
+      "row": 17,
+      "col": 45,
+      "length": 35,
+      "text": ">                                  ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 18,
+      "col": 0,
+      "length": 22,
+      "text": "                      ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 18,
+      "col": 23,
+      "length": 19,
+      "text": "NON-MONETARY ===> <",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 18,
+      "col": 43,
+      "length": 20,
+      "text": "                    ",
+      "color": "green"
+    },
+    {
+      "row": 18,
+      "col": 64,
+      "length": 16,
+      "text": ">               ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 19,
+      "col": 0,
+      "length": 80,
+      "text": "                                                                                ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 20,
+      "col": 0,
+      "length": 22,
+      "text": "                      ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 20,
+      "col": 23,
+      "length": 57,
+      "text": "                                                         ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 21,
+      "col": 0,
+      "length": 22,
+      "text": "                      ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 21,
+      "col": 23,
+      "length": 57,
+      "text": "                                                         ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 22,
+      "col": 0,
+      "length": 80,
+      "text": "                                                                                ",
+      "color": "white",
+      "bold": true
+    },
+    {
+      "row": 23,
+      "col": 1,
+      "length": 79,
+      "text": "F1 = RESET    F2 = INSERT    F3 = DELETE                          CLEAR = QUIT ",
+      "color": "blue"
+    }
+  ]
+}

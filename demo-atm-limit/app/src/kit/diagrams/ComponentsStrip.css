@@ -1,0 +1,88 @@
+.diagram-strip {
+  position: relative;
+  width: 100%;
+  padding: 8px 0;
+}
+
+.diagram-strip-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.diagram-box {
+  flex: 0 1 190px;
+  /* A box is at least as wide as its own text (a long product name widens
+     that one box); short labels keep the shared 190px basis. */
+  min-width: max-content;
+  background: #17181b;
+  border: 2px solid #3a3d42;
+  border-radius: 8px;
+  padding: 10px 10px;
+  text-align: center;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+
+.diagram-box.glow {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 16px rgba(88, 166, 255, 0.45);
+}
+
+.diagram-box-label {
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.005em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.diagram-box-sub {
+  margin-top: 3px;
+  font-size: 11px;
+  color: var(--vsc-fg-muted);
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+
+/* A real flex sibling between boxes (not nested inside one) — the previous
+   full-screen version hid its arrows because they lived inside a
+   flex:1 box-slot, so neighbouring boxes could grow to abut and cover
+   them. This one always gets its own >=40px of width. */
+.diagram-arrow {
+  flex: 0 0 44px;
+  height: 2px;
+  position: relative;
+  margin: 0 2px;
+}
+
+.diagram-arrow-line {
+  position: absolute;
+  inset: 0;
+  background: #5a5d62;
+}
+
+.diagram-arrow-head {
+  position: absolute;
+  right: -1px;
+  top: -4px;
+  border: 5px solid transparent;
+  border-left-color: #5a5d62;
+}
+
+.diagram-packet {
+  position: absolute;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  margin-top: -5px;
+  border-radius: 50%;
+  background: var(--accent-amber);
+  box-shadow: 0 0 12px rgba(210, 153, 34, 0.9);
+  pointer-events: none;
+}

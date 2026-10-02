@@ -1,0 +1,60 @@
+$ panelwright connect localhost:3271
+"Terminal CUU0C0 Date 24.09.26" | cursor=(22,11) | fields=1 | keyboard=UNLOCKED
+00: Terminal   CUU0C0                                                 Date  24.09.26
+01:                                                                   Time  22:08:53
+03:                               ______________     __      __     ___________
+04:                              /||||||||||||||\   |||\    ///\   ||||||||||||\
+05:                             | |||||||||||||| |  ||||   /// /   |||||||||||| |
+06:                             |/____/||||\ ___\|  ||||  /// /    ||||\ ______\|
+07:         |l      _,,,---,,_       | |||| |       |||| /// /     |||| |
+08:  ZZZzz /,'.-'`'    -.  ;-;;,     | |||| |       ||||/// /      |||||||||| \
+09:       |,4-  ) )-,_. ,( (  ''-'   | |||| |       |||///_/       ||||||||||| \
+10:      '---''(_/--'  `-')_)        | |||| |       |||\\\ \       \_______|||| |
+11:                                  | |||| |       ||||\\\ \              |||| |
+12:        The MVS 3.8j              | |||| |       |||| \\\ \     |||||||||||| |
+13:      Tur(n)key system            | |||| |       ||||  \\\_\    ||||||||||| /
+14:                                  |/____\|       \__\   \___\   \__________/
+16:       TK3  created by Volker Bandke      volker@bandke.org
+17:       TK4- update by Juergen Winkelmann  juergen.winkelmann@pebble-beach.ch
+18:       TK5  update by Rob Prins           prin0096@gmail.com
+19:            see SYS2.JCLLIB(CREDITS) for complete credits
+20:                         MVS 3.8j Level 8505 - Update 5
+22: Logon ===> [1:________________________________________…(+88_)]*
+23:                                                             RUNNING  TK5
+$ panelwright transfer put 'HERC02.DOGECICS(DOGESEND)' cobol/DOGESEND.cbl --lrecl 80
+PWL023I: transfer complete: sent 9,300 bytes (235 records) in 0.1s — TRANS03, mode: ascii (auto-detected)
+$ panelwright transfer put 'HERC02.DOGECICS(COMPSEND)' jcl/COMPSEND.jcl --lrecl 80
+PWL023I: transfer complete: sent 346 bytes (9 records) in 0.3s — TRANS03, mode: ascii (auto-detected)
+$ panelwright tso SUBMIT 'HERC02.DOGECICS(COMPSEND)'
+ JOB DOGECOB(JOB00037) SUBMITTED
+PWL194I: tso: "SUBMIT 'HERC02.DOGECICS(COMPSEND)'" — 1 row(s), 1 page(s), 0.0s, ended at READY
+poll 1:  JOB DOGECOB(JOB00037) EXECUTING PWL194I: tso: "STATUS DOGECOB" — 1 row(s), 1 page(s), 0.0s, ended at READY 
+poll 2:  JOB DOGECOB(JOB00037) ON OUTPUT QUEUE PWL194I: tso: "STATUS DOGECOB" — 2 row(s), 1 page(s), 0.0s, ended at READY 
+$ panelwright tso OUTPUT DOGECOB(JOB) PRINT(JOB) KEEP
+ INVALID SEARCH ARGUMENTS, SSOBRETN CODE 012+
+PWL194I: tso: "OUTPUT DOGECOB(JOB) PRINT(JOB) KEEP" — 1 row(s), 1 page(s), 0.0s, ended at READY
+$ panelwright transfer get 'HERC02.JOB.OUTLIST' captures/run1/job-JOB.outlist --lrecl 133
+PWC021E: buildIndFileCommand: lrecl is PUT(send)-only, not valid on GET
+see: panelwright help message PWC021E
+$ panelwright tso OUTPUT DOGECOB(JOB00037) PRINT(JOB00037) KEEP
+PWL194I: tso: "OUTPUT DOGECOB(JOB00037) PRINT(JOB00037) KEEP" — 0 row(s), 1 page(s), 0.1s, ended at READY
+$ panelwright transfer get 'HERC02.JOB00037.OUTLIST' captures/run1/job-JOB00037.outlist
+PWL023E: transfer failed: idle-timeout
+command: IND$FILE GET 'HERC02.JOB00037.OUTLIST' ASCII CRLF
+$ panelwright transfer put 'HERC02.DOGECICS(DOGESEND)' cobol/DOGESEND.cbl --lrecl 80
+PWL023I: transfer complete: sent 10,999 bytes (275 records) in 0.2s — TRANS03, mode: ascii (auto-detected)
+$ panelwright tso SUBMIT 'HERC02.DOGECICS(COMPSEND)'
+ JOB DOGECOB(JOB00038) SUBMITTED
+poll 1:  JOB DOGECOB(JOB00038) EXECUTING
+poll 2:  $HASP165 JOB   38  DOGECOB ENDED- MAX COND CODE 0004
+poll 3:  JOB DOGECOB(JOB00037) ON OUTPUT QUEUE
+$ panelwright tso OUTPUT DOGECOB(JOB00037) PRINT(JOB00037) KEEP
+ NO HELD OUTPUT FOR JOB DOGECOB(JOB00037)
+PWL194I: tso: "OUTPUT DOGECOB(JOB00037) PRINT(JOB00037) KEEP" — 1 row(s), 1 page(s), 0.0s, ended at READY
+$ panelwright transfer get 'HERC02.JOB00037.OUTLIST' captures/run1/job-JOB00037.outlist
+PWL023I: transfer complete: received 0 bytes (0 records) in 0.1s — TRANS03, mode: ascii, lf line endings
+warning: the host file was empty — received 0 bytes. A zero-byte receive is a successful transfer, but if you expected content, the host file does not have any (TSO allocates a PRINT() data set even when OUTPUT finds no held output).
+$ panelwright tso OUTPUT DOGECOB(JOB00038) PRINT(JOB00038) KEEP
+PWL194I: tso: "OUTPUT DOGECOB(JOB00038) PRINT(JOB00038) KEEP" — 0 row(s), 1 page(s), 0.1s, ended at READY
+$ panelwright transfer get 'HERC02.JOB00038.OUTLIST' captures/run1/job-JOB00038.outlist
+PWL023I: transfer complete: received 95,091 bytes (1711 records) in 0.1s — TRANS03, mode: ascii, lf line endings

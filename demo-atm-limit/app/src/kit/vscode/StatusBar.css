@@ -1,0 +1,29 @@
+.vsc-statusbar {
+  height: 26px;
+  background: var(--vsc-bg-statusbar);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  font-size: 13px;
+  flex: none;
+}
+
+.vsc-statusbar-left,
+.vsc-statusbar-right {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.sb-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.sb-item .codicon {
+  font-size: 13px;
+}

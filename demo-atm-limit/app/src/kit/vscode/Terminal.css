@@ -1,0 +1,110 @@
+.vsc-panel {
+  height: 260px;
+  background: #181818;
+  border-top: 1px solid var(--vsc-border);
+  display: flex;
+  flex-direction: column;
+  flex: none;
+  transition: height 0.25s ease;
+}
+
+/* Every VS Code step keeps its chat panel now — no more full-screen
+   terminal takeover — so a step that wants to show a WHOLE vitest run
+   (steps.ts's VSCodeStep.panelExpanded) needs the panel itself to grow
+   instead, leaving just enough of the editor above it to show what file is
+   open. */
+.vsc-panel-expanded {
+  height: 640px;
+}
+
+.vsc-panel-tabs {
+  height: 30px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--vsc-border);
+  font-size: 12px;
+  color: var(--vsc-fg-muted);
+  gap: 16px;
+  flex: none;
+}
+
+.vsc-panel-tabs .active {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+  border-bottom: 2px solid var(--vsc-accent);
+  padding-bottom: 4px;
+}
+
+.vsc-panel-tab-badge {
+  background: #5a5a5a;
+  color: #fff;
+  border-radius: 8px;
+  padding: 0 6px;
+  font-size: 10px;
+  line-height: 16px;
+}
+
+.vsc-terminal-plain {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background: #181818;
+}
+
+.vsc-terminal-pre {
+  margin: 0;
+  padding: 8px 12px;
+  font-family: var(--font-mono);
+  font-size: 18px;
+  line-height: 27px;
+  color: #cccccc;
+}
+
+.term-line {
+  white-space: pre;
+  position: relative;
+  /* A genuinely empty line (no text node at all) generates no inline
+     content, so line-height alone doesn't give it a row — without this
+     it collapses to 0px and the next line renders on top of it. */
+  min-height: 27px;
+}
+
+.term-green {
+  color: #3fb950;
+}
+.term-red {
+  color: #f85149;
+}
+.term-cyan {
+  color: #56d4dd;
+}
+.term-dim {
+  color: #6e7681;
+}
+.term-bold {
+  font-weight: 700;
+}
+
+.term-cursor {
+  display: inline-block;
+  width: 0.6em;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  background: #cccccc;
+  animation: term-cursor-blink 1s step-end infinite;
+}
+
+@keyframes term-cursor-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}

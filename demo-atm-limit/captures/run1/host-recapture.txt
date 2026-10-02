@@ -1,0 +1,32 @@
+$ panelwright transfer put 'HERC02.DOGECICS(DOGESND1)' captures/run1/DOGESEND.v1.cbl --lrecl 80
+PWL023I: transfer complete: sent 9,300 bytes (235 records) in 0.1s — TRANS03, mode: ascii (auto-detected)
+$ panelwright transfer put 'HERC02.DOGECICS(COMPSND1)' /tmp/COMPSND1.jcl --lrecl 80
+PWL023I: transfer complete: sent 346 bytes (9 records) in 0.1s — TRANS03, mode: ascii (auto-detected)
+$ panelwright tso SUBMIT 'HERC02.DOGECICS(COMPSND1)'
+ JOB DOGECOB(JOB00039) SUBMITTED
+PWL194I: tso: "SUBMIT 'HERC02.DOGECICS(COMPSND1)'" — 1 row(s), 1 page(s), 0.1s, ended at READY
+poll 1:  JOB DOGECOB(JOB00039) ON OUTPUT QUEUE
+$ panelwright tso OUTPUT DOGECOB(JOB00039) PRINT(JOB00039) KEEP
+PWL194I: tso: "OUTPUT DOGECOB(JOB00039) PRINT(JOB00039) KEEP" — 0 row(s), 1 page(s), 0.2s, ended at READY
+$ panelwright transfer get 'HERC02.JOB00039.OUTLIST' captures/run1/job-JOB00039.outlist
+PWL023I: transfer complete: received 80,662 bytes (2573 records) in 0.1s — TRANS03, mode: ascii, lf line endings
+$ panelwright transfer put 'HERC02.DOGECICS(DOGESEND)' captures/run1/DOGESEND.v0.cbl --lrecl 80
+PWL023I: transfer complete: sent 5,372 bytes (151 records) in 0.3s — TRANS03, mode: ascii (auto-detected)
+$ panelwright tso SUBMIT 'HERC02.DOGECICS(COMPSEND)'
+ JOB DOGECOB(JOB00040) SUBMITTED
+PWL194I: tso: "SUBMIT 'HERC02.DOGECICS(COMPSEND)'" — 1 row(s), 1 page(s), 0.1s, ended at READY
+poll 1:  JOB DOGECOB(JOB00040) ON OUTPUT QUEUE
+$ panelwright tso OUTPUT DOGECOB(JOB00040) PRINT(JOB00040) KEEP
+PWL194I: tso: "OUTPUT DOGECOB(JOB00040) PRINT(JOB00040) KEEP" — 0 row(s), 1 page(s), 0.1s, ended at READY
+$ panelwright transfer get 'HERC02.JOB00040.OUTLIST' captures/run1/job-JOB00040.outlist
+PWL023I: transfer complete: received 77,406 bytes (1435 records) in 0.1s — TRANS03, mode: ascii, lf line endings
+$ panelwright transfer put 'HERC02.DOGECICS(DOGESEND)' captures/run1/DOGESEND.v2.cbl --lrecl 80
+PWL023I: transfer complete: sent 10,999 bytes (275 records) in 0.1s — TRANS03, mode: ascii (auto-detected)
+$ panelwright tso SUBMIT 'HERC02.DOGECICS(COMPSEND)'
+ JOB DOGECOB(JOB00041) SUBMITTED
+PWL194I: tso: "SUBMIT 'HERC02.DOGECICS(COMPSEND)'" — 1 row(s), 1 page(s), 0.1s, ended at READY
+poll 1:  JOB DOGECOB(JOB00041) ON OUTPUT QUEUE
+$ panelwright tso OUTPUT DOGECOB(JOB00041) PRINT(JOB00041) KEEP
+PWL194I: tso: "OUTPUT DOGECOB(JOB00041) PRINT(JOB00041) KEEP" — 0 row(s), 1 page(s), 0.1s, ended at READY
+$ panelwright transfer get 'HERC02.JOB00041.OUTLIST' captures/run1/job-JOB00041.outlist
+PWL023I: transfer complete: received 95,091 bytes (1711 records) in 0.2s — TRANS03, mode: ascii, lf line endings

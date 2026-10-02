@@ -1,0 +1,50 @@
+$ node tests/dot.regression.test.js
+$ hb script run getCheckingBalances account=101123456
+{
+  "status": "SUCCESS",
+  "header": {
+    "bank": "001",
+    "screenDate": "2026-09-25"
+  },
+  "accountInfo": {
+    "type": "DD:",
+    "accountNumber": "1-01-123456",
+    "customerName": "WILLIAMS ROBT",
+    "fileDate": "1994-01-05"
+  },
+  "primaryBalances": {
+    "currentBalance": "      5,000.00",
+    "accountBalance": "      5,324.00-",
+    "collectedFunds": "      5,000.00",
+    "availableBalance": "        926.00"
+  },
+  "floatDetail": {
+    "day1": "           .00",
+    "day2": "           .00",
+    "day3": "           .00",
+    "day4": "           .00",
+    "day5": "           .00",
+    "other": "           .00"
+  },
+  "overdraftAndCredit": {
+    "odLimit": "           .00",
+    "creditLine": "           .00",
+    "linePayoff": "           .00",
+    "otherFunds": "      5,350.00",
+    "memoCredit": "        900.00",
+    "memoDebits": "           .00",
+    "linePastDue": "           .00"
+  },
+  "activityDetail": {
+    "depositCredits": "         40.00",
+    "withdrawals": "     10,064.00",
+    "otherHolds": "        300.00"
+  },
+  "odpProtection": {
+    "idType": "SS",
+    "idAccount": "11-01-123456",
+    "transferLimit": "      5,350.00",
+    "transferOnline": "           .00"
+  }
+}
+PASS: basic account inquiry returns SUCCESS

@@ -1,0 +1,5 @@
+environment=DEV stageNumber=1 system=BANKING subsystem=DOT type=COBPGM element=DOT500
+  processorGroup=CIINBL  elementVersionLevel(before this run)=0101  fingerprint(before)=4886B0562AF08A7B
+  map: DEV/1 -> PRD/1 (get_map)
+  retrieved via mcp__code4z-cowboys get_elements + get_element_content (mock EWS server, datasource COWBOYS,
+  http://localhost:8080/EndevorService/api/v2, gitRepoPath .../code4z-gen-ai/dev/mock_ews_server/repos/COWBOYS)

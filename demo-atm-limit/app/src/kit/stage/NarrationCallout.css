@@ -1,0 +1,169 @@
+.narration-callout {
+  position: fixed;
+  /* --narration-lift is set inline by NarrationCallout.tsx once it has
+     measured a [data-keep-clear] overlap; 0px when there is none. */
+  bottom: calc(var(--presenter-bar-height) + 22px + var(--narration-lift, 0px));
+  transition:
+    bottom 0.15s ease,
+    right 0.15s ease;
+  z-index: 50;
+  max-width: 38ch;
+  background: rgba(20, 20, 22, 0.82);
+  border-left: 4px solid var(--accent-amber);
+  border-radius: 10px;
+  padding: 14px 18px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+/* Narration renders through the kit's MarkdownLite (markdownLite.tsx) —
+   .md-lite carries the type size/color/family so every block it can
+   produce (paragraph, list, heading) reads consistently, not just <p>. */
+.narration-callout .md-lite {
+  font-family: var(--font-ui);
+  font-size: 20px;
+  line-height: 1.4;
+  color: #f0f0f0;
+}
+
+.narration-callout .md-lite p {
+  /* ~0.5em gap between paragraphs at this callout's own 20px type — NOT
+     ChatPanel.css's fixed 8px .md-lite p margin, which is sized for that
+     panel's own (different) font size. */
+  margin: 0 0 0.5em;
+}
+.narration-callout .md-lite p:last-child {
+  margin-bottom: 0;
+}
+
+/* --narration-review-shift is set inline (NarrationCallout.tsx) to
+   var(--review-panel-width) while review mode is open — clear of
+   ReviewPanel.tsx's dock, which would otherwise sit right on top of a
+   "right"-side callout (both are viewport-fixed real pixels). 0px when
+   review mode is off or the panel is on the other side. */
+.narration-right {
+  right: calc(28px + var(--narration-review-shift, 0px));
+}
+
+.narration-left {
+  left: 28px;
+}
+
+/* Floats at the callout's top-left, ahead of the text — .md-lite's own
+   paragraphs still read top to bottom below it, unaffected. */
+.narration-speaker {
+  float: left;
+  margin: 0 10px 4px 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--accent-amber);
+  background: transparent;
+  color: var(--accent-amber);
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.narration-speaker:hover {
+  background: var(--accent-amber);
+  color: #1c1c1c;
+}
+.narration-speaker-playing {
+  background: var(--accent-amber);
+  color: #1c1c1c;
+}
+.narration-speaker-loading {
+  animation: narration-speaker-spin 0.9s linear infinite;
+}
+.narration-speaker-not-rendered,
+.narration-speaker-error {
+  opacity: 0.55;
+  border-style: dashed;
+}
+@keyframes narration-speaker-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.narration-edit-pencil {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--accent-amber);
+  background: #1c1c1c;
+  color: var(--accent-amber);
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.narration-edit-pencil:hover {
+  background: var(--accent-amber);
+  color: #1c1c1c;
+}
+
+/* Left, not right: the right edge is where --narration-top-review-shift
+   (below) can pull this band's own right edge in to clear ReviewPanel.tsx,
+   which would otherwise sit on top of a right-placed pencil (both
+   viewport-fixed) — the left corner needs no such dance. */
+.narration-top .narration-edit-pencil {
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+}
+
+/* A reserved band, not a corner card: Stage.css gives it exactly
+   --narration-top-height of real screen pixels above the (now shifted
+   down) scaled stage, so this never has scene content to overlap in the
+   first place. Full width, edge to edge like PresenterBar; the amber
+   accent moves from a left rule to a bottom rule to read as a horizontal
+   band rather than a stray vertical stripe running the full width.
+   --narration-top-review-shift (set inline, same value/condition as
+   --narration-review-shift above) pulls the RIGHT edge in while review
+   mode is open — without it the centered text would run under, and get
+   clipped by, ReviewPanel.tsx's dock, which is the one real content
+   truncation this file has to prevent, not just a chrome-on-chrome
+   overlap. */
+.narration-top {
+  position: fixed;
+  top: 0;
+  bottom: auto;
+  left: 0;
+  right: var(--narration-top-review-shift, 0px);
+  max-width: none;
+  /* The band's height is whatever its text needs (a four-paragraph
+     narration is taller than a one-liner); NarrationCallout.tsx measures it
+     and publishes it as --narration-top-height, which is what Stage.css
+     reserves — so the reserved region always equals the rendered band. */
+  height: auto;
+  min-height: var(--narration-top-height);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-left: none;
+  border-bottom: 3px solid var(--accent-amber);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 10px 48px;
+  transition: right 0.15s ease;
+}
+
+.narration-top .md-lite {
+  max-width: 96ch;
+}

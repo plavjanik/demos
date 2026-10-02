@@ -1,0 +1,24 @@
+{"stage":"read-map-elements","t":"2026-09-25T16:37:53Z","epochMs":1790354273000,"note":"Endevor MCP get_map + get_elements (real, code4z-cowboys) -- from session/claude-session.jsonl, the transcript delivered 2026-09-25 19:44 UTC (supersedes this file's earlier, coarser timings)"}
+{"stage":"read-orientation","t":"2026-09-25T16:37:55Z","epochMs":1790354275000,"note":"Read ais-cam-dot/workshop/daily-transaction-limit.md + postDebit.js"}
+{"stage":"hb-script-list","t":"2026-09-25T16:39:17Z","epochMs":1790354357000,"note":"hb script list"}
+{"stage":"hb-smoke-postdebit","t":"2026-09-25T16:39:33Z","epochMs":1790354373000,"note":"hb script run postDebit amount=1.00 (smoke test, not the ticket's own test)"}
+{"stage":"hb-smoke-balances","t":"2026-09-25T16:39:59Z","epochMs":1790354399000,"note":"hb script run getCheckingBalances"}
+{"stage":"tests-regression-written","t":"2026-09-25T16:40:11Z","epochMs":1790354411000,"note":"dot.regression.test.js written -- the demo stages this as PRE-EXISTING (DOGECICS's own device); flagged as an assumption in steps.ts"}
+{"stage":"tests-new-written","t":"2026-09-25T16:40:16Z","epochMs":1790354416000,"note":"dot.dailyLimit.test.js written"}
+{"stage":"tests-first-run-bug","t":"2026-09-25T16:40:32Z","epochMs":1790354432000,"note":"first run of both new tests FAILED with null -- a real bug in the new tests themselves (wrong runScript() call signature), not in DOT500"}
+{"stage":"tests-regression-fixed","t":"2026-09-25T16:40:44Z","epochMs":1790354444000,"note":"dot.regression.test.js fixed after reading hb-cli/lib/client.js's real runScript() signature"}
+{"stage":"tests-new-fixed","t":"2026-09-25T16:40:46Z","epochMs":1790354446000,"note":"dot.dailyLimit.test.js fixed the same way"}
+{"stage":"tests-regression-run","t":"2026-09-25T16:40:58Z","epochMs":1790354458000,"note":"regression test rerun -- PASS (this is the loop's own zero point, agentLoopTiming.ts's LOOP_START_STAGE)"}
+{"stage":"tests-new-run","t":"2026-09-25T16:41:00Z","epochMs":1790354460000,"note":"daily-limit test rerun -- FAIL (red), for the right reason: status ACCEPTED"}
+{"stage":"read-sources","t":"2026-09-25T16:41:10Z","epochMs":1790354470000,"note":"get_element_content DOT500 -- returned 833 of 1566 lines, truncated by the server response budget"}
+{"stage":"edit-v1","t":"2026-09-25T16:43:57Z","epochMs":1790354637000,"note":"local Reads 16:42:23-16:43:42 + Edits 16:42:43-16:43:51 (two \"String to replace not found\" retries omitted), then a 72-column check and the v1 diff"}
+{"stage":"generate-1","t":"2026-09-25T16:44:09Z","epochMs":1790354649000,"note":"syncz task build:dot submitted"}
+{"stage":"listing-1","t":"2026-09-25T16:45:23Z","epochMs":1790354723000,"note":"FAILED rc=12, IGYDS0017-E \"01 should begin in area A\""}
+{"stage":"edit-v2","t":"2026-09-25T16:45:49Z","epochMs":1790354749000,"note":"fixed 01-level column alignment; still had a leftover COPY-statement column-7 bug"}
+{"stage":"generate-2","t":"2026-09-25T16:46:13Z","epochMs":1790354773000,"note":"syncz task build:dot submitted"}
+{"stage":"listing-2","t":"2026-09-25T16:47:21Z","epochMs":1790354841000,"note":"FAILED again, rc=12, IGYDS0002-E column 7 / IGYDS0009-E area A"}
+{"stage":"edit-v3","t":"2026-09-25T16:48:00Z","epochMs":1790354880000,"note":"fixed COPY DOTCONS. column-7 overlap"}
+{"stage":"generate-3","t":"2026-09-25T16:48:11Z","epochMs":1790354891000,"note":"syncz task build:dot submitted"}
+{"stage":"listing-3","t":"2026-09-25T16:49:29Z","epochMs":1790354969000,"note":"SUCCEEDED rc=0"}
+{"stage":"deploy","t":"2026-09-25T16:51:01Z","epochMs":1790355061000,"note":"syncz task deploy (submitted 16:49:36) -- load module to USER.CICS.BIZAPP.DOT.LOAD, CEMT SET PROG(DOT500) PHASEIN, no region restart"}
+{"stage":"tests-run-green","t":"2026-09-25T16:51:12Z","epochMs":1790355072000,"note":"both tests re-run (started 16:51:08): regression PASS, new test PASS (REJECTED, ERROR: DAILY DEBIT LIMIT EXCEEDED)"}

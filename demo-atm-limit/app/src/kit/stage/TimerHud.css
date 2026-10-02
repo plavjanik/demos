@@ -1,0 +1,47 @@
+.timer-hud {
+  position: fixed;
+  /* Below the "top" narration band when one is reserved (NarrationCallout.tsx
+     publishes --narration-top-height; unset = 0px) — the pill is fixed to the
+     viewport, not the shifted stage, so it would otherwise sit on the band's
+     first line. */
+  top: calc(var(--narration-top-height, 0px) + 14px);
+  /* Base fallback only — TimerHud.tsx always sets an inline `right` (18px,
+     606px clear of the VSCodeScene chat panel, or clear of ReviewPanel),
+     which wins over this by specificity. */
+  right: 18px;
+  z-index: 60;
+  transition: right 0.2s;
+  background: rgba(20, 20, 20, 0.85);
+  border: 1px solid var(--vsc-border);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--vsc-fg);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(6px);
+}
+
+.timer-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-red);
+}
+
+.timer-hud.running .timer-dot {
+  background: var(--accent-green);
+  animation: timer-blink 1s ease-in-out infinite;
+}
+
+@keyframes timer-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
