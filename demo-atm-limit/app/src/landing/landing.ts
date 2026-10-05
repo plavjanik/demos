@@ -5,6 +5,7 @@
  */
 import "../styles/global.css";
 import "./landing.css";
+import "@vscode/codicons/dist/codicon.css";
 import logoUrl from "../../../../demo-techutex-limit/brand/broadcom-mainframe-software.png";
 
 for (const logo of document.querySelectorAll("img.brand-logo")) {

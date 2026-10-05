@@ -105,6 +105,11 @@
   color: var(--vsc-fg-muted);
   text-decoration: underline;
 }
+.cut-chooser-offline .codicon {
+  display: inline-block; /* keeps the link underline off the icon */
+  font-size: calc(18 * var(--u));
+  vertical-align: -3px;
+}
 .cut-chooser-offline:hover,
 .cut-chooser-offline:focus-visible {
   color: #fff;

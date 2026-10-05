@@ -1,5 +1,5 @@
 /**
- * PresenterBar.tsx's "🔊 voice" item (kit/stage/PresenterControls.tsx)
+ * PresenterBar.tsx's "voice" item (kit/stage/PresenterControls.tsx)
  * opens this — every spoken-narration setting (kit/engine/
  * narrationSettings.ts) in one small panel, plus a test button that speaks
  * a fixed short line with whatever's currently set and reports how long
@@ -89,7 +89,9 @@ export function VoicePopover({ onClose }: { onClose: () => void }): React.JSX.El
   return createPortal(
     <div className="voice-popover" role="dialog" aria-label="Spoken narration settings">
       <div className="voice-popover-header">
-        <span>🔊 Spoken narration</span>
+        <span>
+          <span className="codicon codicon-unmute" aria-hidden="true" /> Spoken narration
+        </span>
         <button type="button" className="voice-popover-close" aria-label="Close" onClick={onClose}>
           ×
         </button>

@@ -63,6 +63,12 @@
 .pb-download:hover {
   text-decoration: none;
 }
+/* A codicon standing in for a text glyph (◉ ✎ ⚙) inside a pb-item: same
+   colour, sized and lowered to sit on the label's baseline. */
+.pb-glyph {
+  font-size: 14px;
+  vertical-align: -2px;
+}
 .presenter-bar-cut {
   flex: none;
   font-family: var(--font-mono);

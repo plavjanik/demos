@@ -67,7 +67,7 @@ export function CutChooser({
       <p className="cut-chooser-hint">{cuts.map((_, i) => i + 1).join(" / ")} to choose</p>
       {offlineCopy && (
         <a className="cut-chooser-offline" href={offlineCopy.href} download={offlineCopy.download}>
-          Download for offline use
+          <span className="codicon codicon-desktop-download" aria-hidden="true" /> Download for offline use
         </a>
       )}
     </div>

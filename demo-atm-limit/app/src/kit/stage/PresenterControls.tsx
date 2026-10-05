@@ -45,7 +45,7 @@ export function PresenterControls(): React.JSX.Element {
           className={`pb-item pb-voice-toggle ${voiceOpen ? "active" : ""}`}
           onClick={() => setVoiceOpen((v) => !v)}
         >
-          🔊 voice
+          <span className="codicon codicon-unmute pb-glyph" aria-hidden="true" /> voice
         </button>
       )}
       {voiceOpen && <VoicePopover onClose={() => setVoiceOpen(false)} />}
