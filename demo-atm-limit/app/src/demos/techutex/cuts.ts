@@ -96,20 +96,6 @@ const deployGreen: Step = {
   timerStop: true,
 };
 
-/**
- * The closing pair, in both shorter cuts: the process diagram, then the
- * Full compare step ITSELF (same object, id "compare"). One slide carrying
- * both was tried and rejected: at 1280x720 the compact diagram's node labels
- * rendered near 7 px with overlapping boxes.
- */
-const closingProcess: Step = {
-  ...step("process"),
-  id: "closing-process",
-  title: "The same ticket, two ways",
-  // verbatim (owner): paragraph 2 of the process step only ("With AI coding agents the role of the developer shifts ...").
-  narration: compose(paragraphs("process").slice(1, 2)),
-  narrationSide: "top",
-};
 const compareStep = step("compare");
 
 const ids = (list: string[]): Step[] => list.map(step);
@@ -126,13 +112,14 @@ export const MEDIUM_CUT: Cut = {
   label: "Medium",
   blurb: "The whole story with a compressed warm-up and the compile rounds merged.",
   steps: [
-    ...ids(["title", "before-accepted"]),
+    // The process diagram stays at its Full position (owner: a mixed
+    // executive/developer audience should see the two ways first).
+    ...ids(["title", "before-accepted", "process"]),
     warmupOrient,
     warmupRunMerged,
     ...ids(["ticket", "plan", "write-new-test", "red-run", "diff-v0-v1", "host-write-approval"]),
     generateRc12,
     ...ids(["diff-v0-v2", "deploy", "green", "after-refused"]),
-    closingProcess,
     compareStep,
   ],
 };
@@ -142,14 +129,13 @@ export const SHORT_CUT: Cut = {
   label: "Short",
   blurb: "Ticket, plan, red test, the change, the fix, green, refused: the shortest complete story.",
   steps: [
-    ...ids(["title", "before-accepted", "ticket", "plan"]),
+    ...ids(["title", "before-accepted", "process", "ticket", "plan"]),
     testRed,
     ...ids(["diff-v0-v1", "host-write-approval"]),
     generateRc12,
     ...ids(["diff-v0-v2"]),
     deployGreen,
     ...ids(["after-refused"]),
-    closingProcess,
     compareStep,
   ],
 };

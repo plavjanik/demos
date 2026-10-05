@@ -40,12 +40,10 @@ describe("techutex cuts", () => {
     },
   );
 
-  it("ends both shorter cuts with the process diagram, then the Full compare step itself", () => {
+  it("keeps the process diagram third in both shorter cuts and ends with the Full compare step itself", () => {
     for (const cut of [MEDIUM_CUT, SHORT_CUT]) {
-      const tail = cut.steps.slice(-2);
-      expect(tail[0]!.id).toBe("closing-process");
-      expect(tail[0]!.scene).toBe("process");
-      expect(tail[1]).toBe(STEPS.find((s) => s.id === "compare"));
+      expect(cut.steps[2]).toBe(STEPS.find((s) => s.id === "process"));
+      expect(cut.steps.at(-1)).toBe(STEPS.find((s) => s.id === "compare"));
     }
   });
 
@@ -62,7 +60,7 @@ describe("techutex cuts", () => {
     const fullIds = new Set(STEPS.map((s) => s.id));
     const merged = [...MEDIUM_CUT.steps, ...SHORT_CUT.steps].filter((s) => !fullIds.has(s.id)).map((s) => s.id);
     expect(new Set(merged)).toEqual(
-      new Set(["warmup-orient", "warmup-run-merged", "generate-rc12", "closing-process", "test-red", "deploy-green"]),
+      new Set(["warmup-orient", "warmup-run-merged", "generate-rc12", "test-red", "deploy-green"]),
     );
   });
 
