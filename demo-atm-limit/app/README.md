@@ -98,9 +98,18 @@ compare step's numbers, and the workspace name. Each demo's own
 
 ```sh
 npm install
-npm run build     # prerender + tsc --noEmit + vite build -> dist/
+npm run build     # prerender + tsc --noEmit + vite build -> dist/, then build:offline
+npm run build:offline  # (part of build) one self-contained dist/offline/<page>-offline.html per demo
 npx serve -l 5000 dist   # serve the built dist/ locally
 ```
+
+`npm run build:offline` (`scripts/build-offline.mts`, run at the end of `npm run build`) rebuilds
+`techutex`, `techutex-variants` and `dogecics` one page at a time into `dist-offline/` (gitignored) and
+writes `dist/offline/<page>-offline.html`: ONE file with every script, stylesheet, font (the `public/fonts`
+woff2s and the codicon ttf) and image inlined, which opens from disk with no network. It fails the build
+if a non-`data:` `url(` or an unlisted `http(s)` URL survives. The landing page links these as
+"Download for offline use". Opened from `file://`, the cut chooser keeps the cut in memory because
+`history.replaceState` may be refused there.
 
 `npm run dev` runs the same prerender step then starts Vite's dev server
 (HMR; every `.html` entry is served by path — `/`, `/techutex.html`,

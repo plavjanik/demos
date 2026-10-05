@@ -97,6 +97,15 @@ function chooserUrl(): string {
   return window.location.pathname + (query ? `?${query}` : "");
 }
 
+/** Reload at the chooser URL; when the browser refuses (file://), return to the chooser in memory. */
+function backToChooser(setCut: (cut: Cut | null) => void): void {
+  try {
+    window.location.assign(chooserUrl());
+  } catch {
+    setCut(null);
+  }
+}
+
 function CutDemoApp({
   cuts,
   chooserHeadline,
@@ -108,7 +117,12 @@ function CutDemoApp({
     const select = (picked: Cut) => {
       const params = new URLSearchParams(window.location.search);
       params.set("cut", picked.id);
-      window.history.replaceState(null, "", `${window.location.pathname}?${params.toString()}`);
+      // A file:// page may not rewrite its own URL (SecurityError): the cut is kept in memory regardless.
+      try {
+        window.history.replaceState(null, "", `${window.location.pathname}?${params.toString()}`);
+      } catch {
+        /* URL stays as is */
+      }
       setCut(picked);
     };
     return <CutChooser headline={chooserHeadline ?? ""} cuts={cuts} onSelect={select} />;
@@ -123,11 +137,7 @@ function CutDemoApp({
       {...rest}
       demoId={demoId}
       steps={cut.steps}
-      cutInfo={
-        cuts.length > 1
-          ? { cutId: cut.id, label: cut.label, onChange: () => window.location.assign(chooserUrl()) }
-          : undefined
-      }
+      cutInfo={cuts.length > 1 ? { cutId: cut.id, label: cut.label, onChange: () => backToChooser(setCut) } : undefined}
     />
   );
 }

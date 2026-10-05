@@ -10,6 +10,8 @@ withdrawal limit to a CICS/COBOL application test-first. The index of all demos 
 | **Techutex Banking** | <https://plavjanik.github.io/demos/techutex.html> | Claude Code with Endevor MCP, HostBridge JavaScript Engine (HB.js) MCP and Zowe MCP changing a CICS transaction on z/OS |
 | **DOGECICS** | <https://plavjanik.github.io/demos/dogecics.html> | Claude Code with Panelwright driving a CICS application on MVS 3.8 (TK5) over a 3270 session |
 
+Each demo can be downloaded from the landing page as a single self-contained offline HTML file (fonts, images and code inlined; no network needed).
+
 ## Layout
 
 - `demo-atm-limit/app/` — the web app (Vite + React + TypeScript). One

@@ -5,3 +5,4 @@ dist/
 .playwright-cli/
 .env
 .env.*
+demo-atm-limit/app/dist-offline/

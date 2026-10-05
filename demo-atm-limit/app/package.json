@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "npm run prerender && vite",
     "prerender": "tsx scripts/prerender.mts",
-    "build": "npm run prerender && tsc -p . --noEmit && vite build",
+    "build": "npm run prerender && tsc -p . --noEmit && vite build && npm run build:offline",
+    "build:offline": "tsx scripts/build-offline.mts",
     "preview": "vite preview",
     "narration:render:dogecics": "tsx scripts/render-narration.mts --demo dogecics",
     "narration:render:techutex": "tsx scripts/render-narration.mts --demo techutex"
