@@ -8,12 +8,18 @@
   justify-content: center;
 }
 
+/* The same white rounded plate the landing page draws around the logo
+   (landing.css .landing-plate): the PNG's own white box has square corners. */
 .title-scene-logo {
   position: absolute;
   right: 60px;
   bottom: 50px;
-  width: 360px;
+  width: 400px;
   height: auto;
+  box-sizing: border-box;
+  padding: 14px 24px;
+  border-radius: 14px;
+  background: #fff;
 }
 
 .title-scene-inner {

@@ -7,5 +7,6 @@ import "../styles/global.css";
 import "./landing.css";
 import logoUrl from "../../../../demo-techutex-limit/brand/broadcom-mainframe-software.png";
 
-const logo = document.getElementById("brand-logo");
-if (logo instanceof HTMLImageElement) logo.src = logoUrl;
+for (const logo of document.querySelectorAll("img.brand-logo")) {
+  if (logo instanceof HTMLImageElement) logo.src = logoUrl;
+}
