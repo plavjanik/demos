@@ -86,3 +86,13 @@ describe("narration override staleness", () => {
     expect(md).toContain("- after: Edited line. *(stale");
   });
 });
+
+describe("buildReviewMarkdown — cut line", () => {
+  it("names the cut after the Build line when one is passed", () => {
+    expect(buildReviewMarkdown(STEPS, {}, "abc123", "short")).toContain("Build: `abc123`\nCut: `short`\n");
+  });
+
+  it("prints no Cut line without one", () => {
+    expect(buildReviewMarkdown(STEPS, {}, "abc123")).not.toContain("Cut:");
+  });
+});

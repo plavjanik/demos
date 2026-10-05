@@ -30,6 +30,7 @@ export function ReviewPanel(): React.JSX.Element {
     clearTextEdits,
     removeTextEdit,
     clearAllReviewData,
+    cutId,
   } = useStepEngine();
   const [copyStatus, setCopyStatus] = useState<"idle" | "copied" | "failed">("idle");
   const [showPreview, setShowPreview] = useState(false);
@@ -48,7 +49,7 @@ export function ReviewPanel(): React.JSX.Element {
   // TextEditOverlay.tsx's in-place edits for this step — see reviewData.ts's TextEdit.
   const textEdits = reviewData[step.id]?.textEdits ?? [];
 
-  const markdown = buildReviewMarkdown(steps, reviewData, import.meta.env.VITE_BUILD);
+  const markdown = buildReviewMarkdown(steps, reviewData, import.meta.env.VITE_BUILD, cutId);
 
   const copyReview = async () => {
     try {

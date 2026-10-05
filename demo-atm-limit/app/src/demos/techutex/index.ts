@@ -3,3 +3,4 @@
  */
 export { STEPS } from "./steps";
 export { CONTENT } from "./content";
+export { CUTS } from "./cuts";

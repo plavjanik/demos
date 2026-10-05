@@ -13,7 +13,12 @@ import { useStepEngine } from "../engine/StepEngine";
 import { PresenterControls } from "./PresenterControls";
 import "./PresenterBar.css";
 
-export function PresenterBar(): React.JSX.Element {
+export function PresenterBar({
+  cut,
+}: {
+  /** Set when the demo has several cuts: shows the active cut and returns to the chooser on click. */
+  cut?: { label: string; onChange: () => void };
+}): React.JSX.Element {
   const { step, index, steps, hotspotFired, next, barCollapsed, toggleBar } = useStepEngine();
   const isLast = index === steps.length - 1;
 
@@ -41,6 +46,16 @@ export function PresenterBar(): React.JSX.Element {
       {!isLast && (
         <button type="button" className={`presenter-bar-cue ${wantsClick ? "cue-click" : "cue-next"}`} onClick={next}>
           {wantsClick ? "click ⟶" : "→ next"}
+        </button>
+      )}
+      {cut && (
+        <button
+          type="button"
+          className="pb-item presenter-bar-cut"
+          title="Back to the cut chooser"
+          onClick={cut.onChange}
+        >
+          {cut.label} · {steps.length} steps
         </button>
       )}
       <div className="presenter-bar-controls">

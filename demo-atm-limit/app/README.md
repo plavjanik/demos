@@ -120,6 +120,15 @@ including `kit-boundary.test.ts` and `manualTimings.test.ts`.
 - `?atm=bank|doge|terminal` — picks the ATM skin for this session
   (remembered in `localStorage` after); `bench.html` shows all three side
   by side, accepted and refused, for a visual decision at a glance.
+- `?cut=<id>` — a demo with several cuts (`DemoApp`'s `cuts` prop; Techutex
+  has `full`, `medium`, `short` in `src/demos/techutex/cuts.ts`) opens on a
+  chooser (`1`/`2`/`3`) unless the URL names a cut or carries an old
+  `#step-…` deep link, which means the first cut. A cut is a selection of
+  the Full step objects plus merged steps whose narration only concatenates
+  the owner's existing paragraphs (`cuts.test.ts` pins this); the presenter
+  bar shows the cut and returns to the chooser, and `review.md` carries a
+  `Cut:` line. The Full cut keeps the demo's own localStorage prefix; the
+  others get `<demoId>-<cut>`.
 
 ## How to make another demo from the kit
 

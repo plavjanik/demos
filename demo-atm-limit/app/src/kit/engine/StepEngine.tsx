@@ -46,6 +46,8 @@ export interface StepEngineValue {
   /** Drops every text edit on one step (the review panel's "clear text edits"). */
   clearTextEdits: (stepId: string) => void;
   clearAllReviewData: () => void;
+  /** Id of the cut being shown when the demo has several (DemoApp's chooser); undefined for a one-cut demo. ReviewPanel stamps it into review.md. */
+  cutId?: string;
 }
 
 const NARRATION_STORAGE_KEY = "demo-narration-visible";
@@ -90,9 +92,12 @@ export function StepEngineProvider({
   steps,
   children,
   demoId = "",
+  cutId,
 }: {
   steps: Step[];
   children: ReactNode;
+  /** See StepEngineValue.cutId. */
+  cutId?: string;
   /**
    * Prefixes every review/narration localStorage key — DOGECICS passes
    * nothing (empty prefix, so its keys are the literal strings they always
@@ -364,6 +369,7 @@ export function StepEngineProvider({
     removeTextEdit,
     clearTextEdits,
     clearAllReviewData,
+    cutId,
   };
 
   return <StepEngineContext.Provider value={value}>{children}</StepEngineContext.Provider>;

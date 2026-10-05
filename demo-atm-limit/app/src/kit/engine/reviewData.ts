@@ -139,11 +139,12 @@ function escapeForMarkdown(s: string): string {
  * order, skipping every step with none of these, so the document is a
  * punch list Petr can act on rather than 18 mostly-empty headers.
  */
-export function buildReviewMarkdown(steps: Step[], data: ReviewData, buildId: string): string {
+export function buildReviewMarkdown(steps: Step[], data: ReviewData, buildId: string, cutId?: string): string {
   const lines: string[] = [];
   lines.push("# Demo review notes");
   lines.push("");
   lines.push(`Build: \`${buildId}\``);
+  if (cutId) lines.push(`Cut: \`${cutId}\``);
   lines.push(`Generated: ${new Date().toISOString()}`);
   lines.push("");
 

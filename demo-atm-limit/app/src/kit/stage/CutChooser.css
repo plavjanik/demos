@@ -1,0 +1,99 @@
+/* --u: one design pixel of the 1920x1080 box, fit to the viewport (the same ratio Stage.tsx uses). */
+.cut-chooser {
+  --u: min(100vw / 1920, 100vh / 1080);
+  position: fixed;
+  inset: 0;
+  box-sizing: border-box;
+  background: radial-gradient(ellipse at center, #1a1a1e 0%, #0b0b0d 70%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: calc(40 * var(--u)) calc(80 * var(--u));
+  text-align: center;
+  overflow: hidden;
+}
+
+.cut-chooser-headline {
+  margin: 0 0 calc(18 * var(--u));
+  max-width: calc(1500 * var(--u));
+  font-family: var(--font-ui);
+  font-weight: 800;
+  font-size: calc(56 * var(--u));
+  line-height: 1.2;
+  color: #fdfdfd;
+  letter-spacing: -0.01em;
+}
+
+.cut-chooser-prompt {
+  margin: 0 0 calc(56 * var(--u));
+  font-family: var(--font-mono);
+  font-size: calc(26 * var(--u));
+  color: var(--vsc-fg-muted);
+}
+
+.cut-chooser-cards {
+  display: flex;
+  gap: calc(40 * var(--u));
+  justify-content: center;
+}
+
+.cut-card {
+  position: relative;
+  box-sizing: border-box;
+  width: calc(480 * var(--u));
+  padding: calc(36 * var(--u)) calc(32 * var(--u)) calc(44 * var(--u));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(18 * var(--u));
+  background: #17181b;
+  border: calc(2 * var(--u)) solid #3a3d42;
+  border-radius: calc(14 * var(--u));
+  color: #fff;
+  font-family: var(--font-ui);
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+.cut-card:hover,
+.cut-card:focus-visible {
+  border-color: var(--accent-amber);
+  background: #1d1e22;
+  outline: none;
+}
+
+.cut-card-label {
+  font-size: calc(60 * var(--u));
+  font-weight: 800;
+  line-height: 1.1;
+}
+.cut-card-blurb {
+  font-size: calc(26 * var(--u));
+  line-height: 1.35;
+  color: #d6d6d6;
+}
+.cut-card-length {
+  margin-top: auto;
+  font-family: var(--font-mono);
+  font-size: calc(19 * var(--u));
+  line-height: 1.4;
+  color: var(--vsc-fg-muted);
+}
+.cut-card-key {
+  position: absolute;
+  top: calc(14 * var(--u));
+  right: calc(18 * var(--u));
+  font-family: var(--font-mono);
+  font-size: calc(20 * var(--u));
+  font-weight: 700;
+  color: var(--accent-amber);
+}
+
+.cut-chooser-hint {
+  margin: calc(48 * var(--u)) 0 0;
+  font-family: var(--font-mono);
+  font-size: calc(20 * var(--u));
+  color: var(--vsc-fg-muted);
+}
