@@ -97,3 +97,15 @@
   font-size: calc(20 * var(--u));
   color: var(--vsc-fg-muted);
 }
+
+.cut-chooser-offline {
+  margin-top: calc(18 * var(--u));
+  font-family: var(--font-mono);
+  font-size: calc(18 * var(--u));
+  color: var(--vsc-fg-muted);
+  text-decoration: underline;
+}
+.cut-chooser-offline:hover,
+.cut-chooser-offline:focus-visible {
+  color: #fff;
+}

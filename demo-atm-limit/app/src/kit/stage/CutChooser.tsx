@@ -14,6 +14,7 @@
  */
 import { useEffect } from "react";
 import { NARRATION_WORDS_PER_MINUTE, narrationMinutes, narrationWordCount, type Cut } from "../engine/cuts";
+import type { OfflineCopy } from "../engine/offlineCopy";
 import "./CutChooser.css";
 
 /** "23 steps · ≈ 7 min of narration (1,034 words at 145 words/min)" — every figure computed from `cut.steps`. */
@@ -30,10 +31,13 @@ export function CutChooser({
   headline,
   cuts,
   onSelect,
+  offlineCopy,
 }: {
   headline: string;
   cuts: Cut[];
   onSelect: (cut: Cut) => void;
+  /** Already filtered by visibleOfflineCopy: undefined inside the offline file itself. */
+  offlineCopy?: OfflineCopy;
 }): React.JSX.Element {
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
@@ -61,6 +65,11 @@ export function CutChooser({
         ))}
       </div>
       <p className="cut-chooser-hint">{cuts.map((_, i) => i + 1).join(" / ")} to choose</p>
+      {offlineCopy && (
+        <a className="cut-chooser-offline" href={offlineCopy.href} download={offlineCopy.download}>
+          Download for offline use
+        </a>
+      )}
     </div>
   );
 }

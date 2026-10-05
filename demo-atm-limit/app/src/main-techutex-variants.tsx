@@ -22,5 +22,9 @@ createRoot(root).render(
     content={CONTENT}
     demoId="techutex"
     narrationId="techutex"
+    offlineCopy={{
+      href: "offline/techutex-variants-offline.html",
+      download: "techutex-banking-variants-demo-offline.html",
+    }}
   />,
 );

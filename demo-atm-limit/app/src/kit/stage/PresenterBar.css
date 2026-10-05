@@ -55,6 +55,14 @@
   cursor: pointer;
   padding: 0;
 }
+.pb-download {
+  font-size: 16px;
+  line-height: 1;
+  text-decoration: none;
+}
+.pb-download:hover {
+  text-decoration: none;
+}
 .presenter-bar-cut {
   flex: none;
   font-family: var(--font-mono);

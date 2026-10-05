@@ -11,13 +11,17 @@
  */
 import { useStepEngine } from "../engine/StepEngine";
 import { PresenterControls } from "./PresenterControls";
+import { OFFLINE_DOWNLOAD_TITLE, type OfflineCopy } from "../engine/offlineCopy";
 import "./PresenterBar.css";
 
 export function PresenterBar({
   cut,
+  offlineCopy,
 }: {
   /** Set when the demo has several cuts: shows the active cut and returns to the chooser on click. */
   cut?: { label: string; onChange: () => void };
+  /** Already filtered by visibleOfflineCopy: undefined inside the offline file itself. */
+  offlineCopy?: OfflineCopy;
 }): React.JSX.Element {
   const { step, index, steps, hotspotFired, next, barCollapsed, toggleBar } = useStepEngine();
   const isLast = index === steps.length - 1;
@@ -60,6 +64,15 @@ export function PresenterBar({
       )}
       <div className="presenter-bar-controls">
         <PresenterControls />
+        {offlineCopy && (
+          <a
+            className="pb-item pb-download codicon codicon-desktop-download"
+            href={offlineCopy.href}
+            download={offlineCopy.download}
+            title={OFFLINE_DOWNLOAD_TITLE}
+            aria-label={OFFLINE_DOWNLOAD_TITLE}
+          />
+        )}
       </div>
       <div className="presenter-bar-count">
         {index + 1} / {steps.length}

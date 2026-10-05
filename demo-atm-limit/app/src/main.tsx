@@ -15,4 +15,11 @@ if (!root) throw new Error("#root not found");
 // narrationId="dogecics": DemoApp.tsx's own manifest-folder/settings-key id
 // for spoken narration — a new feature with no legacy key to preserve, so
 // unlike demoId above this is always a real name.
-createRoot(root).render(<DemoApp steps={STEPS} content={CONTENT} narrationId="dogecics" />);
+createRoot(root).render(
+  <DemoApp
+    steps={STEPS}
+    content={CONTENT}
+    narrationId="dogecics"
+    offlineCopy={{ href: "offline/dogecics-offline.html", download: "dogecics-demo-offline.html" }}
+  />,
+);

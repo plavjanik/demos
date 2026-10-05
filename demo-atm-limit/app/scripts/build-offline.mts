@@ -1,6 +1,7 @@
 /**
  * Builds each demo page as ONE self-contained .html file (dist/offline/<page>-offline.html)
- * that opens from disk with no network: every script, stylesheet, font and image is inlined.
+ * that opens from disk with no network (and carries `data-offline-copy` on <html>, which hides the app's
+ * own download links — see src/kit/engine/offlineCopy.ts): every script, stylesheet, font and image is inlined.
  *
  * It is a plain file-to-file transformation of Vite's own output, built once per page into
  * dist-offline/ (never dist/). Load-bearing rules: Vite inlines what it processes
@@ -10,6 +11,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { build, type InlineConfig } from "vite";
+import { markOfflineCopy } from "../src/kit/engine/offlineCopy";
 
 const root = path.resolve(import.meta.dirname, "..");
 const scratch = path.join(root, "dist-offline");
@@ -117,7 +119,7 @@ for (const page of PAGES) {
     },
   };
   await build(config);
-  const html = transform(page, dir);
+  const html = markOfflineCopy(transform(page, dir));
   verify(page, html);
   const out = path.join(outDir, `${page}-offline.html`);
   fs.writeFileSync(out, html);

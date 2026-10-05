@@ -108,7 +108,9 @@ npx serve -l 5000 dist   # serve the built dist/ locally
 writes `dist/offline/<page>-offline.html`: ONE file with every script, stylesheet, font (the `public/fonts`
 woff2s and the codicon ttf) and image inlined, which opens from disk with no network. It fails the build
 if a non-`data:` `url(` or an unlisted `http(s)` URL survives. The landing page links these as
-"Download for offline use". Opened from `file://`, the cut chooser keeps the cut in memory because
+"Download for offline use"; every demo page's presenter bar (an icon-only download control) and the cut
+chooser (a text link) carry the same link, and the offline copy hides it (`data-offline-copy` on `<html>`,
+stamped by the build, read by `src/kit/engine/offlineCopy.ts`). Opened from `file://`, the cut chooser keeps the cut in memory because
 `history.replaceState` may be refused there.
 
 `npm run dev` runs the same prerender step then starts Vite's dev server

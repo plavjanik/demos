@@ -8,4 +8,12 @@ const root = document.getElementById("root");
 if (!root) throw new Error("#root not found");
 
 // No StrictMode — see main.tsx's comment.
-createRoot(root).render(<DemoApp steps={STEPS} content={CONTENT} demoId="techutex" narrationId="techutex" />);
+createRoot(root).render(
+  <DemoApp
+    steps={STEPS}
+    content={CONTENT}
+    demoId="techutex"
+    narrationId="techutex"
+    offlineCopy={{ href: "offline/techutex-offline.html", download: "techutex-banking-demo-offline.html" }}
+  />,
+);

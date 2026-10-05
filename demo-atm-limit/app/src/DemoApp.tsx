@@ -33,6 +33,7 @@ import { CompareScene } from "./kit/diagrams/CompareScene";
 import { ProcessScene } from "./kit/diagrams/ProcessScene";
 import { TitleScene } from "./kit/title/TitleScene";
 import { CutChooser } from "./kit/stage/CutChooser";
+import { visibleOfflineCopy, type OfflineCopy } from "./kit/engine/offlineCopy";
 import type { Cut } from "./kit/engine/cuts";
 import type { Step, PresentationContent } from "./kit";
 
@@ -109,6 +110,7 @@ function backToChooser(setCut: (cut: Cut | null) => void): void {
 function CutDemoApp({
   cuts,
   chooserHeadline,
+  offlineCopy,
   ...rest
 }: Omit<DemoAppProps, "steps"> & { cuts: Cut[] }): React.JSX.Element {
   const [cut, setCut] = useState<Cut | null>(() => initialCut(cuts));
@@ -125,7 +127,14 @@ function CutDemoApp({
       }
       setCut(picked);
     };
-    return <CutChooser headline={chooserHeadline ?? ""} cuts={cuts} onSelect={select} />;
+    return (
+      <CutChooser
+        headline={chooserHeadline ?? ""}
+        cuts={cuts}
+        onSelect={select}
+        offlineCopy={visibleOfflineCopy(offlineCopy)}
+      />
+    );
   }
 
   // The first cut (Full) keeps the demo's own storage prefix, so review
@@ -135,6 +144,7 @@ function CutDemoApp({
   return (
     <DemoShell
       {...rest}
+      offlineCopy={offlineCopy}
       demoId={demoId}
       steps={cut.steps}
       cutInfo={cuts.length > 1 ? { cutId: cut.id, label: cut.label, onChange: () => backToChooser(setCut) } : undefined}
@@ -151,6 +161,8 @@ interface DemoAppProps {
   cuts?: Cut[];
   /** Headline shown above the chooser's cards. */
   chooserHeadline?: string;
+  /** This page's own single-file offline copy; PresenterBar and the chooser offer it, the offline file itself hides it. */
+  offlineCopy?: OfflineCopy;
 }
 
 export function DemoApp({ cuts, chooserHeadline, ...rest }: DemoAppProps): React.JSX.Element {
@@ -164,6 +176,7 @@ function DemoShell({
   demoId,
   narrationId,
   cutInfo,
+  offlineCopy,
 }: {
   steps: Step[];
   content: PresentationContent;
@@ -186,6 +199,7 @@ function DemoShell({
   narrationId: string;
   /** The active cut when the demo has several; PresenterBar shows its label and a way back to the chooser. */
   cutInfo?: { cutId: string; label: string; onChange: () => void };
+  offlineCopy?: OfflineCopy;
 }): React.JSX.Element {
   return (
     <StepEngineProvider steps={steps} demoId={demoId} cutId={cutInfo?.cutId}>
@@ -200,7 +214,7 @@ function DemoShell({
             <NarrationCallout />
             <ReviewPanelGate />
             <TextEditOverlayGate />
-            <PresenterBar cut={cutInfo} />
+            <PresenterBar cut={cutInfo} offlineCopy={visibleOfflineCopy(offlineCopy)} />
           </AtmRecipientProvider>
         </ContentProvider>
       </NarrationAudioProvider>
