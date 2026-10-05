@@ -1,9 +1,10 @@
 /**
  * Vite config for the demo presentation app. Static build only — no server
  * runtime, everything is pre-rendered at build time by scripts/prerender.mts.
- * Four HTML entries: index.html (the landing page listing the demos),
+ * Five HTML entries: index.html (the landing page listing the demos),
  * dogecics.html (DOGECICS, the original story), techutex.html (the Techutex
- * Banking / Endevor story) and bench.html (the ATM skin decision bench) —
+ * Banking / Endevor story), techutex-variants.html (the same story behind
+ * a Full/Medium/Short chooser) and bench.html (the ATM skin decision bench) —
  * all need listing explicitly or `vite build` only emits the one Vite finds
  * by default (index.html).
  */
@@ -41,6 +42,7 @@ export default defineConfig({
         main: path.resolve(import.meta.dirname, "index.html"),
         dogecics: path.resolve(import.meta.dirname, "dogecics.html"),
         techutex: path.resolve(import.meta.dirname, "techutex.html"),
+        techutexVariants: path.resolve(import.meta.dirname, "techutex-variants.html"),
         bench: path.resolve(import.meta.dirname, "bench.html"),
       },
     },

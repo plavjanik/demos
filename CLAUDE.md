@@ -14,7 +14,7 @@ History before 2026-10-02 lives in the private Panelwright repository
 
 - `npm ci`, `npm run dev` (prerender + Vite), `npm run build` (prerender,
   `tsc --noEmit`, Vite build), `npx vitest run`, `npx prettier --check src scripts`.
-- Entry pages: `index.html` (landing page listing the demos, `src/landing/`), `dogecics.html`, `techutex.html`, `bench.html`; a new demo needs a card on the landing page.
+- Entry pages: `index.html` (landing page listing the demos, `src/landing/`), `dogecics.html`, `techutex.html`, `techutex-variants.html` (the same story behind a cut chooser), `bench.html`; a new demo needs a card on the landing page.
 - `#step-<id>` in the URL addresses a step; `?review` opens review mode;
   `?name=`, `?voice=`, `?tts=` are one-shot presenter overrides.
 - Publishing is a push to `main`: the Pages workflow builds, runs the tests,

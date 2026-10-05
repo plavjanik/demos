@@ -34,9 +34,10 @@ npm run build      # static bundle in dist/
 ```
 
 Keys: `→`/Space next, `←` back, `S` step rail, `R` review mode, `B` hide the
-presenter bar. Techutex opens on a chooser — `1`/`2`/`3` for the Full,
-Medium or Short cut (`?cut=full|medium|short` skips it; an old `#step-…`
-link means Full).
+presenter bar. `techutex-variants.html` is the same story behind a chooser —
+`1`/`2`/`3` for the Full, Medium or Short cut (`?cut=full|medium|short`
+skips it; a `#step-…` link with no cut means Full); `techutex.html` stays
+the plain Full demo.
 
 ## Publishing
 
