@@ -120,7 +120,7 @@ including `kit-boundary.test.ts` and `manualTimings.test.ts`.
 
 ### Keys and query params
 
-- `→` / `Space` — next step; `←` — previous; `Home` — first step.
+- `→` / `Space` / `PageDown` — next step (on a step with a pending click target it fires that target first, as a click would, so a presentation clicker works); `←` / `PageUp` — previous; `Home` — first step.
 - `S` — toggle the step rail (click a row to jump straight to it; the URL
   hash `#step-<id>` deep-links to any step directly).
 - `R` — toggle review mode (a docked panel for live narration edits +

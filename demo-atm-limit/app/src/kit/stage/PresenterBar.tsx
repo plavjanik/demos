@@ -23,7 +23,7 @@ export function PresenterBar({
   /** Already filtered by visibleOfflineCopy: undefined inside the offline file itself. */
   offlineCopy?: OfflineCopy;
 }): React.JSX.Element {
-  const { step, index, steps, hotspotFired, next, barCollapsed, toggleBar } = useStepEngine();
+  const { step, index, steps, hotspotFired, advance, barCollapsed, toggleBar } = useStepEngine();
   const isLast = index === steps.length - 1;
 
   if (barCollapsed) {
@@ -48,7 +48,11 @@ export function PresenterBar({
           has to guess or hunt. Omitted on the last step: nothing forward
           to cue. */}
       {!isLast && (
-        <button type="button" className={`presenter-bar-cue ${wantsClick ? "cue-click" : "cue-next"}`} onClick={next}>
+        <button
+          type="button"
+          className={`presenter-bar-cue ${wantsClick ? "cue-click" : "cue-next"}`}
+          onClick={advance}
+        >
           {wantsClick ? "click ⟶" : "→ next"}
         </button>
       )}

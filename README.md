@@ -35,8 +35,10 @@ npm run dev        # http://localhost:5173/ (index), /dogecics.html, /techutex.h
 npm run build      # static bundle in dist/
 ```
 
-Keys: `→`/Space next, `←` back, `S` step rail, `R` review mode, `B` hide the
-presenter bar. `techutex-variants.html` is the same story behind a chooser —
+Keys: `→`/Space/PageDown next (a step with a pending click target fires it
+first, so a presentation clicker works), `←`/PageUp back, `S` step rail, `R`
+review mode, `B` hide the presenter bar. `techutex-variants.html` is the
+same story behind a chooser —
 `1`/`2`/`3` for the Full, Medium or Short cut (`?cut=full|medium|short`
 skips it; a `#step-…` link with no cut means Full); `techutex.html` stays
 the plain Full demo.

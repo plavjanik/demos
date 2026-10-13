@@ -4,7 +4,7 @@
  * passes its own hotspot id; this component decides whether that id is the
  * step's active one.
  */
-import { useLayoutEffect, useRef, type ReactNode } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, type ReactNode } from "react";
 import { useStepEngine } from "../engine/StepEngine";
 import "./Hotspot.css";
 
@@ -55,30 +55,55 @@ export function Hotspot({
   /** False: fire onActivate and mark the hotspot used (Step.narrationAfter, the presenter-bar cue), but DON'T advance the step — for a hotspot that reveals something in place (the ATM's confirm) and lets the presenter linger before a plain keypress moves on. */
   advanceOnActivate?: boolean;
 }): React.JSX.Element {
-  const { step, next, markHotspotFired } = useStepEngine();
+  const { step, next, markHotspotFired, registerHotspotActivator } = useStepEngine();
   const active = step.hotspot?.target === id;
   const labelRef = useKeepInViewport(active && labelPlacement === "top", step.hotspot?.label);
 
-  if (!active) return <>{children}</>;
+  // One activation at a time: a second click/key while onActivate's promise
+  // is pending is ignored, and a promise that resolves after the step has
+  // changed must not mark or advance the NEXT step. Both reset per step.
+  const stepIdRef = useRef(step.id);
+  stepIdRef.current = step.id;
+  const inFlightRef = useRef(false);
+  useEffect(() => {
+    inFlightRef.current = false;
+  }, [step.id]);
 
-  const handleClick = () => {
+  const handleActivate = () => {
+    if (inFlightRef.current) return;
     if (!onActivate) {
       markHotspotFired();
       if (advanceOnActivate) next();
       return;
     }
+    inFlightRef.current = true;
+    const startedOn = step.id;
     Promise.resolve(onActivate()).then(() => {
+      if (stepIdRef.current !== startedOn) return;
+      inFlightRef.current = false;
       markHotspotFired();
       if (advanceOnActivate) next();
     });
   };
+  const latestActivate = useRef(handleActivate);
+  latestActivate.current = handleActivate;
+  const stableActivate = useCallback(() => latestActivate.current(), []);
+
+  // The engine's forward key fires this exactly like a click (StepEngine's advance()).
+  useEffect(() => {
+    if (!active) return;
+    registerHotspotActivator(stableActivate);
+    return () => registerHotspotActivator(null);
+  }, [active, registerHotspotActivator, stableActivate]);
+
+  if (!active) return <>{children}</>;
 
   return (
     <button
       type="button"
       data-hotspot={id}
       className={`hotspot ${compact ? "hotspot-compact" : ""} ${className ?? ""}`}
-      onClick={handleClick}
+      onClick={handleActivate}
       aria-label={step.hotspot?.label}
     >
       {children}

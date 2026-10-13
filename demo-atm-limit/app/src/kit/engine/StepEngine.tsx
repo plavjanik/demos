@@ -6,7 +6,7 @@
  * `steps` from a prop (StepEngineProvider) rather than importing any one
  * demo's own steps module, so this whole engine is demo-agnostic.
  */
-import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { Step } from "./types";
 import { readReviewData, writeReviewData, type ReviewData, type ReviewEntry, type TextEdit } from "./reviewData";
 
@@ -15,6 +15,10 @@ export interface StepEngineValue {
   index: number;
   step: Step;
   next: () => void;
+  /** The forward gesture (keyboard, presenter-bar cue): fires the step's un-fired hotspot as if clicked, else behaves as `next`. `next` itself always advances. */
+  advance: () => void;
+  /** The active Hotspot hands over its activate function (null on unmount) so `advance` can fire it; only one hotspot is active per step. */
+  registerHotspotActivator: (fn: (() => void) | null) => void;
   prev: () => void;
   first: () => void;
   goTo: (index: number) => void;
@@ -117,6 +121,10 @@ export function StepEngineProvider({
   const [narrationVisible, setNarrationVisible] = useState(() => readNarrationPreference(keyPrefix));
   const [hotspotFired, setHotspotFired] = useState(false);
   const markHotspotFired = useCallback(() => setHotspotFired(true), []);
+  const hotspotActivatorRef = useRef<(() => void) | null>(null);
+  const registerHotspotActivator = useCallback((fn: (() => void) | null) => {
+    hotspotActivatorRef.current = fn;
+  }, []);
   const toggleNarration = useCallback(() => {
     setNarrationVisible((v) => {
       const next = !v;
@@ -255,6 +263,12 @@ export function StepEngineProvider({
     [steps.length],
   );
   const next = useCallback(() => setIndex((i) => Math.min(steps.length - 1, i + 1)), [steps.length]);
+  const hasPendingHotspot = !!steps[index]?.hotspot && !hotspotFired;
+  const advance = useCallback(() => {
+    const activate = hotspotActivatorRef.current;
+    if (hasPendingHotspot && activate) activate();
+    else next();
+  }, [hasPendingHotspot, next]);
   const prev = useCallback(() => setIndex((i) => Math.max(0, i - 1)), []);
   const first = useCallback(() => setIndex(0), []);
   const toggleRail = useCallback(() => setRailOpen((v) => !v), []);
@@ -288,7 +302,7 @@ export function StepEngineProvider({
       if (isEditableFocused()) return;
       if (e.key === "ArrowRight" || e.key === " " || e.key === "PageDown") {
         e.preventDefault();
-        next();
+        advance();
       } else if (e.key === "ArrowLeft" || e.key === "PageUp") {
         e.preventDefault();
         prev();
@@ -305,7 +319,7 @@ export function StepEngineProvider({
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [next, prev, first, toggleRail, toggleReviewMode, toggleBar]);
+  }, [advance, prev, first, toggleRail, toggleReviewMode, toggleBar]);
 
   // Collapsing the bar reclaims its reserved strip: --presenter-bar-height
   // is defined on :root (styles/global.css), so an inline override on the
@@ -346,6 +360,8 @@ export function StepEngineProvider({
     index,
     step: steps[index]!,
     next,
+    advance,
+    registerHotspotActivator,
     prev,
     first,
     goTo,
